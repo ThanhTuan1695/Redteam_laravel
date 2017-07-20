@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        if($this->userRepository->addUser($request->all())){
+        if($this->userRepository->addUser($request)){
             Flash::success('User create successfully.');
             return redirect(route('users.index'));
         }else{
@@ -116,7 +116,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        if($this->userRepository->editUser($request->all(), $id)){
+        if($this->userRepository->editUser($request, $id)){
             Flash::success('User updated successfully.');
             // Flash::success('User'.config('m_const_config.update_success'));
             return redirect(route('users.index'));

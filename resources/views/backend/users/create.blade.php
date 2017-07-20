@@ -13,7 +13,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'users.store']) !!}
+                    {!! Form::open(['route' => 'users.store','files' => 'true', 'enctype'=>'multipart/form-data' ]) !!}
 
                         @include('backend.users.fields_create')
 
@@ -22,4 +22,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ url('backend/js/displayimages.js')}}"></script>
 @endsection

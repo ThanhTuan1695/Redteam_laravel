@@ -51,5 +51,8 @@ class Rooms extends Model
         'type' => 'required',
     ];
 
-    
+    public function rooms()
+    {
+        return $this->hasMany('App\Models\Rooms', 'creator_id');
+    }
 }

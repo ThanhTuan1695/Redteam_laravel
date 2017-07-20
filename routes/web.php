@@ -17,14 +17,14 @@
 
 
 Auth::routes();
-
 // Route::get('/home', 'HomeController@index');
 Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 
-Route::resource('rooms', 'Backend\RoomsController');
-
-Route::resource('messages', 'Backend\MessagesController');
-
-Route::resource('media', 'Backend\MediaController');
-
-Route::resource('users', 'Backend\UserController');
+Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
+	
+	Route::resource('rooms', 'Backend\RoomsController');
+	Route::resource('messages', 'Backend\MessagesController');
+	Route::resource('media', 'Backend\MediaController');
+	Route::resource('users', 'Backend\UserController');
+	
+});

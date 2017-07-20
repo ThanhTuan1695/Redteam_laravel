@@ -4,10 +4,13 @@
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- User Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
+    <select name="user_id" class="form-control">
+        @foreach ($users as $user)
+            <option value="{{$user->id}}">{{$user->name}}</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Description Field -->

@@ -44,6 +44,7 @@ class RoomsController extends AppBaseController
      */
     public function create()
     {
+
         $listUser = User::pluck('name','id');
         return view('backend.rooms.create',compact('listUser'));
     }
@@ -83,7 +84,7 @@ class RoomsController extends AppBaseController
             return redirect(route('rooms.index'));
         }
 
-        return view('backend.rooms.show')->with('rooms', $rooms);
+        return view('backend.rooms.show');
     }
 
     /**
@@ -96,6 +97,7 @@ class RoomsController extends AppBaseController
     public function edit($id)
     {
         $rooms = $this->roomsRepository->findWithoutFail($id);
+        $users = \App\Models\User::all();
 
         if (empty($rooms)) {
             Flash::error('Rooms not found');
@@ -103,7 +105,7 @@ class RoomsController extends AppBaseController
             return redirect(route('rooms.index'));
         }
 
-        return view('backend.rooms.edit')->with('rooms', $rooms);
+        return view('backend.rooms.edit',compact(['users','rooms']));
     }
 
     /**

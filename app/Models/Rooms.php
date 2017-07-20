@@ -51,8 +51,17 @@ class Rooms extends Model
         'type' => 'required',
     ];
 
-    public function rooms()
+    public function belongtoUser(){
+        return $this->belongsTo('App\Models\User','user_id');
+    }
+
+    public function users()
     {
-        return $this->hasMany('App\Models\Rooms', 'creator_id');
+        return $this->belongsToMany('App\Models\User');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Models\Message', 'room_id');
     }
 }

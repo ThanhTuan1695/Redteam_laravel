@@ -48,5 +48,8 @@ class Media extends Model
         'mgs_id' => 'required'
     ];
 
-    
+    public function belongtoMessage(){
+        return $this->belongsTo('App\Models\Messages','mgs_id');
+    }
+
 }

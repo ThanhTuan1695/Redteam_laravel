@@ -48,5 +48,11 @@ class Messages extends Model
         'content' => 'required'
     ];
 
-    
+    public function belongtoRoom(){
+        return $this->belongsTo('App\Models\Room','room_id');
+    }
+
+    public function belongtoSingler(){
+        return $this->belongsTo('App\Models\Single','single_id');
+    }
 }

@@ -13,10 +13,13 @@ class CreateUserUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('use_user', function (Blueprint $table) {
+        Schema::create('user_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user1_id');
-            $table->string('user2_id');
+            $table->integer('user_first_id')->unsigned();
+            $table->integer('user_second_id')->unsigned();
+            $table->foreign('user_first_id')->references('id')->on('users');
+            $table->foreign('user_second_id')->references('id')->on('users');
+
         });
     }
 
@@ -27,6 +30,6 @@ class CreateUserUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('use_user');
+        Schema::dropIfExists('user_user');
     }
 }

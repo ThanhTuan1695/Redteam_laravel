@@ -17,8 +17,10 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->string('content');
             $table->integer('user_id');
-            $table->integer('room_id');
-            $table->integer('single_id');
+            $table->integer('room_id')->unsigned()->default(0);
+            $table->integer('single_id')->unsigned()->default(0);
+            $table->foreign('room_id')->references('id')->on('rooms');
+            $table->foreign('single_id')->references('id')->on('user_user');
             $table->timestamps();
             $table->softDeletes();
         });

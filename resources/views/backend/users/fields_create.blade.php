@@ -28,6 +28,14 @@
     {!! Form::select('role',['1' => 'Admin' , '2' => 'User'],null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Avatar Field -->
+<div class="col-lg-12">
+    <div class="form-group">
+        {{ Form::file('avatar',['class' => 'control','id' => 'files']) }}
+    </div>
+    <div id="selectedFiles"></div>
+</div>
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

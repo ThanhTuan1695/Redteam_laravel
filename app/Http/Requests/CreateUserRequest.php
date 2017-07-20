@@ -29,7 +29,8 @@ class CreateUserRequest extends FormRequest
             'name' => 'required|min:3|max:50',
             'password' => 'required|min:6|max:10|confirmed',
             'password_confirmation' => 'required|min:6|max:10',
-            'email' => 'required|email|unique:users'
+            'email' => 'required|email|unique:users',
+            'avatar' => 'required|mimes:jpeg,jpg,png|max:8192'
         ];
         return $rules;
     }

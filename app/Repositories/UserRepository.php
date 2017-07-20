@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Auth;
 use Illuminate\Support\Facades\Session;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Response;
 
 
 class UserRepository extends BaseRepository
@@ -35,26 +37,34 @@ class UserRepository extends BaseRepository
 
     public function addUser($request)
     {
-        $data = array(
-            '_token' => $request['_token'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password']),
-            'role' => $request['role']);
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $url = 'backend/images/upload';
+            $imagename=time() . '.'. $avatar->getClientOriginalExtension();
+            $data = array(
+                '_token' => $request['_token'],
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => bcrypt($request['password']),
+                'avatar' => $imagename,
+                'role' => $request['role']);
+
+            $avatar->move(public_path($url), $imagename);
+        }else {
+            return false;
+        }
         $this->create($data);
         return true;
-
     }
 
     public function editUser($request, $id)
     {
+        $data = $this->checkImg($request);
         if ($this->checkPassword($request['current-password'])) {
             if ($request['password'] != '') {
-                $data = array('name' => $request['name']);
                 $this->update($data, $id);
                 $this->update(['password' => Hash::make($request['password'])], $id);
             } else {
-                $data = array('name' => $request['name']);
                 $this->update($data, $id);
             }
             return true;
@@ -63,9 +73,26 @@ class UserRepository extends BaseRepository
         }
     }
 
+    public function checkImg($request) {
+        if($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $url = 'backend/images/upload';
+            $imagename=time() . '.'. $avatar->getClientOriginalExtension();
+            $data = array(
+                'name' => $request['name'],
+                'avatar' => $imagename);
+
+            $avatar->move(public_path($url), $imagename);
+            return $data;
+        } else {
+            $data = array('name' => $request['name']);
+            return $data;
+        }
+    }
+
     public function checkPassword($current_password)
     {
-        if (Hash::check($current_password, Auth::User()->password)) {
+        if (Hash::check($current_password, Auth::user()->password)) {
             return true;
         } else {
             return false;

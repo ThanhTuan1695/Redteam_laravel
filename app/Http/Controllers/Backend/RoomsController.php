@@ -97,11 +97,13 @@ class RoomsController extends AppBaseController
     public function edit($id)
     {
         $rooms = $this->roomsRepository->findWithoutFail($id);
+
        
         //$listUser = User::where('id', $rooms->belongtoUser->id)->pluck('name','id');
         $listUser = $rooms->users()->pluck('name','id');
        //select * from users where id in select user_id from User_room where room_id = ??
        //  dd($rooms->users->toArray());
+
 
         if (empty($rooms)) {
             Flash::error('Rooms not found');

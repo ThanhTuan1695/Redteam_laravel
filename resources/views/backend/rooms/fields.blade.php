@@ -5,9 +5,12 @@
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::select('user_id',$listUser,null, ['class' => 'form-control']) !!}
-
+    {!! Form::label('user_id', 'Creator:') !!}
+    @if (isset($rooms))
+        {!! Form::select('user_id',$listUser,null,['class' => 'form-control']) !!}
+    @else
+        {!! Form::select('user_id',$listUser,null, ['class' => 'form-control']) !!}
+    @endif
 </div>
 
 <!-- Description Field -->

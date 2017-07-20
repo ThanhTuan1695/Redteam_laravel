@@ -9,7 +9,7 @@
     <tbody>
     @foreach($rooms as $room)
         <tr>
-            <td>{!! $room->name !!}</td>
+            <td>{{ $room->name }}</td>
             <td>{!! $room->belongtoUser->name !!}</td>
             <td>{!! $room->description !!}</td>
             <td>{!! $room->type !!}</td>

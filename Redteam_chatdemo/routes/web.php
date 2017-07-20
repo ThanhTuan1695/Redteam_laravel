@@ -19,7 +19,7 @@
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index');
-Route::get('/home', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
+Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 
 Route::resource('rooms', 'Backend\RoomsController');
 

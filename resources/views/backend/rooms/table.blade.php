@@ -11,7 +11,7 @@
         <tr>
             <td>{!! $room->name !!}</td>
             <td>{!! $room->belongtoUser->name !!}</td>
-            <td>{!! $room->description !!}</td>
+            <td>{!! str_limit($room->description ,60)!!}</td>
             <td>{!! $room->type !!}</td>
             <td>
                 {!! Form::open(['route' => ['rooms.destroy', $room->id], 'method' => 'delete']) !!}

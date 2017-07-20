@@ -8,13 +8,13 @@
 <!-- Current-Password Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('current-password', 'Current-password:') !!}
-    {!! Form::password('current-password',['class' => 'form-control', 'type' => 'password']) !!}
+    {!! Form::password('current-password',['class' => 'form-control']) !!}
 </div>
 
 <!-- New-Password Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('password', 'New-password:') !!}
-    {!! Form::password('password',['class' => 'form-control', 'type' => 'password']) !!}
+    {!! Form::password('password',['class' => 'form-control']) !!}
 </div>
 
 <!-- Email Field -->

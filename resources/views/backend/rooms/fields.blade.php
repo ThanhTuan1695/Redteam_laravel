@@ -7,7 +7,7 @@
 <!-- User Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('user_id',$listUser,null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Description Field -->
@@ -18,10 +18,7 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('type', 'Type') !!}
-    <select name="type" class="form-control">
-        <option value="public">Public</option>
-        <option value="private">Private</option>
-    </select>
+    {!! Form::select('type',['public' => 'Public' , 'private' => 'Private'],null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->

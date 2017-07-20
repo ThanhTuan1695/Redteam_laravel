@@ -7,13 +7,13 @@
 <!-- Password Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('password', 'Password:') !!}
-    {!! Form::password('password',['class' => 'form-control', 'type' => 'password']) !!}
+    {!! Form::password('password',['class' => 'form-control']) !!}
 </div>
 
 <!-- Re-Password Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('password_confirmation', 'Password confirmation:') !!}
-    {!! Form::password('password_confirmation',['class' => 'form-control', 'type' => 'password']) !!}
+    {!! Form::password('password_confirmation',['class' => 'form-control']) !!}
 </div>
 
 <!-- Email Field -->
@@ -25,10 +25,7 @@
 <!-- Role Field -->
 <div class="form-group col-sm-6">	
     {!! Form::label('role', 'Role') !!}
-    <select name="role" class="form-control">
-    	<option value="1">Admin</option>
-        <option value="2">User</option>
-    </select>
+    {!! Form::select('role',['1' => 'Admin' , '2' => 'User'],null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateRoomsRequest;
 use App\Http\Requests\UpdateRoomsRequest;
+use App\Models\User;
 use App\Repositories\RoomsRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Http\Request;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -43,7 +44,8 @@ class RoomsController extends AppBaseController
      */
     public function create()
     {
-        return view('backend.rooms.create');
+        $listUser = User::pluck('name','id');
+        return view('backend.rooms.create',compact('listUser'));
     }
 
     /**

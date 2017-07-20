@@ -3,6 +3,7 @@
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
+        <th>Avatar</th>
         <th>Action</th>
     </thead>
     <tbody> 
@@ -15,6 +16,7 @@
             @else
                 <td>User</td>
             @endif
+            <td>{{ $user->avatar }}</td>
             <td style="width: 80px;">
                 {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

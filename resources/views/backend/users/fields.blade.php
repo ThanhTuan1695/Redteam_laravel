@@ -23,6 +23,18 @@
     {!! Form::text('email', null, ['class' => 'form-control', 'readonly']) !!}
 </div>
 
+<div class="col-lg-12">
+    <div class="form-group">
+        {{ Form::file('avatar',['class' => 'control','id' => 'files']) }}
+    </div>
+     <div id="selectedFiles">
+        <div class="col-lg-4">
+            <img style="width:300px;height:200px;margin-bottom:10px;" src="{{ url('/backend/images/upload/'.$user->avatar) }}" 
+            class = "setpicture img-thumbnail img_upload" id ="image_no"></img><br>
+        </div>
+    </div> 
+</div> 
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

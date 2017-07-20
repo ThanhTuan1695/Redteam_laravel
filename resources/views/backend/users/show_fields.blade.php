@@ -11,6 +11,11 @@
     <p>{{ $user->email }}</p>
 </div>
 
+<div class="col-lg-12 form-group">
+    <img style="width:300px;height:200px;margin-bottom:10px;" src="{{ url('/backend/images/upload/'.$user->avatar) }}" 
+    class = "setpicture img-thumbnail img_upload" id ="image_no"></img><br>
+</div>
+
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}

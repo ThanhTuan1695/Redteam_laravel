@@ -9,7 +9,7 @@
                 <h3 style="text-align:center">Sign up</h3>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <fieldset>
-                    <input name="name" placeholder="Your name" type="text" autofocus>
+                    <input name="username" placeholder="Your name" type="text" autofocus>
                 </fieldset>
                 <fieldset>
                     <input name="email" placeholder="Your Email Address" type="email">

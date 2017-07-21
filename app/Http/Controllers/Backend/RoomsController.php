@@ -61,7 +61,7 @@ class RoomsController extends AppBaseController
         $input = $request->all();
 
         $rooms = $this->roomsRepository->create($input);
-
+        $rooms->users()->attach($request['user_id']);
         Flash::success('Rooms saved successfully.');
 
         return redirect(route('rooms.index'));
@@ -80,7 +80,6 @@ class RoomsController extends AppBaseController
 
         if (empty($rooms)) {
             Flash::error('Rooms not found');
-
             return redirect(route('rooms.index'));
         }
 

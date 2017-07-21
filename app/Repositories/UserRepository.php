@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'username',
+        'name',
         'email',
         'password',
         'role',
@@ -111,7 +111,6 @@ class UserRepository extends BaseRepository
 
     public function registerUser($request)
     {
-
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $url = 'backend/images/upload';

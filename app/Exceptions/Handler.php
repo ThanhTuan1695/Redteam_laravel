@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
         }
 
         if($exception->getStatusCode() == '404') {
-            return redirect('/');
+            return redirect('/404');
         }
 
         return parent::render($request, $exception);

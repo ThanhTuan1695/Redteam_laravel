@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'username',
+        'name',
         'email',
         'password',
         'role',
@@ -42,18 +42,17 @@ class UserRepository extends BaseRepository
             $avatar = $request->file('avatar');
             $url = 'backend/images/upload';
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
-            $data = array(
-                '_token' => $request['_token'],
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-                'avatar' => $imagename,
-                'role' => $request['role']);
-
             $avatar->move(public_path($url), $imagename);
         }else {
-            return false;
+            $imagename = null;
         }
+        $data = array(
+            '_token' => $request['_token'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'avatar' => $imagename,
+            'role' => $request['role']);
         $this->create($data);
         return true;
     }
@@ -111,24 +110,24 @@ class UserRepository extends BaseRepository
 
     public function registerUser($request)
     {
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $url = 'backend/images/upload';
+            $imagename=time() . '.'. $avatar->getClientOriginalExtension();
+            
+            $avatar->move(public_path($url), $imagename);
+        }else {
+            $imagename = null;
+        }
         $data = array(
             '_token' => $request['_token'],
             'username' => $request['username'],
-            'username' => $request['username'],
+            'email' => $request['email'],
             'password' => bcrypt($request['password']),
+            'avatar' => $imagename,
             'role' => 2);
         $this->create($data);
-        //if isset ($data)
         return true;
-    }
-
-    public function userLogin($request)
-    {
-        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

@@ -15,17 +15,13 @@
 //     return view('welcome');
 // });
 
-
 Auth::routes();
-// Route::get('/home', 'HomeController@index');
-// ?public
-Route::get('/',function(){
-	 echo "asdsa";
-});
+
 
 Route::get('/404',function(){
 	 return view('errors.404');
 });
+
 Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
 	Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 	Route::resource('rooms', 'Backend\RoomsController');
@@ -33,3 +29,12 @@ Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
 	Route::resource('media', 'Backend\MediaController');
 	Route::resource('users', 'Backend\UserController');
 });
+
+Route::group(['prefix' => 'public'],function(){
+	Route::get('/', 'Frontend\HomeChatController@index');
+	Route::post('registerUser', 'Frontend\RegisterController@store')->name('register_user');
+	Route::get('loginChat', 'Frontend\LoginChatController@index')->name('loginChat');
+	Route::post('submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');
+	Route::get('homeChat', 'Frontend\ManagerController@index')->name('homeChat');
+});
+

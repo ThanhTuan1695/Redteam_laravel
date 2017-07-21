@@ -59,7 +59,7 @@ class UserController extends Controller
             Flash::success('User create successfully.');
             return redirect(route('users.index'));
         }else{
-            Flash::error('Password is not correct');
+            Flash::error('Something wrong');
             return $this->create();
         }
 
@@ -119,7 +119,7 @@ class UserController extends Controller
             // Flash::success('User'.config('m_const_config.update_success'));
             return redirect(route('users.index'));
         }else {
-            Flash::error('Password is not correct.');
+            Flash::error('Username or password is fail');
             return $this->edit($id);
              
         }

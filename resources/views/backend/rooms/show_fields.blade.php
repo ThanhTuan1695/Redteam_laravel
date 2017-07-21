@@ -13,7 +13,7 @@
 <!-- User Id Field -->
 <div class="form-group">
     {!! Form::label('user_id', 'User Id:') !!}
-    <p>{!! $rooms->user_id !!}</p>
+    <p>{!! $rooms->belongtoUser->username !!}</p>
 </div>
 
 <!-- Description Field -->

@@ -45,7 +45,7 @@ class RoomsController extends AppBaseController
     public function create()
     {
 
-        $listUser = User::pluck('name','id');
+        $listUser = User::pluck('username','id');
         return view('backend.rooms.create',compact('listUser'));
     }
 
@@ -61,7 +61,7 @@ class RoomsController extends AppBaseController
         $input = $request->all();
 
         $rooms = $this->roomsRepository->create($input);
-
+        $rooms->users()->attach($request['user_id']);
         Flash::success('Rooms saved successfully.');
 
         return redirect(route('rooms.index'));
@@ -80,11 +80,10 @@ class RoomsController extends AppBaseController
 
         if (empty($rooms)) {
             Flash::error('Rooms not found');
-
             return redirect(route('rooms.index'));
         }
 
-        return view('backend.rooms.show');
+        return view('backend.rooms.show')->with('rooms', $rooms);
     }
 
     /**
@@ -98,7 +97,7 @@ class RoomsController extends AppBaseController
     {
         $rooms = $this->roomsRepository->findWithoutFail($id);
         //$listUser = User::where('id', $rooms->belongtoUser->id)->pluck('name','id');
-        $listUser = $rooms->users()->pluck('name','id');
+        $listUser = $rooms->users()->pluck('username','id');
        //select * from users where id in select user_id from User_room where room_id = ??
        //  dd($rooms->users->toArray());
 

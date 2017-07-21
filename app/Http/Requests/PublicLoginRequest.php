@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
 
-class CreateUserRequest extends FormRequest
+class PublicLoginRequest extends FormRequest
 {
 
     /**
@@ -26,11 +26,8 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'username' => 'required|min:3|max:50|unique:users',
-            'password' => 'required|min:6|max:10|confirmed',
-            'password_confirmation' => 'required|min:6|max:10',
-            'email' => 'required|email|unique:users',
-            'avatar' => 'mimes:jpeg,jpg,png|max:8192'
+            'email' => 'required|email',
+            'password' => 'required|min:6|max:10'
         ];
         return $rules;
     }

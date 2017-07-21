@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'name',
+        'username',
         'email',
         'password',
         'role',
@@ -44,7 +44,7 @@ class UserRepository extends BaseRepository
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
             $data = array(
                 '_token' => $request['_token'],
-                'name' => $request['name'],
+                'username' => $request['username'],
                 'email' => $request['email'],
                 'password' => bcrypt($request['password']),
                 'avatar' => $imagename,
@@ -86,13 +86,13 @@ class UserRepository extends BaseRepository
             $avatar = $request->file('avatar');
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
             $data = array(
-                'name' => $request['name'],
+                'username' => $request['username'],
                 'avatar' => $imagename);
 
             $avatar->move(public_path($url), $imagename);
             return $data;
         } else {
-            $data = array('name' => $request['name']);
+            $data = array('username' => $request['username']);
             return $data;
         }
     }
@@ -113,8 +113,8 @@ class UserRepository extends BaseRepository
     {
         $data = array(
             '_token' => $request['_token'],
-            'name' => $request['name'],
-            'email' => $request['email'],
+            'username' => $request['username'],
+            'username' => $request['username'],
             'password' => bcrypt($request['password']),
             'role' => 2);
         $this->create($data);

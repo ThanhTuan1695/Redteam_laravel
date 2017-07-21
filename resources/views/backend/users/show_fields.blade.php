@@ -1,7 +1,7 @@
 <!-- Fullname Field -->
 <div class="form-group">
-    {!! Form::label('name', 'Name:') !!}
-    <p>{{ $user->name }}</p>
+    {!! Form::label('name', 'Username:') !!}
+    <p>{{ $user->username }}</p>
 </div>
 
 <!-- Email Field -->

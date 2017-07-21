@@ -111,24 +111,33 @@ class UserRepository extends BaseRepository
 
     public function registerUser($request)
     {
-        $data = array(
-            '_token' => $request['_token'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password']),
-            'role' => 2);
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $url = 'backend/images/upload';
+            $imagename=time() . '.'. $avatar->getClientOriginalExtension();
+            $data = array(
+                '_token' => $request['_token'],
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => bcrypt($request['password']),
+                'avatar' => $imagename,
+                'role' => 2);
+
+            $avatar->move(public_path($url), $imagename);
+        }else {
+            return false;
+        }
         $this->create($data);
-        //if isset ($data)
         return true;
     }
 
-    public function userLogin($request)
-    {
-        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // public function userLogin($request)
+    // {
+    //     if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
 }

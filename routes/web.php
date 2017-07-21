@@ -17,7 +17,6 @@
 
 
 Auth::routes();
-// Route::get('/home', 'HomeController@index');
 Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 
 Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
@@ -25,4 +24,12 @@ Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
 	Route::resource('messages', 'Backend\MessagesController');
 	Route::resource('media', 'Backend\MediaController');
 	Route::resource('users', 'Backend\UserController');
+});
+
+Route::group(['prefix' => 'public'],function(){
+	Route::get('/', 'Frontend\HomeChatController@index');
+	Route::post('registerUser', 'Frontend\RegisterController@store')->name('register_user');
+	Route::get('loginChat', 'Frontend\LoginChatController@index')->name('loginChat');
+	Route::post('submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');
+	Route::get('homeChat', 'Frontend\Controller@index')->name('homeChat');
 });

@@ -18,9 +18,17 @@
 
 Auth::routes();
 // Route::get('/home', 'HomeController@index');
-Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
+// ?public
+Route::get('/',function(){
+	 echo "asdsa";
+});
+
+Route::get('/404',function(){
+	 return view('errors.404');
+});
 
 Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
+	Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 	Route::resource('rooms', 'Backend\RoomsController');
 	Route::resource('messages', 'Backend\MessagesController');
 	Route::resource('media', 'Backend\MediaController');

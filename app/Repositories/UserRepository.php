@@ -12,6 +12,7 @@ use Auth;
 use Illuminate\Support\Facades\Session;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use File;
 
 
 class UserRepository extends BaseRepository
@@ -59,7 +60,7 @@ class UserRepository extends BaseRepository
 
     public function editUser($request, $id)
     {
-        $data = $this->checkImg($request);
+        $data = $this->checkImg($request,$id);
         if ($this->checkPassword($request['current-password'])) {
             if ($request['password'] != '') {
                 $this->update($data, $id);
@@ -73,10 +74,16 @@ class UserRepository extends BaseRepository
         }
     }
 
-    public function checkImg($request) {
+    public function checkImg($request, $id) {
         if($request->hasFile('avatar')) {
+            $url = '/backend/images/upload/';
+
+            $image = \DB::table('users')->where('id', $id)->first();
+            $file= $image->avatar;
+            $filename = public_path().$url.$file;
+            File::delete($filename);
+
             $avatar = $request->file('avatar');
-            $url = 'backend/images/upload';
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
             $data = array(
                 'name' => $request['name'],

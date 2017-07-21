@@ -22,7 +22,6 @@ Route::get('/404',function(){
 	 return view('errors.404');
 });
 
-
 Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
 	Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 	Route::resource('rooms', 'Backend\RoomsController');

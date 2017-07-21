@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'username',
+        'name',
         'email',
         'password',
         'role',
@@ -114,7 +114,7 @@ class UserRepository extends BaseRepository
         $data = array(
             '_token' => $request['_token'],
             'username' => $request['username'],
-            'username' => $request['username'],
+            'email' => $request['email'],
             'password' => bcrypt($request['password']),
             'role' => 2);
         $this->create($data);

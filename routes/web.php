@@ -15,7 +15,6 @@
 //     return view('welcome');
 // });
 
-
 Auth::routes();
 Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 
@@ -31,5 +30,6 @@ Route::group(['prefix' => 'public'],function(){
 	Route::post('registerUser', 'Frontend\RegisterController@store')->name('register_user');
 	Route::get('loginChat', 'Frontend\LoginChatController@index')->name('loginChat');
 	Route::post('submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');
-	Route::get('homeChat', 'Frontend\Controller@index')->name('homeChat');
+	Route::get('homeChat', 'Frontend\ManagerController@index')->name('homeChat');
 });
+

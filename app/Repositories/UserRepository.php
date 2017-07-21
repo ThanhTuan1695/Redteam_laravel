@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'name',
+        'username',
         'email',
         'password',
         'role',
@@ -44,7 +44,7 @@ class UserRepository extends BaseRepository
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
             $data = array(
                 '_token' => $request['_token'],
-                'name' => $request['name'],
+                'username' => $request['username'],
                 'email' => $request['email'],
                 'password' => bcrypt($request['password']),
                 'avatar' => $imagename,
@@ -86,13 +86,13 @@ class UserRepository extends BaseRepository
             $avatar = $request->file('avatar');
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
             $data = array(
-                'name' => $request['name'],
+                'username' => $request['username'],
                 'avatar' => $imagename);
 
             $avatar->move(public_path($url), $imagename);
             return $data;
         } else {
-            $data = array('name' => $request['name']);
+            $data = array('username' => $request['username']);
             return $data;
         }
     }
@@ -111,13 +111,14 @@ class UserRepository extends BaseRepository
 
     public function registerUser($request)
     {
+
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $url = 'backend/images/upload';
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
             $data = array(
                 '_token' => $request['_token'],
-                'name' => $request['name'],
+                'username' => $request['username'],
                 'email' => $request['email'],
                 'password' => bcrypt($request['password']),
                 'avatar' => $imagename,
@@ -130,14 +131,5 @@ class UserRepository extends BaseRepository
         $this->create($data);
         return true;
     }
-
-    // public function userLogin($request)
-    // {
-    //     if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 
 }

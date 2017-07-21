@@ -42,18 +42,17 @@ class UserRepository extends BaseRepository
             $avatar = $request->file('avatar');
             $url = 'backend/images/upload';
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
-            $data = array(
-                '_token' => $request['_token'],
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-                'avatar' => $imagename,
-                'role' => $request['role']);
-
             $avatar->move(public_path($url), $imagename);
         }else {
-            return false;
+            $imagename = null;
         }
+        $data = array(
+            '_token' => $request['_token'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'avatar' => $imagename,
+            'role' => $request['role']);
         $this->create($data);
         return true;
     }
@@ -115,18 +114,18 @@ class UserRepository extends BaseRepository
             $avatar = $request->file('avatar');
             $url = 'backend/images/upload';
             $imagename=time() . '.'. $avatar->getClientOriginalExtension();
-            $data = array(
-                '_token' => $request['_token'],
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-                'avatar' => $imagename,
-                'role' => 2);
-
+            
             $avatar->move(public_path($url), $imagename);
         }else {
-            return false;
+            $imagename = null;
         }
+        $data = array(
+            '_token' => $request['_token'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'avatar' => $imagename,
+            'role' => 2);
         $this->create($data);
         return true;
     }

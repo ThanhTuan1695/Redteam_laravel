@@ -57,7 +57,7 @@ class Rooms extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Models\User');
+        return $this->belongsToMany('App\Models\User','user_room','room_id','user_id');
     }
 
     public function messages()

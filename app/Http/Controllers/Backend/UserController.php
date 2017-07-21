@@ -76,7 +76,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
-
+ 
         if (empty($user)) {
             Flash::error('User not found');
 
@@ -99,10 +99,8 @@ class UserController extends Controller
 
         if (empty($user)) {
             Flash::error('user not found');
-
             return redirect(route('users.index'));
         }
-
         return view('backend.users.edit')->with('user', $user);
     }
 

@@ -9,7 +9,7 @@
     <tbody>
     @foreach($rooms as $room)
         <tr>
-            <td>{!! $room->name !!}</td>
+            <td>{{ $room->name }}</td>
             <td>{!! $room->belongtoUser->name !!}</td>
             <td>{!! str_limit($room->description ,60)!!}</td>
             <td>{!! $room->type !!}</td>

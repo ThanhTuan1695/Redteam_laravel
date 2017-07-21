@@ -80,7 +80,6 @@ class RoomsController extends AppBaseController
 
         if (empty($rooms)) {
             Flash::error('Rooms not found');
-
             return redirect(route('rooms.index'));
         }
 

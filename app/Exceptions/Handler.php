@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
             $exception = new NotFoundHttpException($e->getMessage(), $exception);
         }
 
-        if($exception->getStatusCode() == '404') {
+        if($exception->getCode() == '404') {
             return redirect('/');
         }
 

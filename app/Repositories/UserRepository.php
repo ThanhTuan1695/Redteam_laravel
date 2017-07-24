@@ -59,6 +59,7 @@ class UserRepository extends BaseRepository
 
     public function editUser($request, $id)
     {
+        
         $data = $this->checkImg($request,$id);
         if ($this->checkPassword($request['current-password'])) {
             if ($request['password'] != '') {

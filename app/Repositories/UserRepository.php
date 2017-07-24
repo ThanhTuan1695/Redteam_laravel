@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use File;
+use Flash;
 
 
 class UserRepository extends BaseRepository
@@ -46,6 +47,7 @@ class UserRepository extends BaseRepository
         }else {
             $imagename = null;
         }
+
         $data = array(
             '_token' => $request['_token'],
             'username' => $request['username'],
@@ -62,16 +64,31 @@ class UserRepository extends BaseRepository
         
         $data = $this->checkImg($request,$id);
         if ($this->checkPassword($request['current-password'])) {
+            if($this->isExistUser($data['username'])){
+               return false;
+            }
             if ($request['password'] != '') {
+
                 $this->update($data, $id);
                 $this->update(['password' => Hash::make($request['password'])], $id);
             } else {
+
                 $this->update($data, $id);
             }
             return true;
         } else {
             return false;
         }
+    }
+
+    public function isExistUser($username){
+        if($username == Auth::user()->username)
+            return false;
+        $count = \App\Models\User::where('username', $username)->count();
+        if ($count == 0){
+            return false;
+        }
+        return true;
     }
 
     public function checkImg($request, $id) {

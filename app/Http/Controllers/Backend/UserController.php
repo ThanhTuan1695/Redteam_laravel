@@ -55,6 +55,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
+        
         if($this->userRepository->addUser($request)){
             Flash::success('User create successfully.');
             return redirect(route('users.index'));
@@ -96,7 +97,7 @@ class UserController extends Controller
     public function edit($id)
     {   
         $user = $this->userRepository->findWithoutFail($id);
-
+    
         if (empty($user)) {
             Flash::error('user not found');
             return redirect(route('users.index'));
@@ -119,7 +120,8 @@ class UserController extends Controller
             // Flash::success('User'.config('m_const_config.update_success'));
             return redirect(route('users.index'));
         }else {
-            Flash::error('Username or password is fail');
+            Flash::error('Username is exist.');
+
             return $this->edit($id);
              
         }

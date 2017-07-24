@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'username' => 'min:3|max:50|unique:users',
+            'username' => 'min:3|max:50',
             'current-password' => 'required|min:6|max:10',
             'avatar' => 'mimes:jpeg,jpg,png|max:8192'
         ];

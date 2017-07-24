@@ -36,5 +36,6 @@ Route::group(['prefix' => 'public'],function(){
 	Route::get('loginChat', 'Frontend\LoginChatController@index')->name('loginChat');
 	Route::post('submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');
 	Route::get('homeChat', 'Frontend\ManagerController@index')->name('homeChat');
+	Route::get('logoutPublic', 'Frontend\ManagerController@logoutPublic')->name('logoutPublic');
 });
 

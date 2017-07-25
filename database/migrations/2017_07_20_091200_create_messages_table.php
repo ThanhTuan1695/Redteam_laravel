@@ -18,10 +18,8 @@ class CreateMessagesTable extends Migration
             $table->string('content');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('room_id')->unsigned()->default(0);
-            $table->integer('single_id')->unsigned()->default(0);
-            $table->foreign('room_id')->references('id')->on('rooms');
-            $table->foreign('single_id')->references('id')->on('user_user');
+            $table->integer('messageable_id');
+            $table->string('messageable_type');
             $table->timestamps();
             $table->softDeletes();
         });

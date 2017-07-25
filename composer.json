@@ -13,7 +13,8 @@
         "infyomlabs/adminlte-templates": "5.4.x-dev",
         "infyomlabs/swagger-generator": "dev-master",
         "jlapp/swaggervel": "dev-master",
-        "doctrine/dbal": "~2.3"
+        "doctrine/dbal": "~2.3",
+        "unicodeveloper/laravel-emoji": "1.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

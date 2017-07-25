@@ -10,7 +10,7 @@
                     <img src="{{ url('/backend/images/upload/'.Auth::user()->avatar) }}" class="img-circle"
                      alt="User Image"/>
                 @else
-                    <img src="{{ url('/backend/no_image.jpg') }}" 
+                    < src="{{ url('/backend/no_image.jpg') }}"
                     class = "img-circle" id ="User Image"></img><br>
                 @endif
             </div>

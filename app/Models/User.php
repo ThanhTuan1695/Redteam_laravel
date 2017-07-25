@@ -36,5 +36,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Rooms', 'user_room','user_id', 'room_id');
     }
-    
+
+    public function messages()
+    {
+        return $this->morphMany('App\Models\Messages', 'mesageable');
+    }
 }

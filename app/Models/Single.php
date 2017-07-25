@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class Single extends Model
 
     public function messages()
     {
-        return $this->morphMany('App\Models\Messages', 'mesageable');
+        return $this->morphMany('App\Models\Messages', 'messageable');
     }
 }

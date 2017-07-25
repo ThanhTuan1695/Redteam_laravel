@@ -23,8 +23,8 @@ class Messages extends Model
     public $fillable = [
         'content',
         'user_id',
-        'room_id',
-        'single_id'
+        'messageable_id',
+        'messageable_type'
     ];
 
     /**
@@ -35,8 +35,8 @@ class Messages extends Model
     protected $casts = [
         'content' => 'string',
         'user_id' => 'integer',
-        'room_id' => 'integer',
-        'single_id' => 'integer'
+        'messageable_id' => 'integer',
+        'messageable_type' => 'string'
     ];
 
     /**
@@ -51,5 +51,9 @@ class Messages extends Model
     public function messageable()
     {
         return $this->morphTo();
+    }
+
+    public function user(){
+        return $this->belongsTo('App\Models\User','user_id');
     }
 }

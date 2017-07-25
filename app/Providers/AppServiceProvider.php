@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
                 } else {
                     $listRoomPL = DB::table('rooms')->get();
                 }
-                $listUserPL = DB::table('users')->get();
+                $listUserPL = DB::table('users')->orderBy('username', 'asc')->get();
                 $view->with('listRoomPL', $listRoomPL);
                 $view->with('listUserPL', $listUserPL);
             }

@@ -24,4 +24,14 @@ class ManagerController extends Controller
 
         return redirect('/public/loginChat');
     }
+
+    public function chatUser($id)
+    {
+        return view('frontend.manager.chatUser');
+    }
+
+    public function chatRoom($id)
+    {
+        return view('frontend.manager.chatRoom');
+    }
 }

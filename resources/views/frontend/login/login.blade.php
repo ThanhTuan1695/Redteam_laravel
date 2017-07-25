@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="content">
-        <div class="container">
+    <div class="content" style="margin-right:150px;">
+        <div class="container" >
             <form id="contact" action="{{ route('submitLogin') }}" method="post">
                 @include('flash::message')
                 @include('adminlte-templates::common.errors')

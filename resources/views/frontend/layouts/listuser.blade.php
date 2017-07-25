@@ -1,6 +1,6 @@
 @foreach($listUserPL as $listUserPL)
 <li class="{{ Request::is('rooms*') ? 'active' : '' }}">
-    <a href=""><i class="fa fa-user"></i>
+    <a href="{!! route('chatUser',$listUserPL->id) !!}"><i class="fa fa-user"></i>
         <span>
             {{ $listUserPL->username }}
             @if($listUserPL->role == '1')

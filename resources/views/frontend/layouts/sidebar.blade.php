@@ -40,7 +40,7 @@
         
     </section>
     <!-- /.sidebar -->
-    <div class="pull-right">
+    <div class="pull-right" style="margin:17px;">
         <a href="{!! route('logoutPublic') !!}" class="btn btn-default btn-flat"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Sign out

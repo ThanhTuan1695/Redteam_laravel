@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="content">
+    <div class="content"  style="margin-right:150px;">
         <div class="container">
             <form id="contact" action="{{ route('register_user') }}" method="post" enctype="multipart/form-data">
                 @include('flash::message')

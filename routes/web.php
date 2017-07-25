@@ -39,6 +39,8 @@ Route::group(['prefix' => 'public'],function(){
 	Route::get('logoutPublic', 'Frontend\ManagerController@logoutPublic')->name('logoutPublic');
 	Route::get('chatUser/{id}', 'Frontend\ChatSingleController@index')->name('chatUser');
 	Route::get('chatRoom/{id}', 'Frontend\ManagerController@chatRoom')->name('chatRoom');
-	Route::post('sendmessage', 'Frontend\ChatSingleController@sendMessage')->name('addchat');
+	Route::post('sendmessageuser', 'Frontend\ChatSingleController@sendMessage')->name('addchat');
+	Route::get('/sendmessage', 'Frontend\ManagerController@sendMessage');
+
 });
 

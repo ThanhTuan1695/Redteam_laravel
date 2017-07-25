@@ -25,12 +25,11 @@ class AppServiceProvider extends ServiceProvider
                     $user_id = $currentUser->id;
                     $room_id = DB::table('user_room')->select('room_id')->where('user_id', $user_id)->get();
                     $arr = array_pluck($room_id, 'room_id');
-
                     $listRoomPL = DB::table('rooms')->whereIn('id', $arr)->orWhere('type', 'public')->get();
                 } else {
                     $listRoomPL = DB::table('rooms')->get();
                 }
-                $listUserPL = DB::table('users')->get();
+                $listUserPL = DB::table('users')->orderBy('username', 'asc')->get();
                 $view->with('listRoomPL', $listRoomPL);
                 $view->with('listUserPL', $listUserPL);
             }

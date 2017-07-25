@@ -6,7 +6,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                @if (file_exists(public_path('/backend/images/upload/'.Auth::user()->avatar)))
+                @if (Auth::user()->avatar != null && file_exists(public_path('/backend/images/upload/'.Auth::user()->avatar))) 
                     <img src="{{ url('/backend/images/upload/'.Auth::user()->avatar) }}" class="img-circle"
                      alt="User Image"/>
                 @else
@@ -40,7 +40,7 @@
         
     </section>
     <!-- /.sidebar -->
-    <div class="pull-right">
+    <div class="pull-right" style="margin:17px;">
         <a href="{!! route('logoutPublic') !!}" class="btn btn-default btn-flat"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Sign out

@@ -8,10 +8,10 @@
             <div class="pull-left image">
                 @if (Auth::user()->avatar != null && file_exists(public_path('/backend/images/upload/'.Auth::user()->avatar))) 
                     <img src="{{ url('/backend/images/upload/'.Auth::user()->avatar) }}" class="img-circle"
-                     alt="User Image"/>
+                     alt="User Image" />
                 @else
-                    < src="{{ url('/backend/no_image.jpg') }}"
-                    class = "img-circle" id ="User Image"></img><br>
+                    <img src="{{ url('/backend/no_image.jpg') }}"
+                    class = "img-circle" id ="User Image" /><br>
                 @endif
             </div>
             <div class="pull-left info">
@@ -28,12 +28,12 @@
         <!-- Sidebar Menu -->
 
         <ul class="sidebar-menu" style="height:320px;
-        overflow-x: hiden;overflow-y: auto;word-wrap:break-word;">
+        overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             @include('frontend.layouts.menu')
         </ul>
         <!-- /.sidebar-menu -->
         <ul class="sidebar-menu" style="height:200px;
-        overflow-x: hiden;overflow-y: auto;word-wrap:break-word;">
+        overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             @include('frontend.layouts.listuser')
         </ul>
 

@@ -62,6 +62,6 @@ class Rooms extends Model
 
     public function messages()
     {
-        return $this->morphMany('App\Models\Messages', 'mesageable');
+        return $this->morphMany('App\Models\Messages', 'messageable');
     }
 }

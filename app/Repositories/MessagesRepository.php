@@ -13,8 +13,8 @@ class MessagesRepository extends BaseRepository
     protected $fieldSearchable = [
         'content',
         'user_id',
-        'room_id',
-        'single_id'
+        'messageable_id',
+        'messageable_type'
     ];
 
     /**

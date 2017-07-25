@@ -6,7 +6,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                @if (file_exists(public_path('/backend/images/upload/'.Auth::user()->avatar)))
+                @if (Auth::user()->avatar != null && file_exists(public_path('/backend/images/upload/'.Auth::user()->avatar))) 
                     <img src="{{ url('/backend/images/upload/'.Auth::user()->avatar) }}" class="img-circle"
                      alt="User Image"/>
                 @else

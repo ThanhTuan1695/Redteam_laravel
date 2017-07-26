@@ -29,7 +29,7 @@ class MessagesRepository extends BaseRepository
 
     public function insertChat($data)  
     {
-        $user_user = Single::find($data['idCap']);
+        $user_user = Single::find($data['id']);
         $mes = new Messages();
         $mes->user_id = Auth::user()->id;
         $mes->content = $data['messages'];

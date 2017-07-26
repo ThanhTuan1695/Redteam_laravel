@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use App\Models\Rooms;
-use App\Models\Messages;
-use Illuminate\Contracts\Auth\Guard;
 use Auth;
+use DB;
+use App\Models\Messages;
 use LRedis;
-use Reponse;
 
 class RoomController extends Controller
 {
@@ -25,17 +23,25 @@ class RoomController extends Controller
         if ($check->isEmpty()) {
             DB::table('user_room')->insert($data);
         }
-
-        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room'));
+        $type = 'room';
+        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room','type'));
     }
-
     public function sendMessage(Request $request)
     {
         $content = e($request->input('message'));
         $data = new Messages(['content' => $content, 'user_id' => Auth::user()->id]);
-        Rooms::find($request->input('room_id'))->messages()->save($data);
+        Rooms::find($request->input('id'))->messages()->save($data);
         $message2 = Messages::with('user')->orderBy('id', 'desc')->first();
-        $redis = LRedis::connection();
-        $redis->publish('message', $message2);
+        $data = [
+            'content' => \App\Helpers\Emojis::Smilify($content),
+            'avatar' => $message2->user->avatar,
+            'created_at' => $message2->created_at,
+            'username' => $message2->user->username,
+            'messagesType' => 'room',
+            'idChannel' => $request->input('id'),
+        ];
+
+        LRedis::publish('message', json_encode($data));
+
     }
 }

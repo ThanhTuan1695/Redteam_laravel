@@ -3,7 +3,7 @@ namespace App\Helpers;
 
 class Emojis
 {
-    static function Smilify(&$subject)
+    static function Smilify($subject)
     {
 
         $smilies = array(
@@ -35,7 +35,7 @@ class Emojis
             $url = '/emoji/' . $imgName . '.png';
             array_push($replace, '<img src="' . $url . '" alt="' . $imgName . '"  style="width : 20px ; height : 20px;" " />');
         }
-        $subject = str_replace(array_keys($smilies), $replace, $subject);
+        return str_replace(array_keys($smilies), $replace, $subject);
 
     }
 }

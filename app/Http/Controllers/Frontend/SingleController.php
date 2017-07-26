@@ -40,19 +40,29 @@ class SingleController extends Controller
                     ])->first();   
         $mes = $user_user->messages;
         $type ="user-user";
-         return view('frontend.single.chatUser',compact('user','mes','type'))->with('idCap',$user_user->id);
+         return view('frontend.single.chatUser',compact('user','mes','type'))->with('id',$user_user->id);
 
     }
 
     public function sendMessage(Request $req)        
     {
-
         $data =[
                     'messages' => $req['message'],
-                    'idCap'    => $req['idCap']
+                    'id'    => $req['idCap']
                 ];
+
         $this->messagesRepository->insertChat($data);
-        $data['messagesType'] = 'user-user';
+
+        $message = Messages::with('user')->orderBy('id', 'desc')->first();
+        $data = [
+            'content' => \App\Helpers\Emojis::Smilify($req['message']),
+            'avatar' => $message->user->avatar,
+            'created_at' => $message->created_at,
+            'username' => $message->user->username,
+            'messagesType' => 'user-user',
+            'idChannel' => $req['idCap'],
+        ];
+
         LRedis::publish('message', json_encode($data));
         return response()->json([]);
     }

@@ -15,10 +15,10 @@ io.on('connection', function (socket) {
     console.log("mew message in queue "+ message + "channel");
     data = JSON.parse(message);
     console.log(channel + ":" + data.messagesType+
-     ":"+ data.idCap);
-    socket.emit(channel, message);
+     ":"+ data.idChannel);
+    // socket.emit(channel, message);
     socket.emit(channel+ ":" + data.messagesType+
-     ":"+ data.idCap,data);
+     ":"+ data.idChannel,data);
 
   });
 

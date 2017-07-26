@@ -35,7 +35,7 @@
             <div class="input-message-container">
                 <form action="" id="form-sub">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="idCap" id="idCap" value="{{ $idCap }}">
+                    <input type="hidden" name="idCap" id="idCap" value="{{ $id }}">
                     <input type="button" class="display-media " name="media" value="media">
                     <textarea cols="1" rows="1" name="message" id="message-content" class="form-control" placeholder="Message"
                     style="width:835px;float:left;resize:none;border-radius:5px"></textarea>
@@ -87,7 +87,7 @@
                                     $("#message-content").val('');
                                 },
                                 error: function (data) {
-                                    console.log(data);
+                                    console.log('error');
                                 }
                             });
                             return false;
@@ -96,25 +96,14 @@
                             return false;
                         }    
                     });
-
-                        function imageExists(url, callback) {
-                          var img = new Image();
-                          img.onload = function() { callback(true); };
-                          img.onerror = function() { callback(false); };
-                          img.src = url;
-                        }
-
-                       
-                        var imageUrl = window.location.origin + "/backend/images/upload/" + "{{Auth::user()->avatar}}";
-                        imageExists(imageUrl, function(exists) {
-                            if (exists) {
-                               img = "<img style='max-width:45px;height:auto;' class='img-circle' src='"+imageUrl+"'/>";
-                               
-                            }else{
-                                img ="<img style='max-width:45px;height:auto;' class='img-circle' src='{{ url("/backend/no_image.jpg") }}' />";
-                                
+                        function getImage (name){
+                            if(name == null)
+                                    return "<img style='max-width:45px;height:auto;' class='img-circle' src='{{ url("/backend/no_image.jpg") }}' />";
+                            else{
+                                name = "{{url("/backend/images/upload")}}" + "/"+name;
+                                return "<img style='max-width:45px;height:auto;' class='img-circle' src='"+name+"'/>";
                             }
-                        });
+                        }
                         var day = new Date();
                         if (day.getMonth()< 9) {
                             month = "0"+(day.getMonth() +1);
@@ -124,16 +113,14 @@
 
                         var formatdate = day.getFullYear()
                                         + "-"+month+ "-"+day.getDate()+ " "+day.getHours()+ ":"+day.getMinutes()+":"+day.getSeconds();
-                      
-                        socket.on("message:{{$type}}:{{$idCap}}",function(data){    
-                              $("#messages").append("<li>"+img
-                                +"<strong>"
-                                +"{{Auth::user()->username}}"
-                                +":</strong>"
-                                + formatdate
-                                +"<p>"
-                                +data.messages
-                                +"</p></li>" );
+
+                    socket.on("message:{{$type}}:{{$id}}",function(data){
+                        var message = data;
+                        var imageUrl =  message.avatar;
+                        var img = getImage(imageUrl);
+                        $( "#messages" ).append( img+"<span><strong>"+message.username+" :</strong> "+message.created_at.date+
+                                "</span><p>"+message.content +"</p>" );
+                        //auto bottom scroll
                     });
                     var container = $('#all-mess');
                     container.scrollTop(container.get(0).scrollHeight);

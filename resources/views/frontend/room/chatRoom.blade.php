@@ -9,7 +9,7 @@
                     <a href="{{ route('chooseUser', $id) }}">Add Member</a>
                 </button>
             </div>
-            <div id="all_messages" style="height:580px;overflow-x: hiden;overflow-y: auto;word-wrap:break-word;" >
+            <div id="all_messages" style="height:580px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;" >
                 <div>
                 @foreach($messages as $messages)
                     @if ($messages->user->avatar != null && file_exists(public_path('/backend/images/upload/'.$messages->user->avatar))) 
@@ -21,7 +21,7 @@
                     @endif
                      <span style="font-weight:bold">{!! $messages->user->username !!} :</span> 
                     <span>{!! $messages->created_at !!}</span> 
-                    <p>{!! $messages->content !!}</p>
+                    <p>{!! \App\Helpers\Emojis::Smilify($messages->content) !!}</p>
                 @endforeach
                 </div>
                 <div id="messages"></div>
@@ -79,7 +79,7 @@
                     url: '/public/sendmessage',
                     data: {
                         'message' : $('#message-content').val(),
-                        'room_id' : $('#room_id').val(),
+                        'id' : $('#room_id').val(),
                     }
                 });
                 //reset input & focus
@@ -87,12 +87,12 @@
                 $("#message-content").focus();
 
                 request.done(function (response, textStatus, jqXHR){
-                    //console.log("Response: " + response);
+                    console.log("Response: " + response);
                 });
 
                 // Callback handler that will be called on failure
                 request.fail(function (jqXHR, textStatus, errorThrown){
-                    //console.error("error");
+                    console.error(errorThrown);
                 });
 
             });
@@ -112,10 +112,12 @@
                 img ="<img style='max-width:45px;height:auto;' class='img-circle' src='{{ url("/backend/no_image.jpg") }}' />";
                 }
             });
+
             var socket = io.connect('http://localhost:8890');
-            socket.on('message', function (data) {
-                var message = JSON.parse(data);
-                $( "#messages" ).append( img+"<span><strong>"+message.user.username+" :</strong> "+message.created_at+
+            socket.on("message:{{$type}}:{{$id}}",function(data){
+                var message = data;
+                console.log(data);
+                $( "#messages" ).append( img+"<span><strong>"+message.username+" :</strong> "+message.created_at.date+
                 "</span><p>"+message.content +"</p>" );
                 //auto bottom scroll
             });

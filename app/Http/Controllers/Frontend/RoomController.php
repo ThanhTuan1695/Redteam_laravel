@@ -31,12 +31,18 @@ class RoomController extends Controller
         $content = e($request->input('message'));
         $data = new Messages(['content' => $content, 'user_id' => Auth::user()->id]);
         Rooms::find($request->input('id'))->messages()->save($data);
-        $message2 = Messages::with('user')->orderBy('id', 'desc')->first();
+        $message = Messages::with('user')->orderBy('id', 'desc')->first();
+        if(file_exists( public_path() .'/backend/images/upload/'.$message->user->avatar) ){
+            $avatar = $message->user->avatar;
+        }
+        else {
+            $avatar = null;
+        }
         $data = [
             'content' => \App\Helpers\Emojis::Smilify($content),
-            'avatar' => $message2->user->avatar,
-            'created_at' => $message2->created_at,
-            'username' => $message2->user->username,
+            'avatar' => $avatar,
+            'created_at' => $message->created_at,
+            'username' => $message->user->username,
             'messagesType' => 'room',
             'idChannel' => $request->input('id'),
         ];

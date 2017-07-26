@@ -54,9 +54,16 @@ class SingleController extends Controller
         $this->messagesRepository->insertChat($data);
 
         $message = Messages::with('user')->orderBy('id', 'desc')->first();
+        if(file_exists( public_path() .'/backend/images/upload/'.$message->user->avatar) ){
+            $avatar = $message->user->avatar;
+        }
+        else {
+            $avatar = null;
+        }
+
         $data = [
             'content' => \App\Helpers\Emojis::Smilify($req['message']),
-            'avatar' => $message->user->avatar,
+            'avatar' => $avatar,
             'created_at' => $message->created_at,
             'username' => $message->user->username,
             'messagesType' => 'user-user',

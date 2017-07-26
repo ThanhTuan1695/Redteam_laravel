@@ -16,6 +16,7 @@ class CreateMediaTable extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('type');
             $table->string('url');
             $table->integer('mgs_id')->unsigned();
             $table->foreign('mgs_id')->references('id')->on('messages');

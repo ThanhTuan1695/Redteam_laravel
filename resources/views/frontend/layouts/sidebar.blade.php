@@ -29,12 +29,12 @@
 
         <ul class="sidebar-menu" style="height:320px;
         overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
-            @include('frontend.layouts.menu')
+            @widget('listRooms')
         </ul>
         <!-- /.sidebar-menu -->
         <ul class="sidebar-menu" style="height:200px;
         overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
-            @include('frontend.layouts.listuser')
+            @widget('listUsers')
         </ul>
 
         

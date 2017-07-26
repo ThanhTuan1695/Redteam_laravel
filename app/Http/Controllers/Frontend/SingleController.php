@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use LRedis;
 use Reponse;
 
-class ChatSingleController extends Controller
+class SingleController extends Controller
 {
     private $userRepository;
     private $messagesRepository;
@@ -40,7 +40,8 @@ class ChatSingleController extends Controller
                     ])->first();   
         $mes = $user_user->messages;
         $type ="user-user";
-         return view('frontend.manager.chatUser',compact('user','mes','type'))->with('idCap',$user_user->id);
+         return view('frontend.single.chatUser',compact('user','mes','type'))->with('idCap',$user_user->id);
+
     }
 
     public function sendMessage(Request $req)        

@@ -23,7 +23,8 @@ class Media extends Model
     public $fillable = [
         'name',
         'url',
-        'mgs_id'
+        'mgs_id',
+        'type',
     ];
 
     /**

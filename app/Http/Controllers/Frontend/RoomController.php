@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Repositories\MessagesRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Rooms;
@@ -12,6 +13,14 @@ use LRedis;
 
 class RoomController extends Controller
 {
+    private $messagesRepository;
+
+
+    public function __construct( MessagesRepository $mesRepo)
+    {
+        $this->messagesRepository = $mesRepo;
+    }
+
     public function index($id)
     {
         $get_room = Rooms::find($id);
@@ -24,30 +33,18 @@ class RoomController extends Controller
             DB::table('user_room')->insert($data);
         }
         $type = 'room';
-        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room','type'));
+        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type'));
     }
+
     public function sendMessage(Request $request)
     {
-        $content = e($request->input('message'));
-        $data = new Messages(['content' => $content, 'user_id' => Auth::user()->id]);
-        Rooms::find($request->input('id'))->messages()->save($data);
-        $message = Messages::with('user')->orderBy('id', 'desc')->first();
-        if(file_exists( public_path() .'/backend/images/upload/'.$message->user->avatar) ){
-            $avatar = $message->user->avatar;
-        }
-        else {
-            $avatar = null;
-        }
         $data = [
-            'content' => \App\Helpers\Emojis::Smilify($content),
-            'avatar' => $avatar,
-            'created_at' => $message->created_at,
-            'username' => $message->user->username,
-            'messagesType' => 'room',
-            'idChannel' => $request->input('id'),
+            'messages' => $request['message'],
+            'id' => $request['id']
         ];
-
-        LRedis::publish('message', json_encode($data));
+        $room = \App\Models\Rooms::find($data['id']);
+        $this->messagesRepository->insertChat($data, $room);
+        $this->messagesRepository->sendMessage($data, 'room');
 
     }
 }

@@ -164,3 +164,6 @@ fieldset {
   vertical-align: top;
 }
 
+.client{
+  display: block;
+}

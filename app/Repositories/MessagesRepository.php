@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Messages;
-use App\Models\Single;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
+use LRedis;
+use App\Helpers\Youtube;
 
 class MessagesRepository extends BaseRepository
 {
@@ -27,12 +28,58 @@ class MessagesRepository extends BaseRepository
         return Messages::class;
     }
 
-    public function insertChat($data)  
+    public function insertChat($data, $object)
     {
-        $user_user = Single::find($data['id']);
         $mes = new Messages();
         $mes->user_id = Auth::user()->id;
         $mes->content = $data['messages'];
-        $bl= $user_user->messages()->save($mes);
+        $mes = $object->messages()->save($mes);
+        $listYTB = Youtube::getLinkYTB($data['messages']);
+        if ($listYTB != null) {
+            foreach ($listYTB as $ytbUrl) {
+                $idYTB = Youtube::youtube_id_from_url($ytbUrl);
+                $media = new \App\Models\Media();
+                $media->name = 'youtube';
+                $media->url = $idYTB;
+                $media->type = 'youtube';
+                $mes->media()->save($media);
+            }
+        }
+    }
+
+    public function sendMessage($data, $type)
+    {
+        $message = \App\Models\Messages::with('user')->orderBy('id', 'desc')->first();
+        if (file_exists(public_path() . '/backend/images/upload/' . $message->user->avatar)) {
+            $avatar = $message->user->avatar;
+        } else {
+            $avatar = null;
+        }
+
+        if ($avatar == null)
+            $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='".url('/backend/no_image.jpg'). "' />";
+        else {
+            $img =  "<img style='max-width:45px;height:auto;' class='img-circle' src='" .url('/backend/images/upload/'.$avatar). "'/>";
+        }
+        $content = "<div class='client'>"
+                    . $img .
+                    "<span style='font-weight:bold'>".Auth::user()->username."</span>
+                    <span>$message->creat_at</span>
+                    <p>". \App\Helpers\Emojis::Smilify($message->content)." </p>";
+        foreach ($message->media as $media ){
+            $content.= \App\Helpers\Youtube::embededYTB($media->url);
+        }
+        $content.="</div>";
+        
+        $data = [
+            'content' => $content,
+//            'avatar' => $avatar,
+//            'created_at' => $message->created_at,
+//            'username' => $message->user->username,
+            'messagesType' => $type,
+            'idChannel' => $data['id'],
+        ];
+        LRedis::publish('message', json_encode($data));
+        return response()->json([]);
     }
 }

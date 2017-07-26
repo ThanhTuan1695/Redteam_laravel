@@ -57,4 +57,8 @@ class Messages extends Model
     public function user(){
         return $this->belongsTo('App\Models\User','user_id');
     }
+
+    public function media(){
+        return $this->hasMany('App\Models\Media','mgs_id');
+    }
 }

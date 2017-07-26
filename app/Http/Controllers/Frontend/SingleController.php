@@ -13,7 +13,7 @@ use DB;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
-class ChatSingleController extends Controller
+class SingleController extends Controller
 {
     private $userRepository;
     private $messagesRepository;
@@ -35,7 +35,7 @@ class ChatSingleController extends Controller
                         ['user_first_id','=',Auth::user()->id],
                     ])->first();   
         $mes = $user_user->messages;
-         return view('frontend.manager.chatUser',compact('user','mes'))->with('idCap',$user_user->id);
+         return view('frontend.single.chatUser',compact('user','mes'))->with('idCap',$user_user->id);
     }
 
     public function sendMessage(Request $req)        

@@ -18,10 +18,12 @@
                 @if (Auth::guest())
                 <p>InfyOm</p>
                 @else
-                    <p>{{ Auth::user()->username}}</p>
+                    <a href="{{ route('profileUser') }}" style="font-size:14px">{{ Auth::user()->username}}</a>
                 @endif
                 <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <div>
+                    <i class="fa fa-circle text-success"></i> Online
+                </div>
             </div>
         </div>
 

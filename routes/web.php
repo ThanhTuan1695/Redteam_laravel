@@ -40,5 +40,9 @@ Route::group(['prefix' => 'public'],function(){
 	Route::get('chatUser/{id}', 'Frontend\ManagerController@chatUser')->name('chatUser');
 	Route::get('chatRoom/{id}', 'Frontend\ManagerController@chatRoom')->name('chatRoom');
 	Route::get('/sendmessage', 'Frontend\ManagerController@sendMessage');
+	Route::get('chooseUser/{id}', 'Frontend\ManagerController@chooseUser')->name('chooseUser');
+	Route::get('addUser/{id}', 'Frontend\ManagerController@addUser')->name('addUser');
+	Route::get('profileUser', 'Frontend\ManagerController@profileUser')->name('profileUser');
+	Route::post('updateProfile/{id}', 'Frontend\ManagerController@updateProfile')->name('updateProfile');
 });
 

@@ -5,7 +5,11 @@
         <div class="container " style="float:left; max-width:1200px">
             <div style="margin-bottom:20px">
                 <h3 style="display:inline"><span>@</span>{!! $get_room->name !!}</h3>
-                <button style="float:right" type="submit" class="btn btn-default"><a href="">Add Member</a></button>
+                @if(Auth::user()->id== $get_room->user_id)
+                    <a href="{!! route('chooseUser', $id) !!}">
+                        <button style="float:right" type="submit" class="btn btn-default">Add Member</button>
+                    </a>
+                @endif
             </div>
             <div id="all_messages" style="height:580px;overflow-x: hiden;overflow-y: auto;word-wrap:break-word;" >
                 <div>
@@ -72,20 +76,33 @@
 
                         });
                     });
+                    function imageExists(url, callback) {
+                        var img = new Image();
+                        img.onload = function() { callback(true); };
+                        img.onerror = function() { callback(false); };
+                        img.src = url;
+                        }
 
+                        var imageUrl = window.location.origin + "/backend/images/upload/" + "{{Auth::user()->avatar}}";
+                        imageExists(imageUrl, function(exists) {
+                        if (exists) {
+                        img = "<img style='max-width:45px;height:auto;' class='img-circle' src='"+imageUrl+"'/>";
+
+                        }else{
+                        img ="<img style='max-width:45px;height:auto;' class='img-circle' src='{{ url("/backend/no_image.jpg") }}' />";
+                        }
+                    });
                     var socket = io.connect('http://localhost:8890');
                     socket.on('message', function (data) {
                         var message = JSON.parse(data);
-                   
-                        $( "#messages" ).append( "<span><strong>"+message.user.username+" :</strong> "+message.created_at+
+                        $( "#messages" ).append( img+"<span><strong>"+message.user.username+" :</strong> "+message.created_at+
                         "</span><p>"+message.content +"</p>" );
-                        
                         //auto bottom scroll
-                        var container = $('#all_messages');
-                        container.scrollTop(container.get(0).scrollHeight);
-                        document.body.scrollTop = document.body.scrollHeight;
+                        
                     });
-
+                    var container = $('#all_messages');
+                    container.scrollTop(container.get(0).scrollHeight);
+                    document.body.scrollTop = document.body.scrollHeight;
                 </script>
             </div>
         </div>

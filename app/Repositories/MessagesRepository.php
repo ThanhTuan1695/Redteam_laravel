@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Messages;
+use App\Models\Single;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
 
 class MessagesRepository extends BaseRepository
@@ -13,8 +15,8 @@ class MessagesRepository extends BaseRepository
     protected $fieldSearchable = [
         'content',
         'user_id',
-        'room_id',
-        'single_id'
+        'messageable_id',
+        'messageable_type'
     ];
 
     /**
@@ -23,5 +25,14 @@ class MessagesRepository extends BaseRepository
     public function model()
     {
         return Messages::class;
+    }
+
+    public function insertChat($data)  
+    {
+        $user_user = Single::find($data['idCap']);
+        $mes = new Messages();
+        $mes->user_id = Auth::user()->id;
+        $mes->content = $data['messages'];
+        $bl= $user_user->messages()->save($mes);
     }
 }

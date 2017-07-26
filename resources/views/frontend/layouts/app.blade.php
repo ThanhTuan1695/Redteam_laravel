@@ -15,7 +15,6 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="lib/css/emoji.css" rel="stylesheet">
 
     @yield('css')
 </head>
@@ -41,12 +40,9 @@
 
     <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
-     <!-- ** Don't forget to Add jQuery here ** -->
-    <script src="lib/js/config.js"></script>
-    <script src="lib/js/util.js"></script>
-    <script src="lib/js/jquery.emojiarea.js"></script>
-    <script src="lib/js/emoji-picker.js"></script>
+    <!-- Chat  -->
     
+
     @yield('scripts')
 </body>
 </html>

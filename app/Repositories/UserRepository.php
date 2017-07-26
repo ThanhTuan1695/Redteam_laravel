@@ -147,5 +147,9 @@ class UserRepository extends BaseRepository
         $this->create($data);
         return true;
     }
+    public function getUserById($id)
+    {
+        return User::find($id);
+    }
 
 }

@@ -8,10 +8,10 @@
             <div class="pull-left image">
                 @if (Auth::user()->avatar != null && file_exists(public_path('/backend/images/upload/'.Auth::user()->avatar))) 
                     <img src="{{ url('/backend/images/upload/'.Auth::user()->avatar) }}" class="img-circle"
-                     alt="User Image"/>
+                     alt="User Image" />
                 @else
                     <img src="{{ url('/backend/no_image.jpg') }}"
-                         class = "img-circle" id ="User Image"/><br>
+                    class = "img-circle" id ="User Image" /><br>
                 @endif
             </div>
             <div class="pull-left info">
@@ -40,7 +40,7 @@
         
     </section>
     <!-- /.sidebar -->
-    <div class="pull-right" style="margin:17px;">
+    <div class="pull-right" style="margin:10px;">
         <a href="{!! route('logoutPublic') !!}" class="btn btn-default btn-flat"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Sign out

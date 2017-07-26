@@ -10,8 +10,12 @@ use App\Repositories\MessagesRepository;
 use App\Repositories\UserRepository;
 use Auth;
 use DB;
+use Illuminate\Broadcasting\connection;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Redis;
+use LRedis;
+use Reponse;
 
 class ChatSingleController extends Controller
 {
@@ -35,18 +39,21 @@ class ChatSingleController extends Controller
                         ['user_first_id','=',Auth::user()->id],
                     ])->first();   
         $mes = $user_user->messages;
-         return view('frontend.manager.chatUser',compact('user','mes'))->with('idCap',$user_user->id);
+        $type ="user-user";
+         return view('frontend.manager.chatUser',compact('user','mes','type'))->with('idCap',$user_user->id);
     }
 
     public function sendMessage(Request $req)        
     {
+
         $data =[
                     'messages' => $req['message'],
                     'idCap'    => $req['idCap']
                 ];
         $this->messagesRepository->insertChat($data);
-      
-      
+        $data['messagesType'] = 'user-user';
+        LRedis::publish('message', json_encode($data));
+        return response()->json([]);
     }
 
 

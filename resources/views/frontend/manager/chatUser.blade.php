@@ -3,7 +3,7 @@
 @section('content')
     <div class="content" >
         <div class="container " style="float:left; max-width:1300px">
-            <div style="height:610px;overflow-x: hiden;overflow-y: auto;word-wrap:break-word;" >
+            <div id="all-mess" style="height:610px;overflow-x: hiden;overflow-y: auto;word-wrap:break-word;" >
                  <h3 style="color: blue;"><a href="">@ {{$user->username}} </a></h3>
                  <div class="user-panel">
         
@@ -49,11 +49,11 @@
                 </form> 
             </div>
             @section('scripts')
-
+               <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
             <script type="text/javascript">
                 $(function() {
+                     var socket = io.connect('http://localhost:8890');
                      $('#form-sub').on('submit',function (e) {
-                        
                         var token = $("input[name='_token']").val();
                         var idCap = $("input[name='idCap']").val();
                         var msg = $("#message-content").val();
@@ -61,7 +61,7 @@
 
                             $.ajax({
                                 type: "POST",
-                                url: '/public/sendmessage',
+                                url: '/public/sendmessageuser',
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                                 data: {
                                     '_token': token,
@@ -71,10 +71,9 @@
                                 success: function (data) {
                                     console.log(data);
                                     $("#message-content").val('');
-
                                 },
                                 error: function (data) {
-                                    console.log(2);
+                                    console.log(data);
                                 }
                             });
                             return false;
@@ -84,9 +83,50 @@
                         }
                         
                     });
+
+                    function imageExists(url, callback) {
+                      var img = new Image();
+                      img.onload = function() { callback(true); };
+                      img.onerror = function() { callback(false); };
+                      img.src = url;
+                    }
+
+                   
+                    var imageUrl = window.location.origin + "/backend/images/upload/" + "{{Auth::user()->avatar}}";
+                    imageExists(imageUrl, function(exists) {
+                        if (exists) {
+                           img = "<img style='max-width:45px;height:auto;' class='img-circle' src='"+imageUrl+"'/>";
+                           
+                        }else{
+                            img ="<img style='max-width:45px;height:auto;' class='img-circle' src='{{ url("/backend/no_image.jpg") }}' />";
+                            
+                        }
+                    });
+                    var day = new Date();
+                    if (day.getMonth()< 9) {
+                        month = "0"+(day.getMonth() +1);
+                    }else{
+                        month = day.getMonth() +1;
+                    }
+
+                    var formatdate = day.getFullYear()
+                                    + "-"+month+ "-"+day.getDate()+ " "+day.getHours()+ ":"+day.getMinutes()+":"+day.getSeconds();
+                  
+                    socket.on("message:{{$type}}:{{$idCap}}",function(data){    
+                          $("#messages").append("<li>"+img
+                            +"<strong>"
+                            +"{{Auth::user()->username}}"
+                            +":</strong>"
+                            + formatdate
+                            +"<p>"
+                            +data.messages
+                            +"</p></li>" );
                 });
-                
+                var container = $('#all-mess');
+                container.scrollTop(container.get(0).scrollHeight);
+                document.body.scrollTop = document.body.scrollHeight;
             </script>
+
             @endsection
 
         </div>

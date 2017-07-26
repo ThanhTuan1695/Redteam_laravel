@@ -149,3 +149,18 @@ fieldset {
   width: 320px;
   background-color: #4CAF50;
 }
+.media {
+
+  background-color: red;
+}
+
+.content{
+  display: table;
+}
+
+.flex {
+  float: none;
+  display: table-cell;
+  vertical-align: top;
+}
+

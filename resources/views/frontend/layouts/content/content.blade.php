@@ -30,9 +30,8 @@
         <div class="input-message-container">
             <form action="" method="" id="form-sub">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control"
-                            placeholder="Message"
-                            style="width:600px;float:left;resize:none;border-radius:5px">
+                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control" placeholder="Message"
+                    style="width:600px;float:left;resize:none;border-radius:5px">
                 </textarea>
                 <label class="btn btn-default btn-file" style="display:inline; float:left;">
                     Choose File <input type="file" style="display: none;">

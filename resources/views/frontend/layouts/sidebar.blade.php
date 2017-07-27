@@ -26,15 +26,23 @@
                 </div>
             </div>
         </div>
-
+        <form action="{{ route('search') }}" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="search_ip" class="form-control" placeholder="Search..."/>
+                <span class="input-group-btn">
+                    <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
         <!-- Sidebar Menu -->
 
-        <ul class="sidebar-menu" style="height:320px;
+        <ul class="sidebar-menu" style="height:250px;
         overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             @widget('listRooms')
         </ul>
         <!-- /.sidebar-menu -->
-        <ul class="sidebar-menu" style="height:200px;
+        <ul class="sidebar-menu" style="height:210px;
         overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             @widget('listUsers')
         </ul>

@@ -75,5 +75,12 @@ class ManagerController extends Controller
              
         }
     }
+    
+    public function search(Request $request)
+    {
+        $search = "%".$request->search_ip."%";
+        $users = DB::table('users')->where('username', 'like', $search)->get();
+        dd($users);
+    }
 
 }

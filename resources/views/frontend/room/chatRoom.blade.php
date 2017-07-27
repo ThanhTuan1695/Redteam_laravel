@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @include('frontend.layouts.sidebar')
 @section('content')
-    <div class="content  col-lg-12 ">
+    <div class="content col-lg-12 ">
         <div class="messages-wrapper">
             <div class="name-conv" style="margin-bottom:20px">
                 <h3 style="display:inline"><span>@</span>{!! $get_room->name !!}</h3>
@@ -106,7 +106,6 @@
 
             var socket = io.connect('http://localhost:8890');
             socket.on("message:{{$type}}:{{$id}}", function (data) {
-                console.log(data.content);
                 $(".message-content").append(data.content);
                 //auto bottom scroll
             });

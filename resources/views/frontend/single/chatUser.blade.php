@@ -66,7 +66,6 @@
                 }
             });
 
-            var socket = io.connect('http://localhost:8890');
             $('#form-sub').on('submit', function (e) {
                 var token = $("input[name='_token']").val();
                 var msg = $("#message-content").val();
@@ -97,7 +96,6 @@
 
             var socket = io.connect('http://localhost:8890');
             socket.on("message:{{$type}}:{{$id}}", function (data) {
-                console.log(data.content);
                 $(".message-content").append(data.content);
                 //auto bottom scroll
             });

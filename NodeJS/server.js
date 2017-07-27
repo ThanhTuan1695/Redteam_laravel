@@ -14,7 +14,7 @@ io.on('connection', function (socket) {
   redisClient.on("message", function(channel, data) {
     console.log("mew message in queue "+ data + "channel");
     data = JSON.parse(data);
-    console.log(data);
+    //console.log(data);
     // socket.emit(channel, message);
     socket.emit(channel+ ":" + data.messagesType+
      ":"+ data.idChannel,data);

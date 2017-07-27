@@ -37,6 +37,12 @@ Route::group(['prefix' => 'public'],function(){
 	Route::post('submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');
 	Route::get('homeChat', 'Frontend\ManagerController@index')->name('homeChat');
 	Route::get('logoutPublic', 'Frontend\ManagerController@logoutPublic')->name('logoutPublic');
+
+	Route::get('chooseUser/{id}', 'Frontend\ManagerController@chooseUser')->name('chooseUser');
+	Route::get('addUser/{id}', 'Frontend\ManagerController@addUser')->name('addUser');
+	Route::get('profileUser', 'Frontend\ManagerController@profileUser')->name('profileUser');
+	Route::post('updateProfile/{id}', 'Frontend\ManagerController@updateProfile')->name('updateProfile');
+
 	Route::get('single/{id}', 'Frontend\SingleController@index')->name('chatUser');
 	Route::get('room/{id}', 'Frontend\RoomController@index')->name('chatRoom');
 	Route::post('sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');

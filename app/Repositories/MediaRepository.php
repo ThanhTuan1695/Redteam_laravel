@@ -13,7 +13,8 @@ class MediaRepository extends BaseRepository
     protected $fieldSearchable = [
         'name',
         'url',
-        'mgs_id'
+        'mgs_id',
+        'type'
     ];
 
     /**

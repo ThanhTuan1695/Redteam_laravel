@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Repositories\MessagesRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use App\Models\Rooms;
-use App\Models\Messages;
-use Illuminate\Contracts\Auth\Guard;
 use Auth;
+use DB;
+use App\Models\Messages;
 use LRedis;
-use Reponse;
 
 class RoomController extends Controller
 {
+    private $messagesRepository;
+
+
+    public function __construct( MessagesRepository $mesRepo)
+    {
+        $this->messagesRepository = $mesRepo;
+    }
+
     public function index($id)
     {
         $get_room = Rooms::find($id);
@@ -25,18 +32,20 @@ class RoomController extends Controller
         if ($check->isEmpty()) {
             DB::table('user_room')->insert($data);
         }
-
-        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room'));
+        $type = 'room';
+        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type'));
     }
 
     public function sendMessage(Request $request)
     {
-        $content = e($request->input('message'));
-        $data = new Messages(['content' => $content, 'user_id' => Auth::user()->id]);
-        Rooms::find($request->input('room_id'))->messages()->save($data);
-        $message2 = Messages::with('user')->orderBy('id', 'desc')->first();
-        $redis = LRedis::connection();
-        $redis->publish('message', $message2);
+        $data = [
+            'messages' => $request['message'],
+            'id' => $request['id']
+        ];
+        $room = \App\Models\Rooms::find($data['id']);
+        $this->messagesRepository->insertChat($data, $room);
+        $this->messagesRepository->sendMessage($data, 'room');
+
     }
 
     public function callback($id)

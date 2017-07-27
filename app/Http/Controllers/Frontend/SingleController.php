@@ -21,40 +21,38 @@ class SingleController extends Controller
 {
     private $userRepository;
     private $messagesRepository;
-    public function __construct(UserRepository $userRepo,MessagesRepository $mesRepo)
+
+    public function __construct(UserRepository $userRepo, MessagesRepository $mesRepo)
     {
         $this->userRepository = $userRepo;
         $this->messagesRepository = $mesRepo;
     }
+
     public function index($id)
     {
-
         $user = $this->userRepository->getUserById($id);
-        
         $user_user = Single::where([
-                        ['user_first_id','=',$user->id],
-                        ['user_second_id','=', Auth::user()->id]
-            ])->orwhere([
-                        ['user_second_id','=',$user->id ],
-                        ['user_first_id','=',Auth::user()->id],
-                    ])->first();   
-        $mes = $user_user->messages;
-        $type ="user-user";
-         return view('frontend.single.chatUser',compact('user','mes','type'))->with('idCap',$user_user->id);
-
+            ['user_first_id', '=', $user->id],
+            ['user_second_id', '=', Auth::user()->id]
+        ])->orwhere([
+            ['user_second_id', '=', $user->id],
+            ['user_first_id', '=', Auth::user()->id],
+        ])->first();
+        $messages = $user_user->messages;
+        $type = "user-user";
+        return view('frontend.single.chatUser', compact('user', 'messages', 'type'))->with('id', $user_user->id);
     }
 
-    public function sendMessage(Request $req)        
+    public function sendMessage(Request $request)
     {
-
-        $data =[
-                    'messages' => $req['message'],
-                    'idCap'    => $req['idCap']
-                ];
-        $this->messagesRepository->insertChat($data);
-        $data['messagesType'] = 'user-user';
-        LRedis::publish('message', json_encode($data));
-        return response()->json([]);
+        $data = [
+            'messages' => $request['message'],
+            'id' => $request['id']
+        ];
+        $user_user = \App\Models\Single::find($data['id']);
+        $this->messagesRepository->insertChat($data, $user_user);
+        $this->messagesRepository->sendMessage($data, 'user-user');
+        
     }
 
 

@@ -31,7 +31,11 @@ class SingleController extends Controller
 
     public function index($id)
     {
+
         $user = $this->userRepository->getUserById($id);  
+        if ($user == null) {
+            return back();
+        }
         $user_user = $this->singleRepository->findSingleId(Auth::user()->id,$id);
         if ($user_user == null) {
             $user_user = $this->singleRepository->addSingleId(Auth::user()->id,$id);
@@ -39,14 +43,16 @@ class SingleController extends Controller
         $messages = $user_user->messages;
         $type ="user-user";
         $avatarSender =Auth::user()->avatar;
-        return view('frontend.single.chatUser',compact('user','messages','type'))->with('id', $user_user->id);
+        $receiver_id = $id;
+        return view('frontend.single.chatUser',compact('user','messages','type','receiver_id'))->with('id', $user_user->id);
     }
 
     public function sendMessage(Request $request)
     {
         $data = [
             'messages' => $request['message'],
-            'id' => $request['id']
+            'id' => $request['id'],
+            
         ];
         $user_user = Single::find($data['id']);
         $this->messagesRepository->insertChat($data, $user_user);

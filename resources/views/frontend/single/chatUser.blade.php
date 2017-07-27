@@ -96,8 +96,33 @@
 
             var socket = io.connect('http://localhost:8890');
             socket.on("message:{{$type}}:{{$id}}", function (data) {
+                function notifyBrowser(title,desc,url){
+                    if (!Notification) {
+                        console.log('Desktop notifications not available in your browser..'); 
+                        return;
+                    }
+                    if (Notification.permission !== "granted"){
+                        Notification.requestPermission();
+                    }
+                    else {
+                        var notification = new Notification(title, {
+                            body: desc,
+                        });
+                        // Remove the notification from Notification Center when clicked.
+                        notification.onclick = function () {
+                            //window.location = ("url");  
+                            window.location.href = this.tag;   
+                        };
+                        notification.onclose = function () {
+                            console.log('Notification closed');
+                        };
+                    }
+                }
                 $(".message-content").append(data.content);
-                //auto bottom scroll
+                if (data.sender_id == {{$receiver_id}}) {
+                    var url ="/single/"+ data.sender_id;
+                    notifyBrowser(data.usernameSender,data.content_notice);
+                }
             });
             var container = $('#all-mess');
             container.scrollTop(container.get(0).scrollHeight);

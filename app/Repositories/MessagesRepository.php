@@ -76,6 +76,9 @@ class MessagesRepository extends BaseRepository
             'content' => $content,
             'messagesType' => $type,
             'idChannel' => $data['id'],
+            'sender_id' => Auth::user()->id,
+            'content_notice' => $data['messages'],
+            'usernameSender' => Auth::user()->username,
         ];
         LRedis::publish('message', json_encode($data));
         return response()->json([]);

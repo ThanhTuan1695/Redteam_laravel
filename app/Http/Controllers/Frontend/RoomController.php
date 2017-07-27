@@ -88,4 +88,11 @@ class RoomController extends Controller
         return redirect(route('homeChat'));
     }
 
+    public function viewDetail($id)
+    {
+        $listUser_id = DB::table('user_room')->select('user_id')->where('room_id', $id)->get();
+        $listUserID = array_pluck($listUser_id->toArray(),'user_id');
+        $listUser = User::all()->whereIn('id',$listUserID);
+        return view('frontend.room.viewDetail', compact('listUser', 'id'));
+    }
 }

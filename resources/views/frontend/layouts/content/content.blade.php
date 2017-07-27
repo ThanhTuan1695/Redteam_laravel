@@ -38,7 +38,7 @@
                     Choose File <input type="file" style="display: none;">
                 </label>
                 <input type="button" class="display-media btn btn-default" name="media" value="media">
-                <button type="submit" class="btn">Submit</button>
+                <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
             </form>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <div class="content col-lg-7 flex ">
     <div class="messages-wrapper">
         @yield('name-conv')
-        <div id="all_messages" style="height:580px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
+        <div id="all_messages" style="height:550px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             <div class="message-content">
                 @foreach($messages as $message)
                     <div class="client">
@@ -30,14 +30,14 @@
         <div class="input-message-container">
             <form action="" method="" id="form-sub">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="button" class="display-media " name="media" value="media">
-                    <textarea cols="1" rows="1" name="message" id="message-content" class="form-control"
-                              placeholder="Message"
-                              style="width:780px;float:left;resize:none;border-radius:5px"></textarea>
+                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control" placeholder="Message"
+                    style="width:600px;float:left;resize:none;border-radius:5px">
+                </textarea>
                 <label class="btn btn-default btn-file" style="display:inline; float:left;">
                     Choose File <input type="file" style="display: none;">
                 </label>
-                <button type="submit" class="btn">Submit</button>
+                <input type="button" class="display-media btn btn-default" name="media" value="media">
+                <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
             </form>
         </div>
     </div>

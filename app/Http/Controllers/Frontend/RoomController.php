@@ -35,8 +35,9 @@ class RoomController extends Controller
         }
         $type = 'room';
         $url = url('public/sendmessage');
+        $receiver_id = $id;
         $medias = $get_room->medias()->get(['url','type'])->unique('url');
-        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias'));
+        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id'));
     }
 
     public function sendMessage(Request $request)
@@ -60,7 +61,10 @@ class RoomController extends Controller
     {
         $room = Rooms::find($id);
         if(Auth::user()->id == $room->user_id) {
-            $listUser = User::all()->where('id', '!=', Auth::user()->id);
+            $listUser_id = DB::table('user_room')->select('user_id')->where('room_id', $id)
+            ->where('user_id', '!=', Auth::user()->id)->get();
+            $listUserID = array_pluck($listUser_id->toArray(),'user_id');
+            $listUser = User::all()->whereIn('id',$listUserID);
             return view('frontend.room.selectAdmin', compact('listUser', 'id'));
         }else {
             $check = DB::table('user_room')->where('room_id', $id)
@@ -84,4 +88,11 @@ class RoomController extends Controller
         return redirect(route('homeChat'));
     }
 
+    public function viewDetail($id)
+    {
+        $listUser_id = DB::table('user_room')->select('user_id')->where('room_id', $id)->get();
+        $listUserID = array_pluck($listUser_id->toArray(),'user_id');
+        $listUser = User::all()->whereIn('id',$listUserID);
+        return view('frontend.room.viewDetail', compact('listUser', 'id'));
+    }
 }

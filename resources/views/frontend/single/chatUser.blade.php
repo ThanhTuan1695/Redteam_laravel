@@ -8,7 +8,10 @@
 @endsection
 @include('frontend.layouts.content.content')
 @section('scripts')
+
+
     @include('frontend.layouts.script.message')
+
 @endsection
 @endsection
 

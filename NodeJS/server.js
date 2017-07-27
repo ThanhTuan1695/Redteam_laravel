@@ -13,14 +13,13 @@ io.on('connection', function (socket) {
     redisClient.subscribe('message');
 
     redisClient.on("message", function (channel, data) {
+        console.log("mew message in queue " + data + "channel");
         data = JSON.parse(data);
-        console.log(data);
         socket.emit(channel + ":" + data.messagesType + ":" + data.idChannel, data);
-
     });
 
-    socket.on('YTBnewSocket',function (data) {
-        if(data == 'YTB'){
+    socket.on('YTBnewSocket', function (data) {
+        if (data == 'YTB') {
             socketIdList[data].splice(0, 0, socket.id);
             if (socketIdList[data].length > 1) {
                 var lateSocketId = socketIdList[data][socketIdList.length - 1];
@@ -29,20 +28,14 @@ io.on('connection', function (socket) {
         }
     })
 
-
-
-
-
     socket.on('YTBgetCurrentTime', function (data) {
-        console.log('client1');
         io.to(socketIdList[data][0]).emit('YTBsetCurrentTime', data);
     });
 
     socket.on('YTBpause', function (data) {
-        console.log('server pause');
-
         socket.broadcast.emit('YTBpause', data);
     });
+
 
     socket.on('YTBplay', function (order, currentTime) {
         socket.broadcast.emit('YTBplay', order, currentTime);
@@ -54,4 +47,5 @@ io.on('connection', function (socket) {
         console.log('dissconnect');
     })
 
-});
+
+})

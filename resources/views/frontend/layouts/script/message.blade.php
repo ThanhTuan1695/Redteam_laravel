@@ -1,10 +1,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#all_messages").animate({
-            scrollTop: $("#all_messages")[0].scrollHeight
-        });
+        function scroll(element) {
+            $(element).animate({
+                scrollTop: $(element)[0].scrollHeight
+            });
+        }
 
+        scroll($('#all_messages'));
         $('.display-media ').on('click', function (e) {
             if ($('.media').hasClass('hidden')) {
                 $('.media').removeClass('hidden').stop().fadeIn("slow");
@@ -31,6 +34,8 @@
                     },
                     success: function (data) {
                         $("#message-content").val('');
+                        $(".ytb-wrapper").append(data['list_media']);
+                        scroll($('.media-list'));
                     },
                     error: function (data) {
                         console.log('error');
@@ -46,7 +51,6 @@
         var socket = io.connect('http://localhost:8890');
         socket.on("message:{{$type}}:{{$id}}", function (data) {
             $(".message-content").append(data.content);
-            console.log(1);
         });
     });
 </script>

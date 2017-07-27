@@ -47,7 +47,7 @@
 <div class="col-lg-5 media flex hidden">
     <div class="media-list">
         <div class="ytb-list">
-            <ul class="image-grid" id="list">
+            <ul class="image-grid ytb-wrapper" id="list">
                 @foreach( $medias->where('type','ytb')->all() as $media)
                     <li>
                         {!! \App\Helpers\Youtube::embededYTB($media->url) !!}

@@ -59,26 +59,33 @@ class MessagesRepository extends BaseRepository
         }
 
         if ($avatar == null)
-            $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='".url('/backend/no_image.jpg'). "' />";
+            $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='" . url('/backend/no_image.jpg') . "' />";
         else {
-            $img =  "<img style='max-width:45px;height:auto;' class='img-circle' src='" .url('/backend/images/upload/'.$avatar). "'/>";
+            $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='" . url('/backend/images/upload/' . $avatar) . "'/>";
         }
         $content = "<div class='client'>"
-                    . $img .
-                    "<span style='font-weight:bold'>".Auth::user()->username."</span>
+            . $img .
+            "<span style='font-weight:bold'>" . Auth::user()->username . "</span>
                     <span>$message->creat_at</span>
-                    <p>".Emojis::Smilify($message->content)." </p>";
-        foreach ($message->media as $media ){
-            $content.= Youtube::embededYTB($media->url);
+                    <p>" . Emojis::Smilify($message->content) . " </p>";
+        $list_media = "";
+        foreach ($message->media as $media) {
+            $content .= Youtube::embededYTB($media->url);
+            $list_media .= "<li>"
+                . Youtube::embededYTB($media->url) .
+                "</li>";
         }
-        $content.="</div>";
-        
+        $content .= "</div>";
+
         $data = [
             'content' => $content,
             'messagesType' => $type,
             'idChannel' => $data['id'],
         ];
         LRedis::publish('message', json_encode($data));
-        return $data['content'];
+        return $data = [
+            'message' => $content,
+            'list_media' => $list_media,
+        ];
     }
 }

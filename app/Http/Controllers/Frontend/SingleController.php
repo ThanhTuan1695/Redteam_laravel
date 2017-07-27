@@ -23,7 +23,9 @@ class SingleController extends Controller
     private $messagesRepository;
 
     private $singleRepository;
-    public function __construct(UserRepository $userRepo,MessagesRepository $mesRepo,SingleRepository $singleRepo){
+
+    public function __construct(UserRepository $userRepo, MessagesRepository $mesRepo, SingleRepository $singleRepo)
+    {
         $this->userRepository = $userRepo;
         $this->messagesRepository = $mesRepo;
         $this->singleRepository = $singleRepo;
@@ -31,16 +33,16 @@ class SingleController extends Controller
 
     public function index($id)
     {
-        $user = $this->userRepository->getUserById($id);  
-        $user_user = $this->singleRepository->findSingleId(Auth::user()->id,$id);
+        $user = $this->userRepository->getUserById($id);
+        $user_user = $this->singleRepository->findSingleId(Auth::user()->id, $id);
         if ($user_user == null) {
-            $user_user = $this->singleRepository->addSingleId(Auth::user()->id,$id);
+            $user_user = $this->singleRepository->addSingleId(Auth::user()->id, $id);
         }
         $messages = $user_user->messages;
         $type = "user-user";
         $url = url('public/sendmessageuser');
         $medias = $user_user->medias;
-        return view('frontend.single.chatUser', compact('user', 'messages', 'type','url','medias'))->with('id', $user_user->id);
+        return view('frontend.single.chatUser', compact('user', 'messages', 'type', 'url', 'medias'))->with('id', $user_user->id);
 
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Single extends Model
 {
     public $table = 'user_user';
-
+    public $timestamps = false;
 
     public function messages()
     {

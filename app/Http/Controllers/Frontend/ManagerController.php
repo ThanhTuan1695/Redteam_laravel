@@ -36,12 +36,8 @@ class ManagerController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/public/loginChat');
+        return redirect('/loginChat');
     }
-
-   
-
-
 
     public function chooseUser(Request $request, $id)
     {
@@ -57,7 +53,7 @@ class ManagerController extends Controller
         $list_user = $request['check_list'];
         $room = Rooms::find($id);
         $room->users()->attach($list_user);
-        return $this->chatRoom($id);
+        return redirect(route('chatRoom',$id));
     }
 
     public function profileUser()

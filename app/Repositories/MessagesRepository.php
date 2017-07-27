@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Helpers\Emojis;
+use App\Helpers\Youtube;
 use App\Models\Messages;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
 use LRedis;
-use App\Helpers\Youtube;
 
 class MessagesRepository extends BaseRepository
 {
@@ -50,7 +51,7 @@ class MessagesRepository extends BaseRepository
 
     public function sendMessage($data, $type)
     {
-        $message = \App\Models\Messages::with('user')->orderBy('id', 'desc')->first();
+        $message = Messages::with('user')->orderBy('id', 'desc')->first();
         if (file_exists(public_path() . '/backend/images/upload/' . $message->user->avatar)) {
             $avatar = $message->user->avatar;
         } else {
@@ -66,9 +67,9 @@ class MessagesRepository extends BaseRepository
                     . $img .
                     "<span style='font-weight:bold'>".Auth::user()->username."</span>
                     <span>$message->creat_at</span>
-                    <p>". \App\Helpers\Emojis::Smilify($message->content)." </p>";
+                    <p>".Emojis::Smilify($message->content)." </p>";
         foreach ($message->media as $media ){
-            $content.= \App\Helpers\Youtube::embededYTB($media->url);
+            $content.= Youtube::embededYTB($media->url);
         }
         $content.="</div>";
         

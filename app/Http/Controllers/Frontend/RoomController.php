@@ -38,4 +38,9 @@ class RoomController extends Controller
         $redis = LRedis::connection();
         $redis->publish('message', $message2);
     }
+
+    public function callback($id)
+    {
+        return $this->index($id);
+    }
 }

@@ -39,10 +39,6 @@ class ManagerController extends Controller
         return redirect('/public/loginChat');
     }
 
-   
-
-
-
     public function chooseUser(Request $request, $id)
     {
         $user_id = DB::table('user_room')->select('user_id')->where('room_id', $id)->get();

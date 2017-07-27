@@ -47,4 +47,9 @@ class RoomController extends Controller
         $this->messagesRepository->sendMessage($data, 'room');
 
     }
+
+    public function callback($id)
+    {
+        return $this->index($id);
+    }
 }

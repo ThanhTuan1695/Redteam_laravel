@@ -47,6 +47,8 @@ Route::group([],function(){
 		Route::get('room/{id}', 'Frontend\RoomController@index')->name('chatRoom')->middleware('user_room');
 		Route::get('callback/{id}', 'Frontend\RoomController@callback')->name('callback');
 		Route::get('outRoom/{id}', 'Frontend\RoomController@outRoom')->name('outRoom');
+		Route::get('selectAdmin/{id}', 'Frontend\RoomController@selectAdmin')->name('selectAdmin');
+		Route::get('changeAdmin/{id}', 'Frontend\RoomController@changeAdmin')->name('changeAdmin');
 		Route::post('/public/sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
 		Route::post('/public/sendmessage', 'Frontend\RoomController@sendMessage');
 	});

@@ -6,6 +6,7 @@ use App\Repositories\MessagesRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Rooms;
+use App\Models\User;
 use Auth;
 use DB;
 use App\Models\Messages;
@@ -59,16 +60,29 @@ class RoomController extends Controller
     public function outRoom($id)
     {
         $room = Rooms::find($id);
-        $check = DB::table('user_room')->where('room_id', $id)
-        ->where('user_id', Auth::user()->id)->get();
-        // dd($check[0]);
-        // $checkout = $check[0]->toArray();
-        // dd($checkout);
-        if(!$check->isEmpty()){
-            $room->users()->detach($check[0]);
-            return redirect(route('homeChat'));
+        if(Auth::user()->id == $room->user_id) {
+            $listUser = User::all()->where('id', '!=', Auth::user()->id);
+            return view('frontend.room.selectAdmin', compact('listUser', 'id'));
         }else {
-            return redirect(route('chatRoom', $id));
+            $check = DB::table('user_room')->where('room_id', $id)
+            ->where('user_id', Auth::user()->id)->get();
+            if(!$check->isEmpty()){
+                $room->users()->detach($check[0]);
+                return redirect(route('homeChat'));
+            }else {
+                return redirect(route('chatRoom', $id));
+            }
         }
     }
+
+    public function changeAdmin(Request $request,$id){
+        $user_id = (int) $request->select;
+        $update_room = DB::table('rooms')->where('id',$id)->update(['user_id' => $user_id]);
+        $room = Rooms::find($id);
+        $check = DB::table('user_room')->where('room_id', $id)
+                ->where('user_id', Auth::user()->id)->get();
+        $room->users()->detach($check[0]);
+        return redirect(route('homeChat'));
+    }
+
 }

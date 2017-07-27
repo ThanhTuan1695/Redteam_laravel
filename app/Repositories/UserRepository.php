@@ -152,4 +152,6 @@ class UserRepository extends BaseRepository
         return User::find($id);
     }
 
+    
+
 }

@@ -66,7 +66,7 @@
                             $('.content').removeClass('col-lg-7').removeClass('flex').addClass('col-lg-12');
                         }
                     });
-
+                    var img = "mes";
                     var socket = io.connect('http://localhost:8890');
                      $('#form-sub').on('submit',function (e) {
                         var token = $("input[name='_token']").val();
@@ -96,25 +96,7 @@
                             return false;
                         }    
                     });
-
-                        function imageExists(url, callback) {
-                          var img = new Image();
-                          img.onload = function() { callback(true); };
-                          img.onerror = function() { callback(false); };
-                          img.src = url;
-                        }
-
-                       
-                        var imageUrl = window.location.origin + "/backend/images/upload/" + "{{Auth::user()->avatar}}";
-                        imageExists(imageUrl, function(exists) {
-                            if (exists) {
-                               img = "<img style='max-width:45px;height:auto;' class='img-circle' src='"+imageUrl+"'/>";
-                               
-                            }else{
-                                img ="<img style='max-width:45px;height:auto;' class='img-circle' src='{{ url("/backend/no_image.jpg") }}' />";
-                                
-                            }
-                        });
+                        
                         var day = new Date();
                         if (day.getMonth()< 9) {
                             month = "0"+(day.getMonth() +1);
@@ -124,17 +106,32 @@
 
                         var formatdate = day.getFullYear()
                                         + "-"+month+ "-"+day.getDate()+ " "+day.getHours()+ ":"+day.getMinutes()+":"+day.getSeconds();
-                      
-                        socket.on("message:{{$type}}:{{$idCap}}",function(data){    
-                              $("#messages").append("<li>"+img
-                                +"<strong>"
-                                +"{{Auth::user()->username}}"
-                                +":</strong>"
-                                + formatdate
-                                +"<p>"
-                                +data.messages
-                                +"</p></li>" );
-                    });
+                        var imageUrl = window.location.origin + "/backend/images/upload/";
+                        socket.on("message:{{$type}}:{{$idCap}}",function(data){  
+                            var url = imageUrl+ data.avatarSender;
+                            function imageExists(url, callback) {
+                                  var img = new Image();
+                                  img.onload = function() { 
+                                    var  img = "<img style='max-width:45px;height:auto;' class='img-circle' src='"+url+"'/>";
+                                    callback(img);
+                                     };
+                                  img.onerror = function() { 
+                                    var img ="<img style='max-width:45px;height:auto;' class='img-circle' src='{{ url("/backend/no_image.jpg") }}' />";
+                                    callback(img);
+                                     };
+                                  img.src = url;
+                                }
+                           imageExists(url, function(images) {                   
+                                    $("#messages").append("<li>"+images
+                                    +"<strong>"
+                                    +data.usernameSender
+                                    +":</strong>"
+                                    + formatdate
+                                    +"<p>"
+                                    +data.messages
+                                    +"</p></li>" );
+                                     });  
+                        });
                     var container = $('#all-mess');
                     container.scrollTop(container.get(0).scrollHeight);
                     document.body.scrollTop = document.body.scrollHeight;

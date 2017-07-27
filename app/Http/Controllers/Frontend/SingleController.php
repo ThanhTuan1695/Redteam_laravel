@@ -7,13 +7,13 @@ use App\Models\Messages;
 use App\Models\Rooms;
 use App\Models\Single;
 use App\Repositories\MessagesRepository;
+use App\Repositories\SingleRepository;
 use App\Repositories\UserRepository;
 use Auth;
 use DB;
 use Illuminate\Broadcasting\connection;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Redis;
 use LRedis;
 use Reponse;
 
@@ -21,27 +21,25 @@ class SingleController extends Controller
 {
     private $userRepository;
     private $messagesRepository;
-    public function __construct(UserRepository $userRepo,MessagesRepository $mesRepo)
+    private $singleRepository;
+    public function __construct(UserRepository $userRepo,MessagesRepository $mesRepo,SingleRepository $singleRepo)
     {
         $this->userRepository = $userRepo;
         $this->messagesRepository = $mesRepo;
+        $this->singleRepository = $singleRepo;
     }
     public function index($id)
     {
 
-        $user = $this->userRepository->getUserById($id);
-        
-        $user_user = Single::where([
-                        ['user_first_id','=',$user->id],
-                        ['user_second_id','=', Auth::user()->id]
-            ])->orwhere([
-                        ['user_second_id','=',$user->id ],
-                        ['user_first_id','=',Auth::user()->id],
-                    ])->first();   
+        $user = $this->userRepository->getUserById($id);  
+        $user_user = $this->singleRepository->findSingleId(Auth::user()->id,$id);
+        if ($user_user == null) {
+            $user_user = $this->singleRepository->addSingleId(Auth::user()->id,$id);
+        }
         $mes = $user_user->messages;
         $type ="user-user";
-         return view('frontend.single.chatUser',compact('user','mes','type'))->with('idCap',$user_user->id);
-
+        $avatarSender =Auth::user()->avatar;
+         return view('frontend.single.chatUser',compact('user','mes','type','avatarSender'))->with('idCap',$user_user->id);
     }
 
     public function sendMessage(Request $req)        
@@ -49,7 +47,9 @@ class SingleController extends Controller
 
         $data =[
                     'messages' => $req['message'],
-                    'idCap'    => $req['idCap']
+                    'idCap'    => $req['idCap'],
+                    'avatarSender'=>Auth::user()->avatar,
+                    'usernameSender' => Auth::user()->username,
                 ];
         $this->messagesRepository->insertChat($data);
         $data['messagesType'] = 'user-user';

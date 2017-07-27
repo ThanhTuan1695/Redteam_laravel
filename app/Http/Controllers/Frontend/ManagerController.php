@@ -53,7 +53,7 @@ class ManagerController extends Controller
         $list_user = $request['check_list'];
         $room = Rooms::find($id);
         $room->users()->attach($list_user);
-        return $this->chatRoom($id);
+        return redirect(route('chatRoom',$id));
     }
 
     public function profileUser()

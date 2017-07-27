@@ -52,4 +52,20 @@ class RoomController extends Controller
     {
         return $this->index($id);
     }
+
+    public function outRoom($id)
+    {
+        $room = Rooms::find($id);
+        $check = DB::table('user_room')->where('room_id', $id)
+        ->where('user_id', Auth::user()->id)->get();
+        // dd($check[0]);
+        // $checkout = $check[0]->toArray();
+        // dd($checkout);
+        if(!$check->isEmpty()){
+            $room->users()->detach($check[0]);
+            return redirect(route('homeChat'));
+        }else {
+            return redirect(route('chatRoom', $id));
+        }
+    }
 }

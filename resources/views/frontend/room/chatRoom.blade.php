@@ -5,6 +5,7 @@
         <div class="messages-wrapper">
             <div class="name-conv" style="margin-bottom:20px">
                 <h3 style="display:inline"><span>@</span>{!! $get_room->name !!}</h3>
+                <a href="{{ route('outRoom', $id) }}" style="float:right" class="btn btn-default">Out Room</a>
                 @if($get_room->user_id == Auth::user()->id)
                     <a href="{{ route('chooseUser', $id) }}" style="float:right" class="btn btn-default">Add Member</a>
                 @endif

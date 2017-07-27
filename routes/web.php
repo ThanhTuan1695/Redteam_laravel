@@ -34,7 +34,7 @@ Route::group([],function(){
 	Route::get('register', 'Frontend\RegisterController@index')->name('register_public');
 	Route::post('registerUser', 'Frontend\RegisterController@store')->name('register_user');
 	Route::get('loginChat', 'Frontend\LoginChatController@index')->name('loginChat');
-	
+
 	Route::post('public/submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');	
 	Route::group(['middleware'=>'before_login'],function(){
 		Route::get('/','Frontend\HomeChatController@index');//xem xet lai
@@ -47,6 +47,7 @@ Route::group([],function(){
 		Route::get('single/{id}', 'Frontend\SingleController@index')->name('chatUser');
 		Route::get('room/{id}', 'Frontend\RoomController@index')->name('chatRoom')->middleware('user_room');
 		Route::get('callback/{id}', 'Frontend\RoomController@callback')->name('callback');
+		Route::get('outRoom/{id}', 'Frontend\RoomController@outRoom')->name('outRoom');
 		Route::post('/public/sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
 		Route::get('/sendmessage', 'Frontend\RoomController@sendMessage');
 	});

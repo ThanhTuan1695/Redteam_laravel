@@ -43,6 +43,11 @@ class Media extends Model
      *
      * @var array
      */
+    public function mediable()
+    {
+        return $this->morphTo();
+    }
+
     public static $rules = [
         'name' => 'required',
         'url' => 'required',

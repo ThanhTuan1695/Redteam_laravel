@@ -4,7 +4,7 @@ namespace App\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
 use Auth;
-
+use App\Models\Rooms;
 class ListRooms extends AbstractWidget
 {
     /**
@@ -23,7 +23,10 @@ class ListRooms extends AbstractWidget
         $currentUser = Auth::user();
         if (!empty($currentUser)) {
             if ($currentUser->role == '2') {
-                $listRoomPL = $currentUser->ownRooms;
+                $public = Rooms::where('type','public')->get();
+                $private = $currentUser->rooms()->where('type','private')->get();
+                $listRoomPL = collect([$public, $private]);
+                $listRoomPL = $listRoomPL->collapse();
             } else {
                 $listRoomPL = \App\Models\Rooms::all();
             }

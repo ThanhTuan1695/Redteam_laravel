@@ -64,4 +64,9 @@ class Rooms extends Model
     {
         return $this->morphMany('App\Models\Messages', 'messageable');
     }
+
+    public function medias()
+    {
+        return $this->morphMany('App\Models\Media', 'mediable');
+    }
 }

@@ -150,10 +150,19 @@ fieldset {
   background-color: #4CAF50;
 }
 .media {
-
-  background-color: red;
+  border: 1px solid black;
+  height: 100%;
 }
-
+.media-list{
+  height: 50%;
+  border-bottom: 1px solid blue;
+  overflow-x: hidden;
+  overflow-y: auto;
+  word-wrap: break-word;
+}
+.name-media-list{
+  height: 50%;
+}
 .content{
   display: table;
 }

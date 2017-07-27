@@ -24,7 +24,6 @@ class LoginChatController extends Controller
     public function index()
     {
         return view('frontend.login.login');
-
     }
 
     public function login(PublicLoginRequest $request)

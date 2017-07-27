@@ -5,7 +5,9 @@
         <div class="messages-wrapper">
             <div class="name-conv" style="margin-bottom:20px">
                 <h3 style="display:inline"><span>@</span>{!! $get_room->name !!}</h3>
-                <a href="{{ route('chooseUser', $id) }}" style="float:right" class="btn btn-default">Add Member</a>
+                @if($get_room->user_id == Auth::user()->id)
+                    <a href="{{ route('chooseUser', $id) }}" style="float:right" class="btn btn-default">Add Member</a>
+                @endif
             </div>
             <div id="all_messages" style="height:580px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
                 <div class="message-content">
@@ -29,7 +31,6 @@
                             @endforeach
                         </div>
                     @endforeach
-
                 </div>
             </div>
             <div class="input-message-container">
@@ -48,11 +49,9 @@
         </div>
     </div>
 
-
     <div class="col-lg-5 media flex hidden">
         ádasdádasdedia
     </div>
-
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>

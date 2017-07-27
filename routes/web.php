@@ -44,7 +44,7 @@ Route::group([],function(){
 		Route::post('public/updateProfile/{id}', 'Frontend\ManagerController@updateProfile')->name('updateProfile');
 		Route::get('logoutPublic', 'Frontend\ManagerController@logoutPublic')->name('logoutPublic');
 		Route::get('single/{id}', 'Frontend\SingleController@index')->name('chatUser');
-		Route::get('room/{id}', 'Frontend\RoomController@index')->name('chatRoom');
+		Route::get('room/{id}', 'Frontend\RoomController@index')->name('chatRoom')->middleware('user_room');
 		Route::get('callback/{id}', 'Frontend\RoomController@callback')->name('callback');
 		Route::post('/public/sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
 		Route::get('/sendmessage', 'Frontend\RoomController@sendMessage');

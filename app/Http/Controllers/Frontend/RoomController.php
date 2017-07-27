@@ -78,6 +78,10 @@ class RoomController extends Controller
     public function changeAdmin(Request $request,$id){
         $user_id = (int) $request->select;
         $update_room = DB::table('rooms')->where('id',$id)->update(['user_id' => $user_id]);
+        $room = Rooms::find($id);
+        $check = DB::table('user_room')->where('room_id', $id)
+                ->where('user_id', Auth::user()->id)->get();
+        $room->users()->detach($check[0]);
         return redirect(route('homeChat'));
     }
 

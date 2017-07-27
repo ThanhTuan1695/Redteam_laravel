@@ -33,7 +33,10 @@ class RoomController extends Controller
             DB::table('user_room')->insert($data);
         }
         $type = 'room';
-        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type'));
+        $url = url('public/sendmessage');
+        $medias = $get_room->medias;
+
+        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias'));
     }
 
     public function sendMessage(Request $request)
@@ -44,7 +47,7 @@ class RoomController extends Controller
         ];
         $room = \App\Models\Rooms::find($data['id']);
         $this->messagesRepository->insertChat($data, $room);
-        $this->messagesRepository->sendMessage($data, 'room');
-
+        $data = $this->messagesRepository->sendMessage($data, 'room');
+        return $data;
     }
 }

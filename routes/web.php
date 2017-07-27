@@ -46,7 +46,7 @@ Route::group(['prefix' => 'public'],function(){
 	Route::get('single/{id}', 'Frontend\SingleController@index')->name('chatUser');
 	Route::get('room/{id}', 'Frontend\RoomController@index')->name('chatRoom');
 	Route::post('sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
-	Route::get('/sendmessage', 'Frontend\RoomController@sendMessage');
+	Route::post('/sendmessage', 'Frontend\RoomController@sendMessage');
 
 });
 

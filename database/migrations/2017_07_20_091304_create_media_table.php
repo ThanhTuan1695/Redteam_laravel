@@ -20,6 +20,8 @@ class CreateMediaTable extends Migration
             $table->string('url');
             $table->integer('mgs_id')->unsigned();
             $table->foreign('mgs_id')->references('id')->on('messages');
+            $table->integer('mediable_id');
+            $table->string('mediable_type');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -41,8 +41,9 @@ class MessagesRepository extends BaseRepository
                 $media = new \App\Models\Media();
                 $media->name = 'youtube';
                 $media->url = $idYTB;
-                $media->type = 'youtube';
-                $mes->media()->save($media);
+                $media->type = 'ytb';
+                $media->mgs_id = $mes->id;
+                $object->medias()->save($media);
             }
         }
     }
@@ -73,13 +74,10 @@ class MessagesRepository extends BaseRepository
         
         $data = [
             'content' => $content,
-//            'avatar' => $avatar,
-//            'created_at' => $message->created_at,
-//            'username' => $message->user->username,
             'messagesType' => $type,
             'idChannel' => $data['id'],
         ];
         LRedis::publish('message', json_encode($data));
-        return response()->json([]);
+        return $data['content'];
     }
 }

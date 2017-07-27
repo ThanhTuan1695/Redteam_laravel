@@ -32,8 +32,12 @@ class Youtube
         return $aMatches[0];
     }
 
-    static function embededYTB($id){
-        return "<iframe class='yt_players' id='player0' width='385' height='230' src='http://www.youtube.com/embed/" .$id. "?rel=0&wmode=Opaque&enablejsapi=1'
+    static function embededYTB($id, $isOnly){
+        if($isOnly == false)
+        return "<iframe class='yt_players' id='".$id."' width='385' height='230' src='http://www.youtube.com/embed/" .$id. "?rel=0&wmode=Opaque&enablejsapi=1'
+            frameborder='0' allowfullscreen></iframe>";
+        else
+            return "<iframe class='yt_players'  width='385' height='230' src='http://www.youtube.com/embed/" .$id. "?rel=0&wmode=Opaque&enablejsapi=1'
             frameborder='0' allowfullscreen></iframe>";
     }
 }

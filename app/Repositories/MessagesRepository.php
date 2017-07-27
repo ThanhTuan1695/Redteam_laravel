@@ -70,9 +70,9 @@ class MessagesRepository extends BaseRepository
                     <p>" . Emojis::Smilify($message->content) . " </p>";
         $list_media = "";
         foreach ($message->media as $media) {
-            $content .= Youtube::embededYTB($media->url);
+            $content .= Youtube::embededYTB($media->url, true);
             $list_media .= "<li>"
-                . Youtube::embededYTB($media->url) .
+                . Youtube::embededYTB($media->url, false) .
                 "</li>";
         }
         $content .= "</div>";

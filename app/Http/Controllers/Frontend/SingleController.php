@@ -41,7 +41,7 @@ class SingleController extends Controller
         $messages = $user_user->messages;
         $type = "user-user";
         $url = url('public/sendmessageuser');
-        $medias = $user_user->medias;
+        $medias = $user_user->medias()->get(['url', 'type'])->unique('url');
         return view('frontend.single.chatUser', compact('user', 'messages', 'type', 'url', 'medias'))->with('id', $user_user->id);
 
     }

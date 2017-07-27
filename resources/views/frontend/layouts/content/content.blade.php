@@ -1,4 +1,4 @@
-<div class="content col-lg-12 ">
+<div class="content col-lg-7 flex ">
     <div class="messages-wrapper">
         @yield('name-conv')
         <div id="all_messages" style="height:580px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
@@ -20,7 +20,7 @@
 
                         @foreach($message->media as $media)
                             @if( $media->type ='ytb')
-                            {!! \App\Helpers\Youtube::embededYTB($media->url)!!}
+                            {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
                                 @endif
                         @endforeach
                     </div>
@@ -44,13 +44,13 @@
 </div>
 
 
-<div class="col-lg-5 media flex hidden">
+<div class="col-lg-5 media flex ">
     <div class="media-list">
         <div class="ytb-list">
             <ul class="image-grid ytb-wrapper" id="list">
                 @foreach( $medias->where('type','ytb')->all() as $media)
                     <li>
-                        {!! \App\Helpers\Youtube::embededYTB($media->url) !!}
+                        {!! \App\Helpers\Youtube::embededYTB($media->url,false) !!}
                     </li>
                 @endforeach
             </ul>

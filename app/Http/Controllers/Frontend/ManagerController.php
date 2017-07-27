@@ -36,7 +36,7 @@ class ManagerController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/public/loginChat');
+        return redirect('/loginChat');
     }
 
     public function chooseUser(Request $request, $id)

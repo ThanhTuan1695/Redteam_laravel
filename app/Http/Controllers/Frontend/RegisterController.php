@@ -19,7 +19,9 @@ class RegisterController extends Controller
     {
         $this->userRepository = $userRepo;
     }
-
+    public  function index(){
+        return view('frontend.login.register');
+    }
     /**
      * Store a newly created rooms in storage.
      *

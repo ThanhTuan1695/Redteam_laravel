@@ -15,6 +15,7 @@
             </fieldset>
             <fieldset>
                 <button type="submit" class="btn btn-success my_btn">Submit</button>
+                <a href="{{ route('register_public') }}" class="btn btn-default my_btn">Register</a>
             </fieldset>
         </form>
     </div>

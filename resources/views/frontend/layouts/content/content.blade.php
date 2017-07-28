@@ -1,4 +1,4 @@
-<div class="content col-lg-12 ">
+<div class="content col-lg-7 flex ">
     <div class="messages-wrapper">
         @yield('name-conv')
         <div id="all_messages" style="height:550px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
@@ -22,9 +22,9 @@
 
 
                         @foreach($message->media as $media)
-                            @if( $media->type ='ytb')
-                            {!! \App\Helpers\Youtube::embededYTB($media->url)!!}
-                                @endif
+                            @if( $media->type =='ytb')
+                                {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
+                            @endif
                         @endforeach
                     </div>
                 @endforeach
@@ -33,13 +33,10 @@
         <div class="input-message-container">
             <form action="" method="" id="form-sub">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control" placeholder="Message"
-                    style="width:600px;float:left;resize:none;border-radius:5px">
-                </textarea>
-                <label class="btn btn-default btn-file" style="display:inline; float:left;">
-                    Choose File <input type="file" style="display: none;">
-                </label>
-                <input type="button" class="display-media btn btn-default" name="media" value="Media">
+                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control"
+                          style="width:600px;float:left;resize:none;border-radius:5px"></textarea>
+                <input id="file-0" type="file" name="file" class="file" data-preview-file-type="text">
+                <input type="button" class="display-media btn btn-default" name="media" value="media">
                 <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
             </form>
         </div>
@@ -47,16 +44,48 @@
 </div>
 
 
-<div class="col-lg-5 media flex hidden">
-    <div class="media-list">
-        <div class="ytb-list">
-            <ul class="image-grid" id="list">
+<div class="col-lg-5 media flex" title="{{$type}}{{$id}}">
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#ytb-tab">Youtube</a></li>
+        <li><a data-toggle="tab" href="#video-tab">Video</a></li>
+        <li><a data-toggle="tab" href="#mp3-tab">Mp3</a></li>
+    </ul>
+    <div class="tab-content media-list ">
+    <div id='ytb-tab' class="tab-pane fade in active">
+        <div class="ytb-list  ">
+            <ul class="image-grid ytb-wrapper" id="list">
                 @foreach( $medias->where('type','ytb')->all() as $media)
                     <li>
-                        {!! \App\Helpers\Youtube::embededYTB($media->url) !!}
+                        {!! \App\Helpers\Youtube::embededYTB($media->url,false) !!}
                     </li>
                 @endforeach
             </ul>
+        </div>
+    </div>
+
+        <div id='video-tab' class="tab-pane fade ">
+            <div class="ytb-list ">
+                <ul class="image-grid video-wrapper" id="list">
+                    @foreach( $medias->where('type','video')->all() as $media)
+                        <li>
+                            {!! \App\Helpers\Media::embededVideo($media->url) !!}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+        <div id='mp3-tab' class="tab-pane fade">
+            <div class="ytb-list ">
+                <ul class="image-grid music-wrapper" id="list">
+                    @foreach( $medias->where('type','mp3')->all() as $media)
+                        <li>
+                            {!! \App\Helpers\Media::embededMusic($media->url) !!}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
     </div>
     <div class="name-media-list">

@@ -8,7 +8,7 @@ use App\Models\Messages;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
 use LRedis;
-
+use App\Helpers\Media;
 class MessagesRepository extends BaseRepository
 {
     /**
@@ -31,11 +31,41 @@ class MessagesRepository extends BaseRepository
 
     public function insertChat($data, $object)
     {
+        
         $mes = new Messages();
         $mes->user_id = Auth::user()->id;
-        $mes->content = $data['messages'];
+        $mes->content = $data['message'];
         $mes = $object->messages()->save($mes);
-        $listYTB = Youtube::getLinkYTB($data['messages']);
+        if($data->hasFile('file')){
+            $file = $data->file('file');
+            if($file->getClientOriginalExtension() == 'mp4'){
+                $title = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
+                $url = 'storage';
+                $name = time();
+                $fileName=$name . '.'. $file->getClientOriginalExtension();
+                $file->move(public_path($url), $fileName);
+                $media = new \App\Models\Media();
+                $media->name = $title;
+                $media->url = $name;
+                $media->type = 'video';
+                $media->mgs_id = $mes->id;
+                $object->medias()->save($media);
+            }
+            elseif ($file->getClientOriginalExtension() == 'mp3'){
+                $title = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
+                $url = 'storage';
+                $name = time();
+                $fileName=$name . '.'. $file->getClientOriginalExtension();
+                $file->move(public_path($url), $fileName);
+                $media = new \App\Models\Media();
+                $media->name = $title;
+                $media->url = $name;
+                $media->type = 'mp3';
+                $media->mgs_id = $mes->id;
+                $object->medias()->save($media);
+            }
+        }
+        $listYTB = Youtube::getLinkYTB($data['message']);
         if ($listYTB != null) {
             foreach ($listYTB as $ytbUrl) {
                 $idYTB = Youtube::youtube_id_from_url($ytbUrl);
@@ -59,29 +89,50 @@ class MessagesRepository extends BaseRepository
         }
 
         if ($avatar == null)
-            $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='".url('/backend/no_image.jpg'). "' />";
+            $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='" . url('/backend/no_image.jpg') . "' />";
         else {
-            $img =  "<img style='max-width:45px;height:auto;' class='img-circle' src='" .url('/backend/images/upload/'.$avatar). "'/>";
+            $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='" . url('/backend/images/upload/' . $avatar) . "'/>";
         }
         $content = "<div class='client'>"
-                    . $img .
-                    "<span style='font-weight:bold'>".Auth::user()->username."</span>
+            . $img .
+            "<span style='font-weight:bold'>" . Auth::user()->username . "</span>
                     <span>$message->creat_at</span>
-                    <p>".Emojis::Smilify($message->content)." </p>";
-        foreach ($message->media as $media ){
-            $content.= Youtube::embededYTB($media->url);
+                    <p>" . Emojis::Smilify($message->content) . " </p>";
+        $list_media_ytb = "";
+        $list_media_video = "";
+        $list_media_mp3 = "";
+
+        foreach ($message->media as $media) {
+            if($media->type == 'ytb'){
+                $content .= Youtube::embededYTB($media->url, true);
+                $list_media_ytb .= "<li>"
+                    . Youtube::embededYTB($media->url, false) .
+                    "</li>";
+            }
+            elseif ($media->type == 'mp3'){
+                $list_media_mp3.= Media::embededMusic($media->url);
+            }
+            elseif ($media->type == 'video'){
+                $list_media_video.= Media::embededVideo($media->url);
+            }
+
         }
-        $content.="</div>";
-        
+        $content .= "</div>";
+
         $data = [
             'content' => $content,
             'messagesType' => $type,
             'idChannel' => $data['id'],
             'sender_id' => Auth::user()->id,
-            'content_notice' => $data['messages'],
+            'content_notice' => $data['message'],
             'usernameSender' => Auth::user()->username,
         ];
         LRedis::publish('message', json_encode($data));
-        return $data['content'];
+        return $data = [
+            'message' => $content,
+            'list_media_ytb' => $list_media_ytb,
+            'list_media_video' => $list_media_video,
+            'list_media_mp3' => $list_media_mp3,
+        ];
     }
 }

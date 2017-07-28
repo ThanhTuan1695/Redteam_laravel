@@ -1,80 +1,210 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $("#all_messages").animate({
-            scrollTop: $("#all_messages")[0].scrollHeight
-        });
+<script src="http://www.youtube.com/player_api"></script>
 
-        $('.display-media ').on('click', function (e) {
-            if ($('.media').hasClass('hidden')) {
-                $('.media').removeClass('hidden').stop().fadeIn("slow");
-                $('.content').removeClass('col-lg-12').addClass('flex').addClass('col-lg-7');
+<script type="text/javascript">
+    var socket_msg = io.connect('http://localhost:8890/msg');
+    function scroll(element) {
+        $(element).animate({
+            scrollTop: $(element)[0].scrollHeight
+        });
+    }
+    scroll($('#all_messages'));
+    scroll($('.media-list'));
+
+    $('.display-media ').on('click', function (e) {
+        if ($('.media').hasClass('hidden')) {
+            $('.media').removeClass('hidden').stop().fadeIn("slow");
+            $('.content').removeClass('col-lg-12').addClass('flex').addClass('col-lg-7');
+        }
+        else {
+            $('.media').addClass('hidden').stop().fadeOut("slow");
+            $('.content').removeClass('col-lg-7').removeClass('flex').addClass('col-lg-12');
+        }
+    });
+
+    $('#form-sub').on('submit', function (e) {
+        var token = $("input[name='_token']").val();
+        var msg = $("#message-content").val();
+        var form = $(this);
+        var formdata = false;
+        if (window.FormData){
+            formdata = new FormData(form[0]);
+        }
+        console.log(formdata);
+        if (msg != '') {
+            formdata.append('id','{{$id}}');
+            formdata.append('message',msg);
+            $.ajax({
+                type: "POST",
+                url: '{{$url}}',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: formdata,
+                success: function (data) {
+                    $("#message-content").val('');
+                    $('.fileinput-remove ').trigger('click');
+                    $(".ytb-wrapper").append(data['list_media_ytb']);
+                    $(".video-wrapper").append(data['list_media_video']);
+                    $(".music-wrapper").append(data['list_media_mp3']);
+
+                },
+                error: function (data) {
+                    alert(data);
+                },
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false,
+            });
+            return false;
+        } else {
+            alert("Please Add Message.");
+            return false;
+        }
+    });
+
+    socket_msg.on("message:{{$type}}:{{$id}}", function (data) {
+        function notifyBrowser(title,desc,url){
+            if (!Notification) {
+                console.log('Desktop notifications not available in your browser..');
+                return;
+            }
+            if (Notification.permission !== "granted"){
+                Notification.requestPermission();
             }
             else {
-                $('.media').addClass('hidden').stop().fadeOut("slow");
-                $('.content').removeClass('col-lg-7').removeClass('flex').addClass('col-lg-12');
-            }
-        });
-
-        $('#form-sub').on('submit', function (e) {
-            var token = $("input[name='_token']").val();
-            var msg = $("#message-content").val();
-            if (msg != '') {
-                $.ajax({
-                    type: "POST",
-                    url: '{{$url}}',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    data: {
-                        '_token': token,
-                        'message': msg,
-                        'id': '{{$id}}',
-                    },
-                    success: function (data) {
-                        $("#message-content").val('');
-                    },
-                    error: function (data) {
-                        console.log('error');
-                    }
+                var notification = new Notification(title, {
+                    body: desc,
                 });
-                return false;
-            } else {
-                alert("Please Add Message.");
-                return false;
+                // Remove the notification from Notification Center when clicked.
+                notification.onclick = function () {
+                    //window.location = ("url");
+                    window.location.href = this.tag;
+                };
+                notification.onclose = function () {
+                    console.log('Notification closed');
+                };
             }
-        });
+        }
 
-        var socket = io.connect('http://localhost:8890');
-        socket.on("message:{{$type}}:{{$id}}", function (data) {
-             function notifyBrowser(title,desc,url){
-                    if (!Notification) {
-                        console.log('Desktop notifications not available in your browser..'); 
-                        return;
-                    }
-                    if (Notification.permission !== "granted"){
-                        Notification.requestPermission();
-                    }
-                    else {
-                        var notification = new Notification(title, {
-                            body: desc,
-                        });
-                        // Remove the notification from Notification Center when clicked.
-                        notification.onclick = function () {
-                            //window.location = ("url");  
-                            window.location.href = this.tag;   
-                        };
-                        notification.onclose = function () {
-                            console.log('Notification closed');
-                        };
-                    }
-                }
+        if (data.sender_id == '{{$receiver_id}}') {
+            // var url ="/single/"+ data.sender_id;
+            notifyBrowser(data.usernameSender,data.content_notice);
+        }
 
-                if (data.sender_id == {{$receiver_id}}) {
-                    // var url ="/single/"+ data.sender_id;
-                    notifyBrowser(data.usernameSender,data.content_notice);
+        $(".message-content").append(data.content);
+
+    });
+
+    var socket_ytb = io.connect('http://localhost:8890/ytb');
+    players = new Array();
+    var statusCurrent;
+    var isNewSocket = 0;
+    var timeChange = null;
+    var isFromSocket = false;
+
+    function onYouTubeIframeAPIReady() {
+        var temp = $(".ytb-list iframe.yt_players");
+        for (var i = 0; i < temp.length; i++) {
+            var t = new YT.Player($(temp[i]).attr('id'), {
+                events: {
+                    'onStateChange': onPlayerStateChange,
+                    'onReady': ready
                 }
-            
-            $(".message-content").append(data.content);
-            
-        });
+            });
+            players.push(t);
+        }
+    }
+
+    function ready(event) {
+        if (statusCurrent != null && isNewSocket == 1) {
+            if (statusCurrent[event.target.a.src]['currentTime'] > 0) {
+                event.target.seekTo(statusCurrent[event.target.a.src]['currentTime']);
+                if (statusCurrent[event.target.a.src]['state'] == YT.PlayerState.PLAYING) {
+                    event.targer.playVideo();
+                }
+                else
+                    event.target.pauseVideo();
+            }
+        }
+    }
+
+    function onPlayerStateChange(event) {
+
+        if (isFromSocket == true) {
+            return;
+        }
+        else if (event.data == YT.PlayerState.PLAYING) {
+            var src = event.target.a.src;
+            var order = play(src);
+            var currentTime = event.target.getCurrentTime();
+            socket_ytb.emit('YTBplay', '{{$type}}' + '{{$id}}',order, currentTime);
+        }
+        else if (event.data == YT.PlayerState.PAUSED) {
+            var src = event.target.a.src;
+            var order = pause(src);
+            socket_ytb.emit('YTBpause','{{$type}}' + '{{$id}}', order);
+        }
+    }
+
+    function pause(src) {
+        var order;
+        var tempPlayers = $("iframe.yt_players");
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].a.src == src) {
+                players[i].pauseVideo();
+                order = i;
+                isFromSocket = false;
+                return order;
+            }
+        }
+    }
+
+    function play(src) {
+
+        var order;
+        var tempPlayers = $("iframe.yt_players");
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].a.src != src) {
+                players[i].pauseVideo();
+            } else {
+                order = i;
+            }
+        }
+        isFromSocket = false;
+        return order;
+    }
+    socket_ytb.emit('newSocket','{{$type}}' + '{{$id}}');
+
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBgetCurrentTime', function () {
+        var data = {};
+        var state = currentTime = null;
+        for (var i = 0; i < players.length; i++) {
+            state = players[i].getPlayerState();
+            currentTime = players[i].getCurrentTime();
+            var src = players[i].a.src;
+            data[src] = {
+                'currentTime': currentTime,
+                'state': state,
+            }
+        }
+        socket_ytb.emit('YTBgetCurrentTime','{{$type}}' + '{{$id}}', JSON.stringify(data));
+    });
+
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBsetCurrentTime', function (data) {
+        statusCurrent = JSON.parse(data);
+        isNewSocket = 1;
+    })
+
+
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBplay', function (order, currentTime) {
+        isFromSocket = true;
+        players[order].seekTo(currentTime);
+        players[order].playVideo();
+        play(players[order].a.src);
+    });
+
+
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBpause', function (order) {
+        isFromSocket = true;
+        pause(players[order].a.src);
+
     });
 </script>

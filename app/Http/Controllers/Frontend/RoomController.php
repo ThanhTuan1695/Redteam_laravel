@@ -35,21 +35,24 @@ class RoomController extends Controller
         }
         $type = 'room';
         $url = url('public/sendmessage');
-        $medias = $get_room->medias;
+
         $receiver_id = $id;
+        $medias = $get_room->medias()->get(['url','type'])->unique('url');
 
         return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id'));
     }
 
     public function sendMessage(Request $request)
     {
-        $data = [
-            'messages' => $request['message'],
-            'id' => $request['id']
-        ];
-        $room = \App\Models\Rooms::find($data['id']);
-        $this->messagesRepository->insertChat($data, $room);
-        $data = $this->messagesRepository->sendMessage($data, 'room');
+
+//        $data = [
+//            'messages' => $request['message'],
+//            'id' => $request['id'],
+//            'file' => $request['file'],
+//        ];
+        $room = \App\Models\Rooms::find($request['id']);
+        $this->messagesRepository->insertChat($request, $room);
+        $data = $this->messagesRepository->sendMessage($request, 'room');
         return $data;
     }
 

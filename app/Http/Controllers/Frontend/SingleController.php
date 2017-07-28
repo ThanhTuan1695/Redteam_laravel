@@ -53,14 +53,10 @@ class SingleController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $data = [
-            'messages' => $request['message'],
-            'id' => $request['id'],
-            
-        ];
-        $user_user = Single::find($data['id']);
-        $this->messagesRepository->insertChat($data, $user_user);
-        $data = $this->messagesRepository->sendMessage($data, 'user-user');
+
+        $user_user = Single::find($request['id']);
+        $this->messagesRepository->insertChat($request, $user_user);
+        $data = $this->messagesRepository->sendMessage($request, 'user-user');
         return $data;
     }
 

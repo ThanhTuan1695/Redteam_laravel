@@ -39,4 +39,16 @@ class RoomController extends Controller
         $medias = $get_room->medias()->get(['url','type'])->unique('url');
         return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id'));
 
+
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $room = \App\Models\Rooms::find($request['id']);
+        $this->messagesRepository->insertChat($request, $room);
+        $data = $this->messagesRepository->sendMessage($request, 'room');
+        return $data;
+    }
+
+
 }

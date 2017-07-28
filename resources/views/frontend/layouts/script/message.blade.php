@@ -2,7 +2,7 @@
 <script src="http://www.youtube.com/player_api"></script>
 
 <script type="text/javascript">
-    var socket = io('http://localhost:8890');
+    var socket_msg = io.connect('http://localhost:8890/msg');
     function scroll(element) {
         $(element).animate({
             scrollTop: $(element)[0].scrollHeight
@@ -25,24 +25,33 @@
     $('#form-sub').on('submit', function (e) {
         var token = $("input[name='_token']").val();
         var msg = $("#message-content").val();
+        var form = $(this);
+        var formdata = false;
+        if (window.FormData){
+            formdata = new FormData(form[0]);
+        }
+        console.log(formdata);
         if (msg != '') {
+            formdata.append('id','{{$id}}');
+            formdata.append('message',msg);
             $.ajax({
                 type: "POST",
                 url: '{{$url}}',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    '_token': token,
-                    'message': msg,
-                    'id': '{{$id}}',
-                },
+                data: formdata,
                 success: function (data) {
                     $("#message-content").val('');
-                    $(".ytb-wrapper").append(data['list_media']);
-                    scroll($('.media-list'));
+                    $('.fileinput-remove ').trigger('click');
+                    $(".ytb-wrapper").append(data['list_media_ytb']);
+                    $(".video-wrapper").append(data['list_media_video']);
+                    $(".music-wrapper").append(data['list_media_mp3']);
+
                 },
                 error: function (data) {
-                    console.log('error');
-                }
+                    alert(data);
+                },
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false,
             });
             return false;
         } else {
@@ -51,8 +60,7 @@
         }
     });
 
-    var socket = io.connect('http://localhost:8890');
-    socket.on("message:{{$type}}:{{$id}}", function (data) {
+    socket_msg.on("message:{{$type}}:{{$id}}", function (data) {
         function notifyBrowser(title,desc,url){
             if (!Notification) {
                 console.log('Desktop notifications not available in your browser..');
@@ -76,7 +84,7 @@
             }
         }
 
-        if (data.sender_id == {{$receiver_id}}) {
+        if (data.sender_id == '{{$receiver_id}}') {
             // var url ="/single/"+ data.sender_id;
             notifyBrowser(data.usernameSender,data.content_notice);
         }
@@ -85,7 +93,7 @@
 
     });
 
-
+    var socket_ytb = io.connect('http://localhost:8890/ytb');
     players = new Array();
     var statusCurrent;
     var isNewSocket = 0;
@@ -127,12 +135,12 @@
             var src = event.target.a.src;
             var order = play(src);
             var currentTime = event.target.getCurrentTime();
-            socket.emit('YTBplay', order, currentTime);
+            socket_ytb.emit('YTBplay', '{{$type}}' + '{{$id}}',order, currentTime);
         }
         else if (event.data == YT.PlayerState.PAUSED) {
             var src = event.target.a.src;
             var order = pause(src);
-            socket.emit('YTBpause', order);
+            socket_ytb.emit('YTBpause','{{$type}}' + '{{$id}}', order);
         }
     }
 
@@ -163,9 +171,9 @@
         isFromSocket = false;
         return order;
     }
+    socket_ytb.emit('newSocket','{{$type}}' + '{{$id}}');
 
-    socket.emit('YTBnewSocket','YTB');
-    socket.on('YTBgetCurrentTime', function () {
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBgetCurrentTime', function () {
         var data = {};
         var state = currentTime = null;
         for (var i = 0; i < players.length; i++) {
@@ -177,16 +185,16 @@
                 'state': state,
             }
         }
-        socket.emit('YTBgetCurrentTime', JSON.stringify(data));
+        socket_ytb.emit('YTBgetCurrentTime','{{$type}}' + '{{$id}}', JSON.stringify(data));
     });
 
-    socket.on('YTBsetCurrentTime', function (data) {
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBsetCurrentTime', function (data) {
         statusCurrent = JSON.parse(data);
         isNewSocket = 1;
     })
 
 
-    socket.on('YTBplay', function (order, currentTime) {
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBplay', function (order, currentTime) {
         isFromSocket = true;
         players[order].seekTo(currentTime);
         players[order].playVideo();
@@ -194,7 +202,7 @@
     });
 
 
-    socket.on('YTBpause', function (order) {
+    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBpause', function (order) {
         isFromSocket = true;
         pause(players[order].a.src);
 

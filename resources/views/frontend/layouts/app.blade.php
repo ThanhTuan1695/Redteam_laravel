@@ -11,10 +11,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
-    <link href="{{ url('/css/style.css') }}" rel="stylesheet">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ url('/css/style.css') }}" rel="stylesheet">
+    <link href="{{ url('/css/music.css') }}" rel="stylesheet">
+    <link href="{{ url('/css/video.css') }}" rel="stylesheet">
 
     @yield('css')
 </head>
@@ -41,8 +43,14 @@
     <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
     <!-- Chat  -->
-    
+    <script src="{{ url('/js/fileinput.js') }}" ></script>
+    <script src="{{ url('/js/fileinput.js') }}" ></script>
+    <script>
+        $("#file-0").fileinput();
+    </script>
 
     @yield('scripts')
+    <script src="{{ url('/js/music.js') }}" ></script>
+
 </body>
 </html>

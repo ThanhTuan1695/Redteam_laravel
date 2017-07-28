@@ -42,13 +42,15 @@ class RoomController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $data = [
-            'messages' => $request['message'],
-            'id' => $request['id']
-        ];
-        $room = \App\Models\Rooms::find($data['id']);
-        $this->messagesRepository->insertChat($data, $room);
-        $data = $this->messagesRepository->sendMessage($data, 'room');
+
+//        $data = [
+//            'messages' => $request['message'],
+//            'id' => $request['id'],
+//            'file' => $request['file'],
+//        ];
+        $room = \App\Models\Rooms::find($request['id']);
+        $this->messagesRepository->insertChat($request, $room);
+        $data = $this->messagesRepository->sendMessage($request, 'room');
         return $data;
     }
 

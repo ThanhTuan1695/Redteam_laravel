@@ -38,8 +38,8 @@ class RoomController extends Controller
 
         $receiver_id = $id;
         $medias = $get_room->medias()->get(['url','type'])->unique('url');
-
-        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id'));
+        $listUsers = $get_room->users;
+        return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id','listUsers'));
 
 
     }

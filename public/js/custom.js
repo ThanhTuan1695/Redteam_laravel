@@ -1,5 +1,5 @@
 $('#love-mes-form').on('submit', function (e) {
-
+    var socket_
     var input = $(this).find("input[type=text]");
     var text = input.val();
     var array_text = text.split(" ");

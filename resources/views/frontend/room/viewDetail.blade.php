@@ -10,7 +10,7 @@
                     <th>Action</th>
                 </thead>
                 <tbody> 
-                @foreach($listUser as $listUser)
+                @foreach($listUsers as $listUser)
                     <tr>
                         <td>
                             <a href="{!! route('chatUser',$listUser->id) !!}">
@@ -24,7 +24,7 @@
                         </td>
                         <td style="width: 80px;">
                             <div class='btn-group'>
-                                @if((Auth::user()->id==$room->user_id) && (Auth::user()->id != $listUser->id))
+                                @if((Auth::user()->id==$get_room->user_id) && (Auth::user()->id != $listUser->id))
                                     <a href="{{ route('delUserRoom',[$id,$listUser->id]) }}" class='btn btn-default btn-xs'>
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </a>

@@ -1,4 +1,3 @@
-
 <div class="content col-lg-7 flex ">
     <div class="messages-wrapper">
         @yield('name-conv')
@@ -18,8 +17,6 @@
                         <span style="font-weight:bold">{!! $message->user->username !!} :</span>
                         <span>{!! $message->created_at !!}</span>
                         <p>{!! \App\Helpers\Emojis::Smilify($message->content) !!}</p>
-
-
 
 
                         @foreach($message->media as $media)
@@ -51,19 +48,20 @@
         <li class="active"><a data-toggle="tab" href="#ytb-tab">Youtube</a></li>
         <li><a data-toggle="tab" href="#video-tab">Video</a></li>
         <li><a data-toggle="tab" href="#mp3-tab">Mp3</a></li>
+        @yield('list_users_tab')
     </ul>
     <div class="tab-content media-list ">
-    <div id='ytb-tab' class="tab-pane fade in active">
-        <div class="ytb-list  ">
-            <ul class="image-grid ytb-wrapper" id="list">
-                @foreach( $medias->where('type','ytb')->all() as $media)
-                    <li>
-                        {!! \App\Helpers\Youtube::embededYTB($media->url,false) !!}
-                    </li>
-                @endforeach
-            </ul>
+        <div id='ytb-tab' class="tab-pane fade in active">
+            <div class="ytb-list  ">
+                <ul class="image-grid ytb-wrapper" id="list">
+                    @foreach( $medias->where('type','ytb')->all() as $media)
+                        <li>
+                            {!! \App\Helpers\Youtube::embededYTB($media->url,false) !!}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-    </div>
 
         <div id='video-tab' class="tab-pane fade ">
             <div class="ytb-list ">
@@ -88,26 +86,27 @@
                 </ul>
             </div>
         </div>
+        @yield('list_users')
     </div>
     <div class="love-mes form-group">
         <form id="love-mes-form" action="" method="">
             <input type="text" class="form-control" id="love-mes-input'">
         </form>
     </div>
-    <div class="name-media-list"  >
+    <div class="name-media-list">
 
     </div>
 </div>
 <div class="amination" hidden>
-    <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif" />
+    <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif"/>
 
 </div>
 
 {{--<section class="ani-container" hidden>--}}
-    {{--<h1>--}}
-        {{--<span class="ani-title">This is</span>--}}
-        {{--<span class="ani-title">a long</span>--}}
-        {{--<span class="ani-title">long title</span>--}}
-    {{--</h1>--}}
+{{--<h1>--}}
+{{--<span class="ani-title">This is</span>--}}
+{{--<span class="ani-title">a long</span>--}}
+{{--<span class="ani-title">long title</span>--}}
+{{--</h1>--}}
 
 {{--</section>--}}

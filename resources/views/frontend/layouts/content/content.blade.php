@@ -18,6 +18,9 @@
                         <span>{!! $message->created_at !!}</span>
                         <p>{!! \App\Helpers\Emojis::Smilify($message->content) !!}</p>
 
+
+
+
                         @foreach($message->media as $media)
                             @if( $media->type =='ytb')
                                 {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}

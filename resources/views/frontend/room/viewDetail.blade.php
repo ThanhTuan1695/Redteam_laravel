@@ -7,6 +7,7 @@
             <table class="table table-responsive" id="users-table">
                 <thead>
                     <th>Username</th>
+                    <th>Action</th>
                 </thead>
                 <tbody> 
                 @foreach($listUser as $listUser)
@@ -20,6 +21,15 @@
                                     @endif
                                 </span>
                             </a>
+                        </td>
+                        <td style="width: 80px;">
+                            <div class='btn-group'>
+                                @if((Auth::user()->id==$room->user_id) && (Auth::user()->id != $listUser->id))
+                                    <a href="{{ route('delUserRoom',[$id,$listUser->id]) }}" class='btn btn-default btn-xs'>
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @endforeach

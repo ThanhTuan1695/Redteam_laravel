@@ -35,8 +35,10 @@ class RoomController extends Controller
         }
         $type = 'room';
         $url = url('public/sendmessage');
+
         $receiver_id = $id;
         $medias = $get_room->medias()->get(['url','type'])->unique('url');
+
         return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id'));
 
 
@@ -50,5 +52,55 @@ class RoomController extends Controller
         return $data;
     }
 
+
+
+    public function outRoom($id)
+    {
+        $room = Rooms::find($id);
+        if(Auth::user()->id == $room->user_id) {
+            $listUser_id = DB::table('user_room')->select('user_id')->where('room_id', $id)
+            ->where('user_id', '!=', Auth::user()->id)->get();
+            $listUserID = array_pluck($listUser_id->toArray(),'user_id');
+            $listUser = User::all()->whereIn('id',$listUserID);
+            return view('frontend.room.selectAdmin', compact('listUser', 'id'));
+        }else {
+            $check = DB::table('user_room')->where('room_id', $id)
+            ->where('user_id', Auth::user()->id)->get();
+            if(!$check->isEmpty()){
+                $room->users()->detach($check[0]);
+                return redirect(route('homeChat'));
+            }else {
+                return redirect(route('chatRoom', $id));
+            }
+        }
+    }
+
+    public function changeAdmin(Request $request,$id){
+        $user_id = (int) $request->select;
+        $update_room = DB::table('rooms')->where('id',$id)->update(['user_id' => $user_id]);
+        $room = Rooms::find($id);
+        $check = DB::table('user_room')->where('room_id', $id)
+                ->where('user_id', Auth::user()->id)->get();
+        $room->users()->detach($check[0]);
+        return redirect(route('homeChat'));
+    }
+
+    public function viewDetail($id)
+    {
+        $listUser_id = DB::table('user_room')->select('user_id')->where('room_id', $id)->get();
+        $listUserID = array_pluck($listUser_id->toArray(),'user_id');
+        $listUser = User::all()->whereIn('id',$listUserID);
+        $room = Rooms::find($id);
+        return view('frontend.room.viewDetail', compact('listUser', 'id', 'room'));
+    }
+
+    public function delUserRoom($id,$user_id)
+    {
+        $room = Rooms::find($id);
+        $check = DB::table('user_room')->where('room_id', $id)
+                ->where('user_id', $user_id)->get();
+        $room->users()->detach($check[0]);
+        return $this->viewDetail($id);
+    }
 
 }

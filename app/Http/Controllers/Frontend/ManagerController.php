@@ -80,6 +80,7 @@ class ManagerController extends Controller
     {
         $search = "%".$request->search_ip."%";
         $users = DB::table('users')->where('username', 'like', $search)->get();
+        $rooms = DB::table('rooms')->where('name', 'like', $search)->get();
         dd($users);
     }
 

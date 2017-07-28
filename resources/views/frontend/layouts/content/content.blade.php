@@ -1,3 +1,4 @@
+
 <div class="content col-lg-7 flex ">
     <div class="messages-wrapper">
         @yield('name-conv')
@@ -88,4 +89,8 @@
     <div class="name-media-list">
 
     </div>
+</div>
+<div class="amination" hidden>
+    <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif" />
+
 </div>

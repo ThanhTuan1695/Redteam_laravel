@@ -51,6 +51,7 @@
 
     @yield('scripts')
     <script src="{{ url('/js/music.js') }}" ></script>
+    <script src="{{ url('/js/custom.js') }}" ></script>
 
 </body>
 </html>

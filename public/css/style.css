@@ -176,3 +176,14 @@ fieldset {
 .client{
   display: block;
 }
+
+.amination {
+  position: fixed;
+  top: 100%;
+  width: 46%;
+  opacity: 1;
+  z-index: 1;
+}
+.amination img {
+  width: 100%;
+}

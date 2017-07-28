@@ -35,29 +35,24 @@ class RoomController extends Controller
         }
         $type = 'room';
         $url = url('public/sendmessage');
+
         $receiver_id = $id;
         $medias = $get_room->medias()->get(['url','type'])->unique('url');
+
         return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id'));
+
+
     }
 
     public function sendMessage(Request $request)
     {
-
-//        $data = [
-//            'messages' => $request['message'],
-//            'id' => $request['id'],
-//            'file' => $request['file'],
-//        ];
         $room = \App\Models\Rooms::find($request['id']);
         $this->messagesRepository->insertChat($request, $room);
         $data = $this->messagesRepository->sendMessage($request, 'room');
         return $data;
     }
 
-    public function callback($id)
-    {
-        return $this->index($id);
-    }
+
 
     public function outRoom($id)
     {
@@ -95,6 +90,17 @@ class RoomController extends Controller
         $listUser_id = DB::table('user_room')->select('user_id')->where('room_id', $id)->get();
         $listUserID = array_pluck($listUser_id->toArray(),'user_id');
         $listUser = User::all()->whereIn('id',$listUserID);
-        return view('frontend.room.viewDetail', compact('listUser', 'id'));
+        $room = Rooms::find($id);
+        return view('frontend.room.viewDetail', compact('listUser', 'id', 'room'));
     }
+
+    public function delUserRoom($id,$user_id)
+    {
+        $room = Rooms::find($id);
+        $check = DB::table('user_room')->where('room_id', $id)
+                ->where('user_id', $user_id)->get();
+        $room->users()->detach($check[0]);
+        return $this->viewDetail($id);
+    }
+
 }

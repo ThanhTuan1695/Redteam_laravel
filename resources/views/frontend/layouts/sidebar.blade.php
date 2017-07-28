@@ -46,7 +46,6 @@
         overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             @widget('listUsers')
         </ul>
-
         
     </section>
     <!-- /.sidebar -->

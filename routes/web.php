@@ -52,6 +52,7 @@ Route::group([],function(){
 		Route::get('selectAdmin/{id}', 'Frontend\RoomController@selectAdmin')->name('selectAdmin');
 		Route::get('changeAdmin/{id}', 'Frontend\RoomController@changeAdmin')->name('changeAdmin');
 		Route::get('viewDetail/{id}', 'Frontend\RoomController@viewDetail')->name('viewDetail');
+		Route::get('delUserRoom/{id}/{user_id}', 'Frontend\RoomController@delUserRoom')->name('delUserRoom');
 
 		Route::post('/public/sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
 		Route::post('/public/sendmessage', 'Frontend\RoomController@sendMessage');

@@ -39,7 +39,7 @@
                 <label class="btn btn-default btn-file" style="display:inline; float:left;">
                     Choose File <input type="file" style="display: none;">
                 </label>
-                <input type="button" class="display-media btn btn-default" name="media" value="media">
+                <input type="button" class="display-media btn btn-default" name="media" value="Media">
                 <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
             </form>
         </div>

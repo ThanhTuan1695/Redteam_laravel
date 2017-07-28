@@ -36,7 +36,6 @@ class RoomController extends Controller
         $type = 'room';
         $url = url('public/sendmessage');
         $medias = $get_room->medias;
-
         return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias'));
     }
 

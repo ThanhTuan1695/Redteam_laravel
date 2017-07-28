@@ -89,7 +89,12 @@
             </div>
         </div>
     </div>
-    <div class="name-media-list">
+    <div class="love-mes form-group">
+        <form id="love-mes-form" action="" method="">
+            <input type="text" class="form-control" id="love-mes-input'">
+        </form>
+    </div>
+    <div class="name-media-list"  >
 
     </div>
 </div>
@@ -97,3 +102,12 @@
     <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif" />
 
 </div>
+
+{{--<section class="ani-container" hidden>--}}
+    {{--<h1>--}}
+        {{--<span class="ani-title">This is</span>--}}
+        {{--<span class="ani-title">a long</span>--}}
+        {{--<span class="ani-title">long title</span>--}}
+    {{--</h1>--}}
+
+{{--</section>--}}

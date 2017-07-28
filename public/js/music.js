@@ -206,11 +206,11 @@ $(function(){
         });
     }
 
-    $('.player').on('click','#play',function(){
-        $(".amination").fadeIn();
-        rain1();
-        socket.emit('heart', channel);
-    });
+        $('.player').on('click','#play',function(){
+            $(".amination").fadeIn();
+            rain1();
+            socket.emit('heart', channel);
+        });
 
     socket.on(channel+ 'heart',function () {
         $(".amination").fadeIn();

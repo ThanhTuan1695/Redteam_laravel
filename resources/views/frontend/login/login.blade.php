@@ -1,10 +1,8 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="container" style="margin-left:220px" >
+    <div class="container1" style="margin-left:220px" >
         <form id="contact" action="{{ route('submitLogin') }}" method="post">
-            @include('flash::message')
-            @include('adminlte-templates::common.errors')
             <h3 style="text-align:center">Sign in</h3>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <fieldset>
@@ -14,9 +12,13 @@
                 <input name="password" placeholder="Your Password" type="password">
             </fieldset>
             <fieldset>
-                <button type="submit" class="btn btn-success my_btn">Submit</button>
-                <a href="{{ route('register_public') }}" class="btn btn-default my_btn">Register</a>
+                <button type="submit" class="btn btn-success my_btn">Login</button>
             </fieldset>
+            <fieldset>
+                <button type="button" class="btn btn-success my_btn" style="width:350px;">
+                    <a href="{{ route('register_public') }}" style="color:white">Register</a>
+                </button>
+            <fieldset>
         </form>
     </div>
 @endsection

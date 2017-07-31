@@ -21,6 +21,13 @@ body {
   
 }
 
+.container1 {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
 .container {
   max-width: 400px;
   width: 100%;
@@ -146,7 +153,7 @@ fieldset {
   color: #888;
 }
 .my_btn {
-  width: 320px;
+  width: 330px;
   background-color: #4CAF50;
 }
 .media {

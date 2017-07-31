@@ -4,9 +4,7 @@
 @section('name-conv')
     <div class="name-conv" style="margin-bottom:20px">
         <h3 style="display:inline"><span>@</span>
-            <a href="{{ route('viewDetail', $id) }}">
-                {!! $get_room->name !!}
-            </a>
+            {!! $get_room->name !!}
         </h3>
         <a href="{{ route('outRoom', $id) }}" style="float:right" class="btn btn-default">Out Room</a>
         @if(Auth::user()->id==$get_room->user_id)
@@ -21,8 +19,7 @@
 @endsection
 @section('list_users')
     <div class="form-group col-sm-12 tab-pane fade" id='list_users' style="margin:10px">
-        {{--<a style="float:right" href="{!! route('callback', $id) !!}" class="btn btn-default">Back</a>--}}
-        <div class="" style="height:90%;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
+        <div style="height:90%;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             <table class="table table-responsive" id="users-table">
                 <thead>
                 <th>Username</th>
@@ -32,7 +29,9 @@
                 @foreach($listUsers as $listUser)
                     <tr>
                         <td>
+                            @if($listUser->id != Auth::user()->id)
                             <a href="{!! route('chatUser',$listUser->id) !!}">
+                             @endif
                                 <span>
                                     {{ $listUser->username }}
                                     @if($listUser->role == '1')

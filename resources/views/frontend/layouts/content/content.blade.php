@@ -95,7 +95,6 @@
         </form>
     </div>
     <div class="name-media-list">
-
     </div>
 </div>
 <div class="amination" hidden>

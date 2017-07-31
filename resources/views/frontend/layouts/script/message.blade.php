@@ -192,16 +192,12 @@
         statusCurrent = JSON.parse(data);
         isNewSocket = 1;
     })
-
-
     socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBplay', function (order, currentTime) {
         isFromSocket = true;
         players[order].seekTo(currentTime);
         players[order].playVideo();
         play(players[order].a.src);
     });
-
-
     socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBpause', function (order) {
         isFromSocket = true;
         pause(players[order].a.src);

@@ -183,3 +183,94 @@ fieldset {
 .client{
   display: block;
 }
+
+.amination {
+  position: fixed;
+  top: 100%;
+  width: 46%;
+  opacity: 1;
+  z-index: 1;
+}
+.amination img {
+  width: 100%;
+}
+.ani-container{
+  position: fixed;
+  top: 50%;
+  height: 90%;
+  width: 52%;
+  opacity: 1;
+  z-index: 1;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+
+
+
+
+
+.ani-container{
+  display: none;
+  transform: translate(-50%, -50%);
+  top: 73%;
+  left: 50%;
+  max-width: 100%;
+}
+
+.ani-button{
+  float: left;
+  position: relative;
+  bottom: -65px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-10deg);
+  color: #e55643;
+  text-transform: uppercase;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.ani-button span{
+  transform: skew(-10deg);
+  display: block;
+  float: left;
+  text-shadow: #533d4a 1px 1px, #533d4a 2px 2px, #533d4a 3px 3px, #533d4a 4px 4px;
+}
+
+.ani-container h1{
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 107px;
+  margin: 0;
+  line-height: 105px;
+  letter-spacing: 2px;
+}
+
+.ani-title{
+  transform: translateX(-50%) rotate(-10deg);
+  display: block;
+  float: left;
+  left: 50%;
+  position: relative;
+}
+.ani-title span {
+  transform: skew(-10deg);
+  display: block;
+  float: left;
+  text-shadow: #533d4a 1px 1px, #533d4a 2px 2px, #533d4a 3px 3px, #533d4a 4px 4px, #533d4a 5px 5px, #533d4a 6px 6px;
+  min-width: 10px;
+  min-height: 10px;
+  position: relative;
+}
+
+
+.ani-title:nth-child(1){
+   color: #e55643;
+ }
+.ani-title:nth-child(3){
+   color: #2b9f5e;
+ }
+.ani-title:nth-child(5){
+   color: #f1c83c;
+ }

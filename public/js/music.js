@@ -199,5 +199,22 @@ $(function(){
         $('#'+audioName+ ' #seek').val(data);
     });
 
+    function rain1() {
+        $(".amination").animate({ top: '0%'}, 4000, 'linear', function() {
+            $(this).css("top", "100%");
+            $(this).hide();
+        });
+    }
+
+        $('.player').on('click','#play',function(){
+            $(".amination").fadeIn();
+            rain1();
+            socket.emit('heart', channel);
+        });
+
+    socket.on(channel+ 'heart',function () {
+        $(".amination").fadeIn();
+        rain1();
+    })
 
 })

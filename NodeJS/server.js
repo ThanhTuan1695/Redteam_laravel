@@ -76,7 +76,9 @@ var music = io
             socket.broadcast.emit(channel + 'MSpause', audioName);
         });
 
-
+        socket.on('heart', function (channel) {
+            socket.broadcast.emit(channel+'heart');
+        })
         socket.on('MSchange', function (channel, data, audioName) {
             socket.broadcast.emit(channel + 'MSchange', data, audioName);
         });

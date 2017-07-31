@@ -26,7 +26,7 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-10" style="float:right">
+                <div class="col-lg-10 main-content" style="float:right">
                     @yield('content')
                 </div>
             </div>
@@ -42,6 +42,7 @@
 
     <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+
     <!-- Chat  -->
     <script src="{{ url('/js/fileinput.js') }}" ></script>
     <script src="{{ url('/js/fileinput.js') }}" ></script>
@@ -50,7 +51,10 @@
     </script>
 
     @yield('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
     <script src="{{ url('/js/music.js') }}" ></script>
+    <script src="{{ url('/js/custom.js') }}" ></script>
+    <script src="{{ url('/js/jquery.lettering-0.6.1.min.js') }}" ></script>
 
 </body>
 </html>

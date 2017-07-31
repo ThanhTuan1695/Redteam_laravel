@@ -30,7 +30,7 @@
                 </thead>
                 <tbody>
                 @foreach($listUsers as $listUser)
-                    <tr>
+                    <tr id ='{{$listUser->id}}'>
                         <td>
                             <a href="{!! route('chatUser',$listUser->id) !!}">
                                 <span>
@@ -44,8 +44,8 @@
                         <td style="width: 80px;">
                             <div class='btn-group'>
                                 @if((Auth::user()->id==$get_room->user_id) && (Auth::user()->id != $listUser->id))
-                                    <a href="{{ route('delUserRoom',[$id,$listUser->id]) }}"
-                                       class='btn btn-default btn-xs'>
+                                    <a
+                                       class='btn btn-default btn-xs btn-delete-user' id="{{$listUser->id}}">
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </a>
                                 @endif
@@ -60,6 +60,30 @@
 @endsection
 @include('frontend.layouts.content.content')
 @section('scripts')
+    <script>
+        $('.btn-delete-user').on('click', function (e) {
+            var token = $("input[name='_token']").val();
+            var user_id = $(this).attr('id');
+            var id = '{{$id}}';
+            $.ajax({
+                type: "Post",
+                url: '{{Url('delUserRoom')}}',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    '_token': token,
+                    'id' : id,
+                    'user_id' : user_id
+                    },
+                success: function (data) {
+                  $('tr#'+user_id).remove();
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+
+            });
+        })
+    </script>
     @include('frontend.layouts.script.message')
 @endsection
 @endsection

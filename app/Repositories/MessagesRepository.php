@@ -96,7 +96,7 @@ class MessagesRepository extends BaseRepository
         $content = "<div class='client'>"
             . $img .
             "<span style='font-weight:bold'>" . Auth::user()->username . "</span>
-                    <span>$message->creat_at</span>
+                    <span>$message->created_at</span>
                     <p>" . Emojis::Smilify($message->content) . " </p>";
         $list_media_ytb = "";
         $list_media_video = "";
@@ -126,6 +126,9 @@ class MessagesRepository extends BaseRepository
             'sender_id' => Auth::user()->id,
             'content_notice' => $data['message'],
             'usernameSender' => Auth::user()->username,
+            'list_media_ytb' => $list_media_ytb,
+            'list_media_video' => $list_media_video,
+            'list_media_mp3' => $list_media_mp3,
         ];
         LRedis::publish('message', json_encode($data));
         return $data = [

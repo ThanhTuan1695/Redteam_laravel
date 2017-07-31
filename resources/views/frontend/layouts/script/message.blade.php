@@ -30,7 +30,6 @@
         if (window.FormData){
             formdata = new FormData(form[0]);
         }
-        console.log(formdata);
         if (msg != '') {
             formdata.append('id','{{$id}}');
             formdata.append('message',msg);
@@ -42,9 +41,6 @@
                 success: function (data) {
                     $("#message-content").val('');
                     $('.fileinput-remove ').trigger('click');
-                    $(".ytb-wrapper").append(data['list_media_ytb']);
-                    $(".video-wrapper").append(data['list_media_video']);
-                    $(".music-wrapper").append(data['list_media_mp3']);
 
                 },
                 error: function (data) {
@@ -90,6 +86,9 @@
         }
 
         $(".message-content").append(data.content);
+        $(".ytb-wrapper").append(data.list_media_ytb);
+        $(".video-wrapper").append(data.list_media_video);
+        $(".music-wrapper").append(data.list_media_mp3);
 
     });
 

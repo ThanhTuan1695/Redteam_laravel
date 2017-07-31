@@ -99,9 +99,7 @@
 </div>
 <div class="amination" hidden>
     <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif"/>
-
 </div>
-
 {{--<section class="ani-container" hidden>--}}
 {{--<h1>--}}
 {{--<span class="ani-title">This is</span>--}}

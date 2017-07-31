@@ -21,7 +21,6 @@
             $('.content').removeClass('col-lg-7').removeClass('flex').addClass('col-lg-12');
         }
     });
-
     $('#form-sub').on('submit', function (e) {
         var token = $("input[name='_token']").val();
         var msg = $("#message-content").val();
@@ -30,7 +29,6 @@
         if (window.FormData){
             formdata = new FormData(form[0]);
         }
-        console.log(formdata);
         if (msg != '') {
             formdata.append('id','{{$id}}');
             formdata.append('message',msg);
@@ -48,6 +46,7 @@
 
                 },
                 error: function (data) {
+                    console.log(1);
                     alert(data);
                 },
                 contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
@@ -59,7 +58,6 @@
             return false;
         }
     });
-
     socket_msg.on("message:{{$type}}:{{$id}}", function (data) {
         function notifyBrowser(title,desc,url){
             if (!Notification) {
@@ -92,14 +90,12 @@
         $(".message-content").append(data.content);
 
     });
-
     var socket_ytb = io.connect('http://localhost:8890/ytb');
     players = new Array();
     var statusCurrent;
     var isNewSocket = 0;
     var timeChange = null;
     var isFromSocket = false;
-
     function onYouTubeIframeAPIReady() {
         var temp = $(".ytb-list iframe.yt_players");
         for (var i = 0; i < temp.length; i++) {
@@ -158,7 +154,6 @@
     }
 
     function play(src) {
-
         var order;
         var tempPlayers = $("iframe.yt_players");
         for (var i = 0; i < players.length; i++) {
@@ -207,4 +202,44 @@
         pause(players[order].a.src);
 
     });
+    $(function(){
+      $('#message-content').change(function() {
+          var content = $(this).val();
+          $.ajax({
+              url: '/previewUrl',
+              type: 'GET',
+              data: {
+                  content: content,
+              },
+              success: function (response) {
+                console.log(response.success);
+               if (response.success) {
+                  var data =response.data;
+                  var preview = '<div class="row" data-miss>'
+                  +'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
+                                + '<div class="col-md-3">'
+                                + '<div style="background: #999;">'
+                                + '<img src="' + data.image + '" width="150" height="auto">'
+                                + '</div>'
+                                + '</div>'
+                                + '<div class="col-md-9">'
+                                + '<div class="row url-title">'
+                                + '<a href="' + data.url + '">' + data.title + '</a>'
+                                + '</div>'
+                                + '<div class="row url-link">'
+                                + '<a href="' + data.url + '">' + data.host + '</a>'
+                                + '</div>'
+                                + '<div class="row url-description">' + data.description + '</div>'
+                                + '</div>'
+                                + '</div>';
+                $('.file-preview .row').remove();
+                $('div.file-preview').addClass('alert alert-success alert-dismissable');
+                $('.file-preview').append(preview);
+                }else{
+                   $('.file-preview-frame .row').remove();
+                }
+              }
+          });
+    });
+      });
 </script>

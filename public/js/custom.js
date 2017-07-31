@@ -1,9 +1,19 @@
-$('#love-mes-form').on('submit', function (e) {
-    var socket_
-    var input = $(this).find("input[type=text]");
-    var text = input.val();
-    var array_text = text.split(" ");
 
+var socket_text = io.connect('http://localhost:8890/general');
+var channel = $('.media').attr('title');
+var input = $('#love-mes-form').find("input[type=text]");
+
+
+$('#love-mes-form').on('submit', function (e) {
+    var text = input.val();
+
+    getTextAnimation(text);
+    e.preventDefault();
+    socket_text.emit('text', channel, text);
+});
+
+function getTextAnimation(text){
+    var array_text = text.split(" ");
     var length = array_text.length;
     if (length % 3 != 0)
         length = length + (3 - length % 3);
@@ -35,14 +45,14 @@ $('#love-mes-form').on('submit', function (e) {
     $('.main-content').append(content);
     $(".ani-title").lettering();
     $(".ani-container").fadeIn();
+
     input.val("");
     animation();
     setTimeout(function () {
         $('.ani-container').remove();
 
     }, 3000);
-    e.preventDefault();
-});
+}
 
 function animation() {
     var title1 = new TimelineMax();
@@ -50,3 +60,7 @@ function animation() {
         {ease: Back.easeOut.config(1.7), opacity: 0, bottom: -80},
         {ease: Back.easeOut.config(1.7), opacity: 1, bottom: 0}, 0.05);
 }
+
+socket_text.on(channel+'text', function (text) {
+    getTextAnimation(text);
+});

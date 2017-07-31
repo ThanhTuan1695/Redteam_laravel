@@ -37,7 +37,7 @@ class RoomController extends Controller
         $url = url('public/sendmessage');
 
         $receiver_id = $id;
-        $medias = $get_room->medias()->get(['url','type'])->unique('url');
+        $medias = $get_room->medias()->get(['url','type','name'])->unique('url');
         $listUsers = $get_room->users;
         return view('frontend.room.chatRoom', compact('messages', 'id', 'get_room', 'type','url','medias','receiver_id','listUsers'));
 
@@ -85,13 +85,17 @@ class RoomController extends Controller
         return redirect(route('homeChat'));
     }
 
-    public function delUserRoom($id,$user_id)
+    public function delUserRoom(Request $request)
+
     {
+     
+        $id = $request['id'];
+        $user_id = $request['user_id'];
         $room = Rooms::find($id);
         $check = DB::table('user_room')->where('room_id', $id)
                 ->where('user_id', $user_id)->get();
         $room->users()->detach($check[0]);
-        return $this->viewDetail($id);
+
     }
 
 }

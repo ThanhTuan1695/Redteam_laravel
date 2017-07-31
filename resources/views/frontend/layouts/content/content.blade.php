@@ -21,6 +21,7 @@
                             @if( $media->type =='ytb')
                                 {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
                             @endif
+
                         @endforeach
                     </div>
                 @endforeach
@@ -69,6 +70,7 @@
                 <ul class="image-grid video-wrapper" id="list">
                     @foreach( $medias->where('type','video')->all() as $media)
                         <li>
+                            {!!$media->name!!}
                             {!! \App\Helpers\Media::embededVideo($media->url) !!}
                         </li>
                     @endforeach
@@ -81,6 +83,7 @@
                 <ul class="image-grid music-wrapper" id="list">
                     @foreach( $medias->where('type','mp3')->all() as $media)
                         <li>
+                            {!!$media->name!!}
                             {!! \App\Helpers\Media::embededMusic($media->url) !!}
                         </li>
                     @endforeach

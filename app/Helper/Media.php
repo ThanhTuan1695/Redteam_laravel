@@ -8,7 +8,7 @@ class Media
     {
         $url = url('storage');
         return " <div class='videoContainer' id='" . $id . "'>  
-        <video  id='playerVideo' controls preload='auto' poster='https://s.cdpn.io/6035/vp_poster.jpg' width='380' >
+        <video  id='playerVideo' controls preload='auto'  width='380' >
             <source src='" . $url . '/' . $id . ".mp4' type='video/mp4' />
             <p>Your browser does not support the video tag.</p>
         </video>
@@ -34,6 +34,19 @@ class Media
     }
 
     static function embededMusic($id)
+    {
+        return "<li>
+        <div class='container gradient'>
+            <div class='player gradient clearfix' id='".$id."'>
+                <a class='button gradient' id='play' href='' title=''><span class='glyphicon glyphicon-play' aria-hidden='true'></span></a>
+                <a class='button gradient' id='mute' href='' title=''><span class='glyphicon glyphicon-volume-up' aria-hidden='true'></a>
+                <input type='range' id='seek' value='0' max=''/>
+            </div>
+        </div>
+    </li>";
+    }
+
+    static function embededPhoto($id)
     {
         return "<li>
         <div class='container gradient'>

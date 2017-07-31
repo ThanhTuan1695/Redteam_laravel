@@ -10,7 +10,6 @@ var ytb = io
     .of('/ytb')
     .on('connection', function (socket) {
         console.log('ytb connected');
-
         socket.on('newSocket', function (channel) {
             if (socketIdList[channel] == undefined) socketIdList[channel] = [];
             socketIdList[channel].splice(0, 0, socket.id);
@@ -21,7 +20,6 @@ var ytb = io
             }
 
         })
-
         socket.on('YTBgetCurrentTime', function (channel, data) {
             io.to(socketIdList[channel][0]).emit(channel + 'YTBsetCurrentTime', data);
         });
@@ -145,3 +143,11 @@ var video = io
         })
     });
 
+var general = io
+    .of('/general')
+    .on('connection', function (socket) {
+        console.log("general connected");
+        socket.on('text', function (channel, text) {
+            socket.broadcast.emit(channel + 'text', text);
+        });
+    });

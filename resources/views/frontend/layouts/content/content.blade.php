@@ -1,7 +1,7 @@
 <div class="content col-lg-7 flex ">
     <div class="messages-wrapper">
         @yield('name-conv')
-        <div id="all_messages" style="height:550px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
+        <div id="all_messages" style="height:480px;overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
             <div class="message-content">
                 @foreach($messages as $message)
                     <div class="client">
@@ -17,12 +17,11 @@
                         <span style="font-weight:bold">{!! $message->user->username !!} :</span>
                         <span>{!! $message->created_at !!}</span>
                         <p>{!! \App\Helpers\Emojis::Smilify($message->content) !!}</p>
-
-
                         @foreach($message->media as $media)
                             @if( $media->type =='ytb')
                                 {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
                             @endif
+
                         @endforeach
                     </div>
                 @endforeach
@@ -32,10 +31,13 @@
             <form action="" method="" id="form-sub">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <textarea cols="1" rows="1" name="message" id="message-content" class="form-control"
-                          style="width:600px;float:left;resize:none;border-radius:5px"></textarea>
-                <input id="file-0" type="file" name="file" class="file" data-preview-file-type="text">
-                <input type="button" class="display-media btn btn-default" name="media" value="media">
+                          style="width:550px;float:left;resize:none;border-radius:5px">
+                </textarea>
+                <input type="button" class="display-media btn btn-default" name="media" value="Media">
                 <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
+                <div style="width:687px">
+                    <input id="file-0" type="file" name="file" class="file" style="height:100px" data-preview-file-type="text">
+                </div>
             </form>
         </div>
     </div>
@@ -68,6 +70,7 @@
                 <ul class="image-grid video-wrapper" id="list">
                     @foreach( $medias->where('type','video')->all() as $media)
                         <li>
+                            {!!$media->name!!}
                             {!! \App\Helpers\Media::embededVideo($media->url) !!}
                         </li>
                     @endforeach
@@ -80,6 +83,7 @@
                 <ul class="image-grid music-wrapper" id="list">
                     @foreach( $medias->where('type','mp3')->all() as $media)
                         <li>
+                            {!!$media->name!!}
                             {!! \App\Helpers\Media::embededMusic($media->url) !!}
                         </li>
                     @endforeach
@@ -94,7 +98,6 @@
         </form>
     </div>
     <div class="name-media-list">
-
     </div>
 </div>
 <div class="amination" hidden>

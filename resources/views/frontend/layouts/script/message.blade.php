@@ -40,9 +40,6 @@
                 success: function (data) {
                     $("#message-content").val('');
                     $('.fileinput-remove ').trigger('click');
-                    $(".ytb-wrapper").append(data['list_media_ytb']);
-                    $(".video-wrapper").append(data['list_media_video']);
-                    $(".music-wrapper").append(data['list_media_mp3']);
 
                 },
                 error: function (data) {
@@ -88,6 +85,9 @@
         }
 
         $(".message-content").append(data.content);
+        $(".ytb-wrapper").append(data.list_media_ytb);
+        $(".video-wrapper").append(data.list_media_video);
+        $(".music-wrapper").append(data.list_media_mp3);
 
     });
     var socket_ytb = io.connect('http://localhost:8890/ytb');
@@ -187,16 +187,12 @@
         statusCurrent = JSON.parse(data);
         isNewSocket = 1;
     })
-
-
     socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBplay', function (order, currentTime) {
         isFromSocket = true;
         players[order].seekTo(currentTime);
         players[order].playVideo();
         play(players[order].a.src);
     });
-
-
     socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBpause', function (order) {
         isFromSocket = true;
         pause(players[order].a.src);

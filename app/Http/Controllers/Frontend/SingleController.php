@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\PreviewURL;
 use App\Http\Controllers\Controller;
 use App\Models\Messages;
 use App\Models\Rooms;
@@ -33,7 +34,6 @@ class SingleController extends Controller
 
     public function index($id)
     {
-
         $user = $this->userRepository->getUserById($id);  
         if ($user == null) {
             return back();
@@ -61,47 +61,11 @@ class SingleController extends Controller
 
 
      public function previewUrl(Request $request){
-        $content = $request->content;
-        $urls = preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match);
-        $results = [];
-
-        if ($urls > 0) {
-            $url = $match[0][0];
-            $client = new Client();
-            try {
-                $crawler = $client->request('GET',$url);
-                $status_code= $client->getResponse()->getStatus();
-                if ($status_code == 200) {
-                    //$crawler->filterXPath("html/head/title")->text();otherwise to take head title
-                    $title = $crawler->filter('title')->text();
-                    if ($crawler->filterXpath('//meta[@name="description"]')->count()) {
-                        $description = $crawler->filterXpath('//meta[@name="description"]')->attr('content');
-                    }
-                    if ($crawler->filterXpath('//meta[@name="og:image"]')->count()) {
-                            $image = $crawler->filterXpath('//meta[@name="og:image"]')->attr('content');
-                    } elseif ($crawler->filterXpath('//meta[@name="twitter:image"]')->count()) {
-                             $image = $crawler->filterXpath('//meta[@name="twitter:image"]')->attr('content');
-                             }else {
-                                if ($crawler->filter('img')->count()) {
-                                     $image = $crawler->filter('img')->attr('src');
-                                 } else {
-                                     $image = 'no_image';
-                                 }  
-                         }
-                }
-                 $results['title'] = $title;
-                 $results['url'] = $url;
-                 $results['host'] = parse_url($url)['host'];
-                 $results['description'] = isset($description) ? $description : '';
-                 $results['image'] = $image;
-            } catch (Exception $e) {
-                
-            }
-         }
+        $msg = $request->content;
+        $results =  PreviewURL::preview($msg);
          if (count($results) > 0 ) {
              return response()->json(['success' => true, 'data' => $results]);
          }
-
          return response()->json(['success' => false, 'data' =>$results]);
     }
 

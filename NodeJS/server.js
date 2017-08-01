@@ -100,7 +100,7 @@ var msg = io
         var redisClient = redis.createClient();
         redisClient.subscribe('message');
         redisClient.on("message", function (channel, data) {
-            console.log("mew message in queue " + data + "channel");
+            console.log(data);
             data = JSON.parse(data);
             socket.emit(channel + ":" + data.messagesType + ":" + data.idChannel, data);
         });

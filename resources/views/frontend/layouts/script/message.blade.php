@@ -40,7 +40,6 @@
                 success: function (data) {
                     $("#message-content").val('');
                     $('.fileinput-remove ').trigger('click');
-
                 },
                 error: function (data) {
                     console.log(1);
@@ -83,12 +82,11 @@
             // var url ="/single/"+ data.sender_id;
             notifyBrowser(data.usernameSender,data.content_notice);
         }
-
         $(".message-content").append(data.content);
         $(".ytb-wrapper").append(data.list_media_ytb);
         $(".video-wrapper").append(data.list_media_video);
         $(".music-wrapper").append(data.list_media_mp3);
-
+        $('.file-preview .row').remove();
     });
     var socket_ytb = io.connect('http://localhost:8890/ytb');
     players = new Array();
@@ -199,7 +197,7 @@
 
     });
     $(function(){
-      $('#message-content').change(function() {
+      $('#message-content').keyup(function() {
           var content = $(this).val();
           $.ajax({
               url: '/previewUrl',
@@ -208,19 +206,19 @@
                   content: content,
               },
               success: function (response) {
-                console.log(response.success);
+                console.log(response);
                if (response.success) {
                   var data =response.data;
                   var preview = '<div class="row" data-miss>'
                   +'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
                                 + '<div class="col-md-3">'
                                 + '<div style="background: #999;">'
-                                + '<img src="' + data.image + '" width="150" height="auto">'
+                                + '<img src="' + data.image + '" width="150" height="180">'
                                 + '</div>'
                                 + '</div>'
                                 + '<div class="col-md-9">'
                                 + '<div class="row url-title">'
-                                + '<a href="' + data.url + '">' + data.title + '</a>'
+                                + '<a style="color:black;" href="' + data.url + '">' + data.title + '</a>'
                                 + '</div>'
                                 + '<div class="row url-link">'
                                 + '<a href="' + data.url + '">' + data.host + '</a>'
@@ -229,12 +227,12 @@
                                 + '</div>'
                                 + '</div>';
                 $('.file-preview .row').remove();
-                $('div.file-preview').addClass('alert alert-success alert-dismissable');
+                $('div.file-preview').addClass('alert alert-default alert-dismissable');
                 $('.file-preview').append(preview);
                 }else{
-                   $('.file-preview-frame .row').remove();
+                   $('.file-preview .row').remove();
                 }
-              }
+               }
           });
     });
       });

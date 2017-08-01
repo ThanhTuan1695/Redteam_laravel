@@ -25,10 +25,13 @@ class RoomController extends Controller
     public function index($id)
     {
         $get_room = Rooms::find($id);
+        if($get_room == null ){
+            return back();
+        }
         $messages = $get_room->messages;
         $user_id = Auth::user()->id;
-        $check = DB::table('user_room')->where('user_id', '=', $user_id)
-            ->where('room_id', '=', $id)->get();
+        $check = DB::table('user_room')->where('user_id', $user_id)
+            ->where('room_id', $id)->get();
         $data = array('user_id' => $user_id, 'room_id' => $id);
         if ($check->isEmpty()) {
             DB::table('user_room')->insert($data);

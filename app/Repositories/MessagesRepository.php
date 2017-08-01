@@ -3,12 +3,14 @@
 namespace App\Repositories;
 
 use App\Helpers\Emojis;
+use App\Helpers\Media;
+use App\Helpers\PreviewURL;
 use App\Helpers\Youtube;
 use App\Models\Messages;
+use Goutte\Client;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
 use LRedis;
-use App\Helpers\Media;
 class MessagesRepository extends BaseRepository
 {
     /**
@@ -87,17 +89,18 @@ class MessagesRepository extends BaseRepository
         } else {
             $avatar = null;
         }
-
         if ($avatar == null)
             $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='" . url('/backend/no_image.jpg') . "' />";
         else {
             $img = "<img style='max-width:45px;height:auto;' class='img-circle' src='" . url('/backend/images/upload/' . $avatar) . "'/>";
         }
+        $previewUrl=PreviewURL::getPreviewUrl($message->content);
         $content = "<div class='client'>"
             . $img .
             "<span style='font-weight:bold'>" . Auth::user()->username . "</span>
                     <span>$message->created_at</span>
                     <p>" . Emojis::Smilify($message->content) . " </p>";
+
         $list_media_ytb = "";
         $list_media_video = "";
         $list_media_mp3 = "";
@@ -117,8 +120,8 @@ class MessagesRepository extends BaseRepository
             }
 
         }
+        $content .= $previewUrl;
         $content .= "</div>";
-
         $data = [
             'content' => $content,
             'messagesType' => $type,
@@ -138,4 +141,6 @@ class MessagesRepository extends BaseRepository
             'list_media_mp3' => $list_media_mp3,
         ];
     }
+
+  
 }

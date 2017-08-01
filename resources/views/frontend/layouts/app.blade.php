@@ -45,7 +45,7 @@
 
     <!-- Chat  -->
     <script src="{{ url('/js/fileinput.js') }}" ></script>
-    <script src="{{ url('/js/fileinput.js') }}" ></script>
+   {{--  <script src="{{ url('/js/fileinput.js') }}" ></script> --}}
     <script>
         $("#file-0").fileinput();
     </script>

@@ -6,22 +6,44 @@ var socketIdList = new Array;
 var listChannel = new Array;
 server.listen(8890);
 
+io.on('connection', function (socket) {
+    socket.on('newSocketConnect', function (channel) {
+        io.of('/ytb').to('/ytb#' + socket.id).emit('test');
+        if (socketIdList[channel] == undefined) socketIdList[channel] = [];
+        socketIdList[channel].splice(0, 0, socket.id);
+        console.log(socketIdList);
+    })
+
+    socket.on('disconnect', function () {
+        for (var item in socketIdList) {
+            if (socketIdList[item].indexOf(socket.id) >= 0) {
+                var index = socketIdList[item].indexOf(socket.id);
+                socketIdList[item].splice(index, 1);
+                console.log('disconnect')
+                break;
+            }
+        }
+    })
+
+});
+
 var ytb = io
     .of('/ytb')
     .on('connection', function (socket) {
         console.log('ytb connected');
+
         socket.on('newSocket', function (channel) {
-            if (socketIdList[channel] == undefined) socketIdList[channel] = [];
-            socketIdList[channel].splice(0, 0, socket.id);
-            console.log(socketIdList);
-            if (socketIdList[channel].length > 1) {
-                var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
-                io.to(lateSocketId).emit(channel + 'YTBgetCurrentTime');
+            if (socketIdList[channel] != undefined) {
+                if (socketIdList[channel].length > 1) {
+                    var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
+                    io.of('/ytb').to('/ytb#' + lateSocketId).emit(channel + 'YTBgetCurrentTime');
+                }
             }
+
 
         })
         socket.on('YTBgetCurrentTime', function (channel, data) {
-            io.to(socketIdList[channel][0]).emit(channel + 'YTBsetCurrentTime', data);
+            io.of('/ytb').to('/ytb#' + socketIdList[channel][0]).emit(channel + 'YTBsetCurrentTime', data);
         });
 
         socket.on('YTBpause', function (channel, data) {
@@ -33,39 +55,51 @@ var ytb = io
             socket.broadcast.emit(channel + 'YTBplay', order, currentTime);
         });
 
+
+    });
+
+
+var msg = io
+    .of('/msg')
+    .on('connection', function (socket) {
+        console.log("msg connected");
+        var redisClient = redis.createClient();
+        redisClient.subscribe('message');
+        redisClient.on("message", function (channel, data) {
+            data = JSON.parse(data);
+            socket.emit(channel + ":" + data.messagesType + ":" + data.idChannel, data);
+        });
         socket.on('disconnect', function () {
             for (var item in socketIdList) {
                 if (socketIdList[item].indexOf(socket.id) >= 0) {
                     var index = socketIdList[item].indexOf(socket.id);
                     socketIdList[item].splice(index, 1);
-                    console.log('ytb  disconnect')
+                    console.log('msg  disconnect')
                     break;
                 }
             }
         })
     });
-
 var music = io
     .of('/music')
     .on('connection', function (socket) {
         console.log('music connected');
 
         socket.on('newSocket', function (channel) {
-            if (socketIdList[channel] == undefined) socketIdList[channel] = [];
-            socketIdList[channel].splice(0, 0, socket.id);
-            console.log(socketIdList);
-            if (socketIdList[channel].length > 1) {
-                var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
-                io.to(lateSocketId).emit(channel + 'MSgetCurrentTime');
+            if (socketIdList[channel] != undefined) {
+                if (socketIdList[channel].length > 1) {
+                    var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
+                    io.of('/music').to('/music#' + lateSocketId).emit(channel + 'MSgetCurrentTime');
+                }
             }
+
         })
 
         socket.on('MSgetCurrentTime', function (channel, data) {
-            io.to(socketIdList[0]).emit(channel + 'MSsetCurrentTime', data);
+            io.of('/music').to('/music#' + socketIdList[channel][0]).emit(channel + 'MSsetCurrentTime', data);
         });
 
         socket.on('MSplay', function (channel, audioName) {
-            console.log('server');
 
             socket.broadcast.emit(channel + 'MSplay', audioName);
         });
@@ -75,23 +109,12 @@ var music = io
         });
 
         socket.on('heart', function (channel) {
-            socket.broadcast.emit(channel+'heart');
+            socket.broadcast.emit(channel + 'heart');
         })
         socket.on('MSchange', function (channel, data, audioName) {
             socket.broadcast.emit(channel + 'MSchange', data, audioName);
         });
-        socket.on('disconnect', function () {
-            for (var item in socketIdList) {
-                if (socketIdList[item].indexOf(socket.id) >= 0) {
-                    var index = socketIdList[item].indexOf(socket.id);
-                    socketIdList[item].splice(index, 1);
-                    console.log('music  disconnect')
-                    break;
-                }
-            }
-        })
 
-    });
 
 var msg = io
     .of('/msg')
@@ -115,32 +138,36 @@ var msg = io
             }
         })
     });
-
 var video = io
     .of('/video')
     .on('connection', function (socket) {
         console.log('video connected');
 
         socket.on('newSocket', function (channel) {
-            if (socketIdList[channel] == undefined) socketIdList[channel] = [];
-            socketIdList[channel].splice(0, 0, socket.id);
-            console.log(socketIdList);
-            if (socketIdList[channel].length > 1) {
-                var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
-                io.to(lateSocketId).emit(channel + 'VgetCurrentTime');
-            }
 
-        })
-        socket.on('disconnect', function () {
-            for (var item in socketIdList) {
-                if (socketIdList[item].indexOf(socket.id) >= 0) {
-                    var index = socketIdList[item].indexOf(socket.id);
-                    socketIdList[item].splice(index, 1);
-                    console.log('video disconnect')
-                    break;
+            if (socketIdList[channel] != undefined) {
+                if (socketIdList[channel].length > 1) {
+                    var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
+                    io.of('/video').to('/video#' + lateSocketId).emit(channel + 'video_getCurrentTime');
                 }
             }
         })
+
+        socket.on('video_getCurrentTime', function (channel, data) {
+            io.of('/video').to('/video#' + socketIdList[channel][0]).emit(channel + 'video_setCurrentTime', data);
+        });
+
+        socket.on('video_play', function (channel, id) {
+            socket.broadcast.emit(channel + 'video_play', id);
+        });
+        socket.on('video_pause', function (channel, id) {
+            socket.broadcast.emit(channel + 'video_pause', id);
+        });
+        socket.on('video_seek', function (channel, x, videoId) {
+            socket.broadcast.emit(channel + 'video_seek', x, videoId);
+        });
+
+
     });
 
 var general = io

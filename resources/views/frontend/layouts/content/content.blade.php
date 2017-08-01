@@ -21,6 +21,8 @@
                             @foreach($message->media as $media)
                                 @if( $media->type =='ytb')
                                     {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
+                                @elseif($media->type == 'image')
+                                    {!! \App\Helpers\Media::embededPhoto($media->url)!!}
                                 @endif
                             @endforeach
                         @else 
@@ -39,7 +41,8 @@
                 <input type="button" class="display-media btn btn-default" name="media" value="Media">
                 <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
                 <div style="width:687px">
-                    <input id="file-0" type="file" name="file" class="file" style="height:100px" data-preview-file-type="text">
+                    <input id="file-0" type="file" name="file" class="file" style="height:100px"
+                           data-preview-file-type="text">
                 </div>
             </form>
         </div>
@@ -56,7 +59,7 @@
         @yield('list_users_tab')
     </ul>
     <div class="tab-content media-list ">
-        <div id='ytb-tab' class="tab-pane fade in active">
+        <div id='ytb-tab' class="tab-pane fade ">
             <div class="ytb-list  ">
                 <ul class="image-grid ytb-wrapper" id="list">
                     @foreach( $medias->where('type','ytb')->all() as $media)
@@ -68,7 +71,7 @@
             </div>
         </div>
 
-        <div id='video-tab' class="tab-pane fade ">
+        <div id='video-tab' class="tab-pane fade in active">
             <div class="ytb-list ">
                 <ul class="image-grid video-wrapper" id="list">
                     @foreach( $medias->where('type','video')->all() as $media)
@@ -100,17 +103,11 @@
             <input type="text" class="form-control" id="love-mes-input'">
         </form>
     </div>
+
     <div class="name-media-list">
     </div>
 </div>
 <div class="amination" hidden>
     <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif"/>
 </div>
-{{--<section class="ani-container" hidden>--}}
-{{--<h1>--}}
-{{--<span class="ani-title">This is</span>--}}
-{{--<span class="ani-title">a long</span>--}}
-{{--<span class="ani-title">long title</span>--}}
-{{--</h1>--}}
 
-{{--</section>--}}

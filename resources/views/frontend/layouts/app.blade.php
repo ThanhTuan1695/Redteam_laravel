@@ -53,6 +53,7 @@
     @yield('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
     <script src="{{ url('/js/music.js') }}" ></script>
+    <script src="{{ url('/js/video.js') }}" ></script>
     <script src="{{ url('/js/custom.js') }}" ></script>
     <script src="{{ url('/js/jquery.lettering-0.6.1.min.js') }}" ></script>
 

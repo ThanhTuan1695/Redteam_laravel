@@ -3,6 +3,10 @@
 
 <script type="text/javascript">
     var socket_msg = io.connect('http://localhost:8890/msg');
+    var socket_connect = io.connect('http://localhost:8890/');
+    var channel = $('.media').attr('title');
+    socket_connect.emit('newSocketConnect', channel);
+
     function scroll(element) {
         $(element).animate({
             scrollTop: $(element)[0].scrollHeight
@@ -26,12 +30,12 @@
         var msg = $("#message-content").val();
         var form = $(this);
         var formdata = false;
-        if (window.FormData){
+        if (window.FormData) {
             formdata = new FormData(form[0]);
         }
         if (msg != '') {
-            formdata.append('id','{{$id}}');
-            formdata.append('message',msg);
+            formdata.append('id', '{{$id}}');
+            formdata.append('message', msg);
             $.ajax({
                 type: "POST",
                 url: '{{$url}}',
@@ -55,12 +59,12 @@
         }
     });
     socket_msg.on("message:{{$type}}:{{$id}}", function (data) {
-        function notifyBrowser(title,desc,url){
+        function notifyBrowser(title, desc, url) {
             if (!Notification) {
                 console.log('Desktop notifications not available in your browser..');
                 return;
             }
-            if (Notification.permission !== "granted"){
+            if (Notification.permission !== "granted") {
                 Notification.requestPermission();
             }
             else {
@@ -80,7 +84,7 @@
 
         if (data.sender_id == '{{$receiver_id}}') {
             // var url ="/single/"+ data.sender_id;
-            notifyBrowser(data.usernameSender,data.content_notice);
+            notifyBrowser(data.usernameSender, data.content_notice);
         }
         $(".message-content").append(data.content);
         $(".ytb-wrapper").append(data.list_media_ytb);
@@ -89,6 +93,7 @@
         $('.file-preview .row').remove();
     });
     var socket_ytb = io.connect('http://localhost:8890/ytb');
+    socket_ytb.emit('newSocket', channel);
     players = new Array();
     var statusCurrent;
     var isNewSocket = 0;
@@ -129,12 +134,12 @@
             var src = event.target.a.src;
             var order = play(src);
             var currentTime = event.target.getCurrentTime();
-            socket_ytb.emit('YTBplay', '{{$type}}' + '{{$id}}',order, currentTime);
+            socket_ytb.emit('YTBplay', '{{$type}}' + '{{$id}}', order, currentTime);
         }
         else if (event.data == YT.PlayerState.PAUSED) {
             var src = event.target.a.src;
             var order = pause(src);
-            socket_ytb.emit('YTBpause','{{$type}}' + '{{$id}}', order);
+            socket_ytb.emit('YTBpause', '{{$type}}' + '{{$id}}', order);
         }
     }
 
@@ -164,9 +169,8 @@
         isFromSocket = false;
         return order;
     }
-    socket_ytb.emit('newSocket','{{$type}}' + '{{$id}}');
 
-    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBgetCurrentTime', function () {
+    socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBgetCurrentTime', function () {
         var data = {};
         var state = currentTime = null;
         for (var i = 0; i < players.length; i++) {
@@ -178,24 +182,25 @@
                 'state': state,
             }
         }
-        socket_ytb.emit('YTBgetCurrentTime','{{$type}}' + '{{$id}}', JSON.stringify(data));
+        socket_ytb.emit('YTBgetCurrentTime', '{{$type}}' + '{{$id}}', JSON.stringify(data));
     });
 
-    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBsetCurrentTime', function (data) {
+    socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBsetCurrentTime', function (data) {
         statusCurrent = JSON.parse(data);
         isNewSocket = 1;
     })
-    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBplay', function (order, currentTime) {
+    socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBplay', function (order, currentTime) {
         isFromSocket = true;
         players[order].seekTo(currentTime);
         players[order].playVideo();
         play(players[order].a.src);
     });
-    socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBpause', function (order) {
+    socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBpause', function (order) {
         isFromSocket = true;
         pause(players[order].a.src);
 
     });
+<<<<<<< HEAD
     $(function(){
       $('#message-content').keyup(function() {
           var content = $(this).val();
@@ -211,6 +216,23 @@
                   var data =response.data;
                   var preview = '<div class="row" data-miss>'
                   +'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
+=======
+    $(function () {
+        $('#message-content').change(function () {
+            var content = $(this).val();
+            $.ajax({
+                url: '/previewUrl',
+                type: 'GET',
+                data: {
+                    content: content,
+                },
+                success: function (response) {
+                    console.log(response.success);
+                    if (response.success) {
+                        var data = response.data;
+                        var preview = '<div class="row" data-miss>'
+                                + '<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
+>>>>>>> bf5585d71ff16355171d0aadb16aac0879121f66
                                 + '<div class="col-md-3">'
                                 + '<div style="background: #999;">'
                                 + '<img src="' + data.image + '" width="150" height="180">'
@@ -226,6 +248,7 @@
                                 + '<div class="row url-description">' + data.description + '</div>'
                                 + '</div>'
                                 + '</div>';
+<<<<<<< HEAD
                 $('.file-preview .row').remove();
                 $('div.file-preview').addClass('alert alert-default alert-dismissable');
                 $('.file-preview').append(preview);
@@ -234,6 +257,16 @@
                 }
                }
           });
+=======
+                        $('.file-preview .row').remove();
+                        $('div.file-preview').addClass('alert alert-success alert-dismissable');
+                        $('.file-preview').append(preview);
+                    } else {
+                        $('.file-preview-frame .row').remove();
+                    }
+                }
+            });
+        });
+>>>>>>> bf5585d71ff16355171d0aadb16aac0879121f66
     });
-      });
 </script>

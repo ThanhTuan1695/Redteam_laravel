@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\IsAdmin::class,
         'user_room' => \App\Http\Middleware\IsUserRoom::class,
         'before_login' =>\App\Http\Middleware\BeforeLogin::class,
+        'after_login' =>\App\Http\Middleware\AfterLogin::class,
     ];
 }

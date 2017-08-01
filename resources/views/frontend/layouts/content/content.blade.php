@@ -16,14 +16,18 @@
                         @endif
                         <span style="font-weight:bold">{!! $message->user->username !!} :</span>
                         <span>{!! $message->created_at !!}</span>
-                        <p>{!! \App\Helpers\Emojis::Smilify($message->content) !!}</p>
-                        @foreach($message->media as $media)
-                            @if( $media->type =='ytb')
-                                {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
-                            @elseif($media->type == 'image')
-                                {!! \App\Helpers\Media::embededPhoto($media->url)!!}
-                            @endif
-                        @endforeach
+                        <p>{!! \App\Helpers\Emojis::Smilify($message->content)!!}</p>
+                        @if($message->media->count() > 0)
+                            @foreach($message->media as $media)
+                                @if( $media->type =='ytb')
+                                    {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
+                                @elseif($media->type == 'image')
+                                    {!! \App\Helpers\Media::embededPhoto($media->url)!!}
+                                @endif
+                            @endforeach
+                        @else 
+                            {!! \App\Helpers\PreviewURL::getPreviewUrl($message->content) !!}
+                        @endif 
                     </div>
                 @endforeach
             </div>
@@ -31,7 +35,7 @@
         <div class="input-message-container">
             <form action="" method="" id="form-sub">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control"
+                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control textarea-control" data-emojiable="true"
                           style="width:550px;float:left;resize:none;border-radius:5px">
                 </textarea>
                 <input type="button" class="display-media btn btn-default" name="media" value="Media">

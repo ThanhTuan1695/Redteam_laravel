@@ -114,8 +114,29 @@ var music = io
         socket.on('MSchange', function (channel, data, audioName) {
             socket.broadcast.emit(channel + 'MSchange', data, audioName);
         });
-
     });
+// var msg = io
+//     .of('/msg')
+//     .on('connection', function (socket) {
+//         console.log("msg connected");
+//         var redisClient = redis.createClient();
+//         redisClient.subscribe('message');
+//         redisClient.on("message", function (channel, data) {
+//             console.log(data);
+//             data = JSON.parse(data);
+//             socket.emit(channel + ":" + data.messagesType + ":" + data.idChannel, data);
+//         });
+//         socket.on('disconnect', function () {
+//             for (var item in socketIdList) {
+//                 if (socketIdList[item].indexOf(socket.id) >= 0) {
+//                     var index = socketIdList[item].indexOf(socket.id);
+//                     socketIdList[item].splice(index, 1);
+//                     console.log('msg  disconnect')
+//                     break;
+//                 }
+//             }
+//         });
+//     });
 var video = io
     .of('/video')
     .on('connection', function (socket) {

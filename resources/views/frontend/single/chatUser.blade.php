@@ -11,6 +11,7 @@
 
 
     @include('frontend.layouts.script.message')
+    {{-- @include('frontend.layouts.script.pickerEmotion') --}}
 
 @endsection
 @endsection

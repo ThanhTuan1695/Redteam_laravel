@@ -42,7 +42,7 @@ function getTextAnimation(text){
     if(two != undefined) content+=two;
     if(three != undefined) content+=three;
     content+=end;
-    $('.main-content').append(content);
+    $('.name-media-list').append(content);
     $(".ani-title").lettering();
     $(".ani-container").fadeIn();
 

@@ -48,6 +48,15 @@
 
 <div class="col-lg-5 media flex" title="{{$type}}{{$id}}">
 
+
+    <div class="name-media-list">
+
+    </div>
+    <div class="love-mes form-group">
+        <form id="love-mes-form" action="" method="">
+            <input type="text" class="form-control" id="love-mes-input'">
+        </form>
+    </div>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#ytb-tab">Youtube</a></li>
         <li><a data-toggle="tab" href="#video-tab">Video</a></li>
@@ -94,16 +103,20 @@
         </div>
         @yield('list_users')
     </div>
-    <div class="love-mes form-group">
-        <form id="love-mes-form" action="" method="">
-            <input type="text" class="form-control" id="love-mes-input'">
-        </form>
-    </div>
 
-    <div class="name-media-list">
-    </div>
 </div>
 <div class="amination" hidden>
     <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif"/>
 </div>
 
+@section('added-scripts')
+    <script src="{{ url('/js/fileinput.js') }}"></script>
+    <script>
+        $("#file-0").fileinput();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
+    <script src="{{ url('/js/music.js') }}"></script>
+    <script src="{{ url('/js/video.js') }}"></script>
+    <script src="{{ url('/js/custom.js') }}"></script>
+    <script src="{{ url('/js/jquery.lettering-0.6.1.min.js') }}"></script>
+@endsection

@@ -18,7 +18,7 @@ class MessagesRepository extends BaseRepository
         'content',
         'user_id',
         'messageable_id',
-        'messageable_type'
+        'messageable_type'  
     ];
 
     /**
@@ -102,7 +102,7 @@ class MessagesRepository extends BaseRepository
 
         foreach ($message->media as $media) {
             if($media->type == 'ytb' ){
-                $content .= Youtube::embededYTB($media->url, timagerue);
+                $content .= Youtube::embededYTB($media->url, true);
                 $list_media_ytb .= "<li>"
                     . Youtube::embededYTB($media->url, false) .
                     "</li>";

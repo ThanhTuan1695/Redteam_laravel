@@ -169,13 +169,15 @@ fieldset {
 }
 .name-media-list{
   height: 50%;
+  margin-top: 21px;
+  background-color: black;
+  position: relative;
 }
 .content{
   display: table;
 }
 
 .flex {
-  float: none;
   display: table-cell;
   vertical-align: top;
 }
@@ -195,8 +197,8 @@ fieldset {
   width: 100%;
 }
 .ani-container{
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 45%;
   height: 90%;
   width: 52%;
   opacity: 1;
@@ -213,7 +215,7 @@ fieldset {
 .ani-container{
   display: none;
   transform: translate(-50%, -50%);
-  top: 73%;
+  top: 50%;
   left: 50%;
   max-width: 100%;
 }
@@ -241,7 +243,7 @@ fieldset {
 .ani-container h1{
   color: #fff;
   text-transform: uppercase;
-  font-size: 107px;
+  font-size: 81px;
   margin: 0;
   line-height: 105px;
   letter-spacing: 2px;
@@ -274,3 +276,6 @@ fieldset {
 .ani-title:nth-child(5){
    color: #f1c83c;
  }
+.main-content{
+  height: 69%;
+}

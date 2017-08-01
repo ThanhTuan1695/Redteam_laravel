@@ -200,7 +200,7 @@
         pause(players[order].a.src);
 
     });
-<<<<<<< HEAD
+
     $(function(){
       $('#message-content').keyup(function() {
           var content = $(this).val();
@@ -216,23 +216,6 @@
                   var data =response.data;
                   var preview = '<div class="row" data-miss>'
                   +'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
-=======
-    $(function () {
-        $('#message-content').change(function () {
-            var content = $(this).val();
-            $.ajax({
-                url: '/previewUrl',
-                type: 'GET',
-                data: {
-                    content: content,
-                },
-                success: function (response) {
-                    console.log(response.success);
-                    if (response.success) {
-                        var data = response.data;
-                        var preview = '<div class="row" data-miss>'
-                                + '<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
->>>>>>> bf5585d71ff16355171d0aadb16aac0879121f66
                                 + '<div class="col-md-3">'
                                 + '<div style="background: #999;">'
                                 + '<img src="' + data.image + '" width="150" height="180">'
@@ -248,7 +231,7 @@
                                 + '<div class="row url-description">' + data.description + '</div>'
                                 + '</div>'
                                 + '</div>';
-<<<<<<< HEAD
+
                 $('.file-preview .row').remove();
                 $('div.file-preview').addClass('alert alert-default alert-dismissable');
                 $('.file-preview').append(preview);
@@ -257,16 +240,6 @@
                 }
                }
           });
-=======
-                        $('.file-preview .row').remove();
-                        $('div.file-preview').addClass('alert alert-success alert-dismissable');
-                        $('.file-preview').append(preview);
-                    } else {
-                        $('.file-preview-frame .row').remove();
-                    }
-                }
-            });
-        });
->>>>>>> bf5585d71ff16355171d0aadb16aac0879121f66
+    });
     });
 </script>

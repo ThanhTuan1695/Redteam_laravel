@@ -20,8 +20,9 @@
                         @foreach($message->media as $media)
                             @if( $media->type =='ytb')
                                 {!! \App\Helpers\Youtube::embededYTB($media->url,true)!!}
+                            @elseif($media->type == 'image')
+                                {!! \App\Helpers\Media::embededPhoto($media->url)!!}
                             @endif
-
                         @endforeach
                     </div>
                 @endforeach
@@ -53,7 +54,7 @@
         @yield('list_users_tab')
     </ul>
     <div class="tab-content media-list ">
-        <div id='ytb-tab' class="tab-pane fade in active">
+        <div id='ytb-tab' class="tab-pane fade ">
             <div class="ytb-list  ">
                 <ul class="image-grid ytb-wrapper" id="list">
                     @foreach( $medias->where('type','ytb')->all() as $media)
@@ -65,7 +66,7 @@
             </div>
         </div>
 
-        <div id='video-tab' class="tab-pane fade ">
+        <div id='video-tab' class="tab-pane fade in active">
             <div class="ytb-list ">
                 <ul class="image-grid video-wrapper" id="list">
                     @foreach( $medias->where('type','video')->all() as $media)
@@ -97,7 +98,7 @@
             <input type="text" class="form-control" id="love-mes-input'">
         </form>
     </div>
-    <div class="name-media-list">
+    <div class="name-media-list tab-content ">
 
     </div>
 </div>

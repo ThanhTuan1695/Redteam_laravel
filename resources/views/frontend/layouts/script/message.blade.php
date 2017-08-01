@@ -3,6 +3,10 @@
 
 <script type="text/javascript">
     var socket_msg = io.connect('http://localhost:8890/msg');
+    var socket_connect= io.connect('http://localhost:8890/');
+    var channel = $('.media').attr('title');
+    socket_connect.emit('newSocketConnect',channel);
+
     function scroll(element) {
         $(element).animate({
             scrollTop: $(element)[0].scrollHeight
@@ -93,6 +97,8 @@
     });
 
     var socket_ytb = io.connect('http://localhost:8890/ytb');
+    socket_ytb.emit('newSocket',channel);
+
     players = new Array();
     var statusCurrent;
     var isNewSocket = 0;
@@ -170,7 +176,6 @@
         isFromSocket = false;
         return order;
     }
-    socket_ytb.emit('newSocket','{{$type}}' + '{{$id}}');
 
     socket_ytb.on('{{$type}}' + '{{$id}}'+'YTBgetCurrentTime', function () {
         var data = {};

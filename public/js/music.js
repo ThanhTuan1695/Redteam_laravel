@@ -1,6 +1,8 @@
 $(function(){
     var socket = io.connect('http://localhost:8890/music');
     var channel = $('.media').attr('title');
+    socket.emit('newSocket', channel);
+    var channel = $('.media').attr('title');
     songs = new Array();
     container = $('.container');
     var listSong = $('.player');
@@ -16,13 +18,10 @@ $(function(){
         }
         songs[name] = song;
     }
-    console.log(songs);
-    socket.emit('newSocket', channel);
 
     // Handle events
     $('.player').on('click','#play', function(e){
         var audioName = getAudioName(e);
-        console.log('send');
         socket.emit('MSplay',channel, audioName);
         play(audioName);
         e.preventDefault();
@@ -171,7 +170,6 @@ $(function(){
         var data = JSON.parse(data);
         for( var i = 0 ; i < listSong.length; i++){
             var audioName = $(listSong[i]).attr('id');
-            console.log(data[audioName].maxTime);
             $('#'+audioName+ ' #seek').attr('max',data[audioName].maxTime);
             songs[audioName].currentTime = parseInt(data[audioName].currentTime, 10);
             var status  =  data[audioName].status;
@@ -184,8 +182,6 @@ $(function(){
     })
 
     socket.on(channel+'MSplay', function(audioName){
-        console.log(audioName);
-
         play(audioName);
     });
 

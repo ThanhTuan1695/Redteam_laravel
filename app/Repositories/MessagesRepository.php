@@ -38,30 +38,28 @@ class MessagesRepository extends BaseRepository
         $mes = $object->messages()->save($mes);
         if($data->hasFile('file')){
             $file = $data->file('file');
+            $extensions = array('jpg', 'jpeg', 'png');
+            $title = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
+            $url = 'storage';
+            $name = time();
+            $fileName=$name . '.'. $file->getClientOriginalExtension();
+            $file->move(public_path($url), $fileName);
+            $media = new \App\Models\Media();
+            $media->name = $title;
+            $media->url = $name;
+            $media->mgs_id = $mes->id;
+
             if($file->getClientOriginalExtension() == 'mp4'){
-                $title = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
-                $url = 'storage';
-                $name = time();
-                $fileName=$name . '.'. $file->getClientOriginalExtension();
-                $file->move(public_path($url), $fileName);
-                $media = new \App\Models\Media();
-                $media->name = $title;
-                $media->url = $name;
                 $media->type = 'video';
-                $media->mgs_id = $mes->id;
                 $object->medias()->save($media);
             }
             elseif ($file->getClientOriginalExtension() == 'mp3'){
-                $title = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
-                $url = 'storage';
-                $name = time();
-                $fileName=$name . '.'. $file->getClientOriginalExtension();
-                $file->move(public_path($url), $fileName);
-                $media = new \App\Models\Media();
-                $media->name = $title;
-                $media->url = $name;
                 $media->type = 'mp3';
-                $media->mgs_id = $mes->id;
+                $object->medias()->save($media);
+            }
+            elseif (in_array($file->getClientOriginalExtension(), $extensions)) {
+                $media->type = 'image';
+                $media->url = $fileName;
                 $object->medias()->save($media);
             }
         }
@@ -103,16 +101,21 @@ class MessagesRepository extends BaseRepository
         $list_media_mp3 = "";
 
         foreach ($message->media as $media) {
-            if($media->type == 'ytb'){
-                $content .= Youtube::embededYTB($media->url, true);
+            if($media->type == 'ytb' ){
+                $content .= Youtube::embededYTB($media->url, timagerue);
                 $list_media_ytb .= "<li>"
                     . Youtube::embededYTB($media->url, false) .
                     "</li>";
             }
+            elseif( $media->type == 'image'){
+                $content.=Media::embededPhoto($media->url);
+            }
             elseif ($media->type == 'mp3'){
+                $list_media_mp3.= $media->name;
                 $list_media_mp3.= Media::embededMusic($media->url);
             }
             elseif ($media->type == 'video'){
+                $list_media_video.= $media->name;
                 $list_media_video.= Media::embededVideo($media->url);
             }
 

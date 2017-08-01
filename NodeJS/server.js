@@ -33,7 +33,7 @@ var ytb = io
         console.log('ytb connected');
 
         socket.on('newSocket', function (channel) {
-            if (socketIdList[channel] != undefined){
+            if (socketIdList[channel] != undefined) {
                 if (socketIdList[channel].length > 1) {
                     var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
                     io.of('/ytb').to('/ytb#' + lateSocketId).emit(channel + 'YTBgetCurrentTime');
@@ -86,7 +86,7 @@ var music = io
         console.log('music connected');
 
         socket.on('newSocket', function (channel) {
-            if (socketIdList[channel] != undefined){
+            if (socketIdList[channel] != undefined) {
                 if (socketIdList[channel].length > 1) {
                     var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
                     io.of('/music').to('/music#' + lateSocketId).emit(channel + 'MSgetCurrentTime');

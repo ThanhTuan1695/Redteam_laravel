@@ -37,7 +37,8 @@
                 <input type="button" class="display-media btn btn-default" name="media" value="Media">
                 <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
                 <div style="width:687px">
-                    <input id="file-0" type="file" name="file" class="file" style="height:100px" data-preview-file-type="text">
+                    <input id="file-0" type="file" name="file" class="file" style="height:100px"
+                           data-preview-file-type="text">
                 </div>
             </form>
         </div>
@@ -98,20 +99,11 @@
             <input type="text" class="form-control" id="love-mes-input'">
         </form>
     </div>
-    <div class="name-media-list tab-content ">
 
+    <div class="name-media-list">
     </div>
 </div>
 <div class="amination" hidden>
     <img src="{{url('effect')}}/many-little-heart-make-big-heart-gif.gif"/>
-
 </div>
 
-{{--<section class="ani-container" hidden>--}}
-{{--<h1>--}}
-{{--<span class="ani-title">This is</span>--}}
-{{--<span class="ani-title">a long</span>--}}
-{{--<span class="ani-title">long title</span>--}}
-{{--</h1>--}}
-
-{{--</section>--}}

@@ -35,7 +35,6 @@ Route::group([],function(){
 	Route::post('registerUser', 'Frontend\RegisterController@store')->name('register_user');
 	Route::get('loginChat', 'Frontend\LoginChatController@index')->name('loginChat');
 	Route::post('public/submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');
-
 	Route::group(['middleware'=>'before_login'],function(){
 		Route::get('/','Frontend\HomeChatController@index');//xem xet lai
 		Route::get('homeChat', 'Frontend\ManagerController@index')->name('homeChat');
@@ -45,18 +44,15 @@ Route::group([],function(){
 		Route::post('public/updateProfile/{id}', 'Frontend\ManagerController@updateProfile')->name('updateProfile');
 		Route::get('logoutPublic', 'Frontend\ManagerController@logoutPublic')->name('logoutPublic');
 		Route::get('single/{id}', 'Frontend\SingleController@index')->name('chatUser');
-		
+		Route::get('previewUrl', 'Frontend\SingleController@previewUrl')->name('previewUrl');
 		Route::get('room/{id}', 'Frontend\RoomController@index')->name('chatRoom')->middleware('user_room');
 		Route::get('callback/{id}', 'Frontend\RoomController@callback')->name('callback');
 		Route::get('outRoom/{id}', 'Frontend\RoomController@outRoom')->name('outRoom');
 		Route::get('selectAdmin/{id}', 'Frontend\RoomController@selectAdmin')->name('selectAdmin');
 		Route::get('changeAdmin/{id}', 'Frontend\RoomController@changeAdmin')->name('changeAdmin');
-		Route::get('viewDetail/{id}', 'Frontend\RoomController@viewDetail')->name('viewDetail');
 		Route::post('delUserRoom', 'Frontend\RoomController@delUserRoom')->name('delUserRoom');
-
 		Route::post('/public/sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
 		Route::post('/public/sendmessage', 'Frontend\RoomController@sendMessage');
-
 		Route::get('search', 'Frontend\ManagerController@search')->name('search');
 	});
 });

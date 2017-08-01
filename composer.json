@@ -8,6 +8,7 @@
         "php": ">=5.6.4",
         "arrilot/laravel-widgets": "^3.7",
         "doctrine/dbal": "~2.3",
+        "fabpot/goutte": "^3.2",
         "infyomlabs/adminlte-templates": "5.4.x-dev",
         "infyomlabs/laravel-generator": "5.4.x-dev",
         "infyomlabs/swagger-generator": "dev-master",

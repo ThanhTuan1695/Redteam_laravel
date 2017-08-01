@@ -85,25 +85,17 @@ class RoomController extends Controller
         return redirect(route('homeChat'));
     }
 
-//    public function viewDetail($id)
-//    {
-//        $listUser_id = DB::table('user_room')->select('user_id')->where('room_id', $id)->get();
-//        $listUserID = array_pluck($listUser_id->toArray(),'user_id');
-//        $listUser = User::all()->whereIn('id',$listUserID);
-//        $room = Rooms::find($id);
-//        return view('frontend.room.viewDetail', compact('listUser', 'id', 'room'));
-//    }
-
     public function delUserRoom(Request $request)
+
     {
-//        return 'abc';
+     
         $id = $request['id'];
         $user_id = $request['user_id'];
         $room = Rooms::find($id);
         $check = DB::table('user_room')->where('room_id', $id)
                 ->where('user_id', $user_id)->get();
         $room->users()->detach($check[0]);
-//        return $this->viewDetail($id);
+
     }
 
 }

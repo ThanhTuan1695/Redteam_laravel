@@ -46,6 +46,7 @@ $(document).ready(function () {
                 video[0].play();
             });
     }
+
     socket_video.emit('newSocket', channel);
 
     for (var i = 0; i < listVideo.length; i++) {

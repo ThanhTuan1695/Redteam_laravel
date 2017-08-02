@@ -12,20 +12,19 @@ function getRandomColor() {
 }
 $('#love-mes-form').on('submit', function (e) {
     var text = input.val();
-
     getTextAnimation(text);
     e.preventDefault();
     socket_general.emit('text', channel, text);
 });
 $('#custom-text').on('submit', function (e) {
     var text = customText.val();
-    text = "<span class='custom-text-sticker sticker drag ui-draggable ui-draggable-handle ui-droppable' style=' position: absolute; left: 79.0001px; top: 215.2px;'>" + text + "</span>";
+    text = "<div class='drag inside-drop-zone'  style=' position: absolute; left: 79.0001px; top: 215.2px;'><span class='custom-text-sticker sticker'>" + text + "</span></div>";
     $('.drop').append(text);
-    var textSpan = $(".drop>span");
+    var textSpan = $(".drop>.drag>span");
     var thisSpan = textSpan[textSpan.length - 1];
     $(thisSpan).lettering();
     $(thisSpan).css('color', getRandomColor());
-    $('.drop>span').draggable();
+    $('.drop>.drag').draggable();
     customText.val("");
     e.preventDefault();
 
@@ -87,35 +86,31 @@ $('.drop').droppable({
     tolerance: 'fit'
 });
 $('.drag').draggable({
-    // revert: 'invalid', 
     helper: 'clone',
-    stop: function (event, ui) {
-    }
 });
 $('.drag').droppable({
     greedy: true,
     tolerance: 'touch',
-    drop: function (event, ui) {
-    }
 });
 var content = "";
 
 $('.drop').droppable({
 
-    drop: function (event, ui) {
-        // console.log(ui.position.left + " " + ui.position.top);
-        if ($(ui.draggable)[0].id != "") {
-            x = ui.helper.clone();
-            ui.helper.remove();
-            console.log(1);
-            // x.attr('id',"bla");
-            x.draggable({
-                helper: 'original',
-                containment: '.drop',
-            });
+    accept: '.drag',
+    drop: function(event, ui) {
+        var $clone = ui.helper.clone();
+        if (!$clone.is('.inside-drop-zone')) {
+            $(this).append($clone.addClass('inside-drop-zone').draggable({
+                containment: '.drop'
+            }));
 
-            x.appendTo('.drop');
+            // $clone.resizable({ //this works but I dont want it to on outside elements
+            //     helper: "ui-resizable-helper"
+            // });
         }
+        $('.drop>.drag>img').resizable({
+            helper: "ui-resizable-helper"
+        });
         content = "";
         for (var i = 0; i < $('.drop>.drag').length; i++) {
             content += $('.drop>.drag')[i].outerHTML;
@@ -125,8 +120,6 @@ $('.drop').droppable({
 });
 
 $('.bin').droppable({
-    // accept: ".drag",
-
     drop: function (event, ui) {
         ui.helper.remove();
         content = "";
@@ -150,7 +143,7 @@ socket_general.on(channel + 'sticker', function (content) {
     $('.drop>.drag').remove();
     $('.drop').append(content);
     $('.drop>.drag').draggable();
-    rotation(); 
+    rotation();
 });
 
 $('.sticker-play').click(function (e) {
@@ -160,7 +153,7 @@ $('.sticker-play').click(function (e) {
 })
 
 var rotation = function () {
-    $(".drop>.sticker").rotate({
+    $(".drop .ui-wrapper>.sticker, .drop>.inside-drop-zone span").rotate({
         angle: -25,
         animateTo: 25,
         callback: back
@@ -168,7 +161,7 @@ var rotation = function () {
 }
 
 var back = function () {
-    $(".drop>.sticker").rotate({
+    $(".drop>.inside-drop-zone .sticker, .drop>.inside-drop-zone span").rotate({
         angle: 25,
         animateTo: -25,
         callback: rotation

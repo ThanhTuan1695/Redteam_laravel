@@ -285,3 +285,9 @@ fieldset {
 .sticker-play:hover{
   cursor: pointer;
 }
+.ui-icon-gripsmall-diagonal-se {
+  background-color: black;
+  width: 5px;
+  height: 5px;
+}
+}

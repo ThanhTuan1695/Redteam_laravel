@@ -113,13 +113,16 @@
         <div id='sticker-tab' >
             <div class="ytb-list media-list ">
                 @foreach( \App\Models\Emoji::all() as $emoji)
-                    {!! \App\Helpers\Sticker::embededSticker($emoji->url) !!}
+                   <div class="drag" style="display: inline-block; width: 80px;" > {!! \App\Helpers\Sticker::embededSticker($emoji->url) !!}</div>
                 @endforeach
                     <img class='bin' id='st{{str_random(6)}}' src='{{url('storage/sticker')}}/bin.png' style='width : 80px;' >
-                    <form action="" id="custom-text">
-                        <input type="text" value="" > <span class="glyphicon glyphicon-play sticker-play" style="font-size: 25px; display: inline-block;"></span>
-                    </form>
+
             </div>
+        </div>
+        <div>
+            <form action="" id="custom-text">
+                <input type="text" value="" > <span class="glyphicon glyphicon-play sticker-play" style="font-size: 25px; display: inline-block;"></span>
+            </form>
         </div>
     </div>
 

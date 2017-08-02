@@ -7,6 +7,6 @@ class Sticker
     static function embededSticker($id)
     {
         $url = url('storage/sticker');
-        return "<img class='sticker drag' id='st".str_random(6)."' src='" . $url . '/' . $id . "' style='width : 80px;' >";
+        return "<img class='sticker ' id='st".str_random(6)."' src='" . $url . '/' . $id . "' style='width : 80px;' >";
     }
 }

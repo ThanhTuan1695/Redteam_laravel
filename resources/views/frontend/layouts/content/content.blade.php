@@ -50,7 +50,7 @@
 </div>
 
 
-<div class="col-lg-5 media flex" title="{{$type}}{{$id}}">
+<div class="col-lg-5 media flex drop" title="{{$type}}{{$id}}">
 
 
     <div class="name-media-list">
@@ -66,6 +66,8 @@
         <li><a data-toggle="tab" href="#video-tab">Video</a></li>
         <li><a data-toggle="tab" href="#mp3-tab">Mp3</a></li>
         @yield('list_users_tab')
+        <li><a data-toggle="tab" href="#sticker-tab">Sticker</a></li>
+
     </ul>
     <div class="tab-content media-list ">
         <div id='ytb-tab' class="tab-pane fade ">
@@ -106,6 +108,16 @@
             </div>
         </div>
         @yield('list_users')
+        <div id='sticker-tab' class="tab-pane fade">
+            <div class="ytb-list ">
+                {{--<ul class="image-grid music-wrapper" id="list">--}}
+                    @foreach( \App\Models\Emoji::all() as $emoji)
+                            {!! \App\Helpers\Sticker::embededSticker($emoji->url) !!}
+                    @endforeach
+                {{--</ul>--}}
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -119,6 +131,9 @@
         $("#file-0").fileinput();
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
+    <script src="{{url("js/jquery.js")}}"></script>
+    <script src="{{url("js/jquery-ui.js")}}"></script>
+    <script src="{{url("js/jquery.simulate.js")}}"></script>
     <script src="{{ url('/js/music.js') }}"></script>
     <script src="{{ url('/js/video.js') }}"></script>
     <script src="{{ url('/js/custom.js') }}"></script>

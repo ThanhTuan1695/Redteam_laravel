@@ -1,5 +1,5 @@
 
-var socket_text = io.connect('http://localhost:8890/general');
+var socket_general = io.connect('http://localhost:8890/general');
 var channel = $('.media').attr('title');
 var input = $('#love-mes-form').find("input[type=text]");
 
@@ -9,7 +9,7 @@ $('#love-mes-form').on('submit', function (e) {
 
     getTextAnimation(text);
     e.preventDefault();
-    socket_text.emit('text', channel, text);
+    socket_general.emit('text', channel, text);
 });
 
 function getTextAnimation(text){
@@ -61,6 +61,87 @@ function animation() {
         {ease: Back.easeOut.config(1.7), opacity: 1, bottom: 0}, 0.05);
 }
 
-socket_text.on(channel+'text', function (text) {
+socket_general.on(channel+'text', function (text) {
     getTextAnimation(text);
 });
+
+
+$('.drop').droppable({
+    tolerance: 'fit'
+});
+
+$('.drag').draggable({
+    // revert: 'invalid', 
+    helper: 'clone',
+
+    // drag: function(e, ui){
+    //           // var offset = $(this).offset();
+    //           // var xPos = offset.left;
+    //           // var yPos = offset.top;          
+    //           console.log(ui.offset.left + " " + ui.offset.top);
+    //            leftPosition  = ui.offset.left - $(this).offset().left;
+    // 	topPosition   = ui.offset.top - $(this).offset().top;
+    //           console.log(ui.position.left + " " + ui.position.top);
+    //       },
+    stop: function(event, ui ){
+        $(this).draggable('option','revert','invalid');
+
+    }
+});
+
+$('.drag').droppable({
+    greedy: true,
+    tolerance: 'touch',
+    drop: function(event,ui){
+        ui.draggable.draggable('option','revert',true);
+
+    }
+});
+
+
+$('.drop').droppable({
+    // accept: ".drag",
+
+    drop: function(event,ui){
+        // console.log(ui.position.left + " " + ui.position.top);
+        if ($(ui.draggable)[0].id != "") {
+            x = ui.helper.clone();
+            ui.helper.remove();
+            console.log(1);
+            // x.attr('id',"bla");
+            x.draggable({
+                helper: 'original',
+                containment: '.drop',
+            });
+
+            x.appendTo('.drop');
+        }
+        var content = "";
+        for(var i = 0; i<$('.drop>.drag').length; i++){
+            content+=$('.drop>.drag')[i].outerHTML;
+        }
+        socket_general.emit('sticker',channel,content);
+    },
+
+});
+
+socket_general.on(channel+'sticker', function (content) {
+    console.log(content);
+    $('.drop>.drag').remove();
+    $('.drop').append(content);
+    $('.drop>.drag').draggable();
+
+
+});
+
+// function trigger_drop(x,y) {
+//     var draggable = $(".drag").draggable();
+//     dx = $('.drop').offset().left + x;
+//     dy = $('.drop').offset().top + y;
+//
+//
+//     draggable.simulate("drag", {
+//         dx: x,
+//         dy: y
+//     });
+// }

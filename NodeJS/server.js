@@ -176,4 +176,9 @@ var general = io
         socket.on('text', function (channel, text) {
             socket.broadcast.emit(channel + 'text', text);
         });
+
+        socket.on('sticker', function (channel, content) {
+            console.log('server');
+            socket.broadcast.emit(channel + 'sticker', content);
+        });
     });

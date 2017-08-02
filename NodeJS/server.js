@@ -173,12 +173,26 @@ var general = io
     .of('/general')
     .on('connection', function (socket) {
         console.log("general connected");
+        socket.on('newSocket', function (channel) {
+
+            if (socketIdList[channel] != undefined) {
+                if (socketIdList[channel].length > 1) {
+                    var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
+                    io.of('/general').to('/general#' + lateSocketId).emit(channel + 'sticker_getCurrent');
+                }
+            }
+        })
+
+        socket.on('sticker_getCurrent', function (channel, data) {
+            console.log(data);
+            io.of('/general').to('/general#' + socketIdList[channel][0]).emit(channel + 'sticker_setCurrent', data);
+        });
+
         socket.on('text', function (channel, text) {
             socket.broadcast.emit(channel + 'text', text);
         });
 
         socket.on('sticker', function (channel, content) {
-            console.log('server');
             socket.broadcast.emit(channel + 'sticker', content);
         });
     });

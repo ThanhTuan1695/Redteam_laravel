@@ -167,17 +167,16 @@ fieldset {
   overflow-y: auto;
   word-wrap: break-word;
 }
-.name-media-list{
+.sticker_list{
   height: 50%;
   margin-top: 21px;
-  background-color: black;
-  position: relative;
 }
 .content{
   display: table;
 }
 
 .flex {
+  float:  initial;
   display: table-cell;
   vertical-align: top;
 }
@@ -198,7 +197,7 @@ fieldset {
 }
 .ani-container{
   position: absolute;
-  top: 45%;
+  top: 70%;
   height: 90%;
   width: 52%;
   opacity: 1;
@@ -215,7 +214,7 @@ fieldset {
 .ani-container{
   display: none;
   transform: translate(-50%, -50%);
-  top: 50%;
+  top: 70%;
   left: 50%;
   max-width: 100%;
 }
@@ -224,7 +223,7 @@ fieldset {
   float: left;
   position: relative;
   bottom: -65px;
-  left: 50%;
+  left: 30%;
   transform: translateX(-50%) rotate(-10deg);
   color: #e55643;
   text-transform: uppercase;
@@ -243,9 +242,9 @@ fieldset {
 .ani-container h1{
   color: #fff;
   text-transform: uppercase;
-  font-size: 81px;
+  font-size: 91px;
   margin: 0;
-  line-height: 105px;
+  line-height: 115px;
   letter-spacing: 2px;
 }
 
@@ -256,7 +255,7 @@ fieldset {
   left: 50%;
   position: relative;
 }
-.ani-title span {
+.ani-title span, .custom-text-sticker span {
   transform: skew(-10deg);
   display: block;
   float: left;
@@ -278,4 +277,11 @@ fieldset {
  }
 .main-content{
   height: 69%;
+}
+.custom-text-sticker{
+  z-index: 1;
+  font-size: 30px;
+}
+.sticker-play:hover{
+  cursor: pointer;
 }

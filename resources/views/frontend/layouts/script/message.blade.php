@@ -23,7 +23,8 @@
         else {
             $('.media').addClass('hidden').stop().fadeOut("slow");
             $('.content').removeClass('col-lg-7').removeClass('flex').addClass('col-lg-12');
-        };
+        }
+        ;
     });
     $('#form-sub').on('submit', function (e) {
         var token = $("input[name='_token']").val();
@@ -99,6 +100,7 @@
     var isNewSocket = 0;
     var timeChange = null;
     var isFromSocket = false;
+    var type;
     function onYouTubeIframeAPIReady() {
         var temp = $(".ytb-list iframe.yt_players");
         for (var i = 0; i < temp.length; i++) {
@@ -128,7 +130,14 @@
     function onPlayerStateChange(event) {
 
         if (isFromSocket == true) {
+            if (event.data == YT.PlayerState.PLAYING && type =='playing') {
+                isFromSocket = false;
+            }
+            else if (event.data == YT.PlayerState.PAUSED && type =='paused') {
+                isFromSocket = false;
+            }
             return;
+
         }
         else if (event.data == YT.PlayerState.PLAYING) {
             var src = event.target.a.src;
@@ -151,7 +160,6 @@
             if (players[i].a.src == src) {
                 players[i].pauseVideo();
                 order = i;
-                isFromSocket = false;
                 return order;
             }
         }
@@ -167,7 +175,6 @@
                 order = i;
             }
         }
-        isFromSocket = false;
         return order;
     }
 
@@ -192,13 +199,15 @@
     })
     socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBplay', function (order, currentTime) {
         isFromSocket = true;
+        type = 'playing';
         players[order].seekTo(currentTime);
         players[order].playVideo();
         play(players[order].a.src);
-        console.log(isFromSocket);
     });
     socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBpause', function (order) {
         isFromSocket = true;
+        type = 'paused';
+
         pause(players[order].a.src);
 
     });
@@ -270,43 +279,43 @@
                 },
                 success: function (data) {
                     console.log(data);
-                    if(data.success) {
+                    if (data.success) {
 
                         var user = data.users;
                         var room = data.rooms;
                         var username = user.map(function (a) {
                             var result = [];
-                            result.push({id:a.id,name:a.username});
+                            result.push({id: a.id, name: a.username});
                             return result;
                         });
 
                         var roomname = room.map(function (a) {
                             var result = [];
-                            result.push({id:a.id, name:a.name});
+                            result.push({id: a.id, name: a.name});
                             return result;
                         });
                         var content = "";
                         var roomContent = "";
                         for (var i = 0; i < username.length; i++) {
                             var obj = username[i];
-                            for (var k = 0 ; k < obj.length; k++){
-                                var path = "/single/"  + obj[k].id;
-                                var url = window.location.protocol+"//" + window.location.host + path;
-                                content += '<li><a href="' +url+
-                                    '">'
-                                + obj[k].name
-                                + '</a></li>';
+                            for (var k = 0; k < obj.length; k++) {
+                                var path = "/single/" + obj[k].id;
+                                var url = window.location.protocol + "//" + window.location.host + path;
+                                content += '<li><a href="' + url +
+                                        '">'
+                                        + obj[k].name
+                                        + '</a></li>';
                             }
                         }
                         for (var i = 0; i < roomname.length; i++) {
                             var objroom = roomname[i];
-                            for (var k = 0; k< objroom.length; k++) {
-                                var path = "/room/"  + objroom[k].id;
-                                var url = window.location.protocol+"//" + window.location.host + path;
-                                roomContent += '<li><a href="' +url+
-                                    '">'
-                                    + objroom[k].name
-                                    + '</a></li>';
+                            for (var k = 0; k < objroom.length; k++) {
+                                var path = "/room/" + objroom[k].id;
+                                var url = window.location.protocol + "//" + window.location.host + path;
+                                roomContent += '<li><a href="' + url +
+                                        '">'
+                                        + objroom[k].name
+                                        + '</a></li>';
                             }
                         }
                         if (content != "") {
@@ -317,7 +326,7 @@
                             $('.myRoom').html("");
                             $('.myUser').html("");
                         }
-                    }else{
+                    } else {
                         $('.myRoom').html("");
                         $('.myUser').html("");
                         console.log("ko co du lieu");

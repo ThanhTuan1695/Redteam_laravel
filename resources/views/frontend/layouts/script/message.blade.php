@@ -194,8 +194,8 @@
         isFromSocket = true;
         players[order].seekTo(currentTime);
         players[order].playVideo();
-        console.log(isFromSocket);
         play(players[order].a.src);
+        console.log(isFromSocket);
     });
     socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBpause', function (order) {
         isFromSocket = true;

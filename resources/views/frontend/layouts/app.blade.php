@@ -14,6 +14,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ url('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ url('/css/style.css') }}" rel="stylesheet">
     <link href="{{ url('/css/music.css') }}" rel="stylesheet">
     <link href="{{ url('/css/video.css') }}" rel="stylesheet">
@@ -22,16 +23,19 @@
 </head>
 
 <body class="skin-blue sidebar-mini">
-    
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-10 main-content" style="float:right">
-                    @yield('content')
+
+        @include('frontend.layouts.sidebar')
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 main-content" >
+                        @yield('content')
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
 
 
     <!-- jQuery 3.1.1 -->
@@ -44,18 +48,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
 
     <!-- Chat  -->
-    <script src="{{ url('/js/fileinput.js') }}" ></script>
-   {{--  <script src="{{ url('/js/fileinput.js') }}" ></script> --}}
-    <script>
-        $("#file-0").fileinput();
-    </script>
+
 
     @yield('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
-    <script src="{{ url('/js/music.js') }}" ></script>
-    <script src="{{ url('/js/video.js') }}" ></script>
-    <script src="{{ url('/js/custom.js') }}" ></script>
-    <script src="{{ url('/js/jquery.lettering-0.6.1.min.js') }}" ></script>
+    @yield('added-scripts')
+
+
 
 </body>
 </html>

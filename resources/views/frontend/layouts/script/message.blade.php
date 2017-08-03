@@ -23,7 +23,7 @@
         else {
             $('.media').addClass('hidden').stop().fadeOut("slow");
             $('.content').removeClass('col-lg-7').removeClass('flex').addClass('col-lg-12');
-        }
+        };
     });
     $('#form-sub').on('submit', function (e) {
         var token = $("input[name='_token']").val();
@@ -134,6 +134,7 @@
             var src = event.target.a.src;
             var order = play(src);
             var currentTime = event.target.getCurrentTime();
+            console.log('send');
             socket_ytb.emit('YTBplay', '{{$type}}' + '{{$id}}', order, currentTime);
         }
         else if (event.data == YT.PlayerState.PAUSED) {
@@ -193,6 +194,7 @@
         isFromSocket = true;
         players[order].seekTo(currentTime);
         players[order].playVideo();
+        console.log(isFromSocket);
         play(players[order].a.src);
     });
     socket_ytb.on('{{$type}}' + '{{$id}}' + 'YTBpause', function (order) {
@@ -201,21 +203,21 @@
 
     });
 
-    $(function(){
-      $('#message-content').keyup(function() {
-          var content = $(this).val();
-          $.ajax({
-              url: '/previewUrl',
-              type: 'GET',
-              data: {
-                  content: content,
-              },
-              success: function (response) {
-                console.log(response);
-               if (response.success) {
-                  var data =response.data;
-                  var preview = '<div class="row" data-miss>'
-                  +'<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
+    $(function () {
+        $('#message-content').keyup(function () {
+            var content = $(this).val();
+            $.ajax({
+                url: '/previewUrl',
+                type: 'GET',
+                data: {
+                    content: content,
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        var data = response.data;
+                        var preview = '<div class="row" data-miss>'
+                                + '<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
                                 + '<div class="col-md-3">'
                                 + '<div style="background: #999;">'
                                 + '<img src="' + data.image + '" width="150" height="180">'
@@ -232,15 +234,15 @@
                                 + '</div>'
                                 + '</div>';
 
-                $('.file-preview .row').remove();
-                $('div.file-preview').addClass('alert alert-default alert-dismissable');
-                $('.file-preview').append(preview);
-                }else{
-                   $('.file-preview .row').remove();
+                        $('.file-preview .row').remove();
+                        $('div.file-preview').addClass('alert alert-default alert-dismissable');
+                        $('.file-preview').append(preview);
+                    } else {
+                        $('.file-preview .row').remove();
+                    }
                 }
-               }
-          });
-    });
+            });
+        });
     });
 </script>
 

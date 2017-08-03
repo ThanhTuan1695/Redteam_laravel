@@ -161,21 +161,22 @@ fieldset {
   height: 100%;
 }
 .media-list{
-  height: 50%;
+  height: 400px;
   border-bottom: 1px solid blue;
   overflow-x: hidden;
   overflow-y: auto;
   word-wrap: break-word;
 }
-.name-media-list{
+.sticker_list{
   height: 50%;
+  margin-top: 21px;
 }
 .content{
   display: table;
 }
 
 .flex {
-  float: none;
+  /*float:  initial;*/
   display: table-cell;
   vertical-align: top;
 }
@@ -195,9 +196,9 @@ fieldset {
   width: 100%;
 }
 .ani-container{
-  position: fixed;
-  top: 50%;
-  height: 90%;
+  position: absolute;
+  top: 70%;
+  height: 50%;
   width: 52%;
   opacity: 1;
   z-index: 1;
@@ -213,8 +214,8 @@ fieldset {
 .ani-container{
   display: none;
   transform: translate(-50%, -50%);
-  top: 73%;
-  left: 50%;
+  top: 50%;
+  left: 40%;
   max-width: 100%;
 }
 
@@ -222,7 +223,7 @@ fieldset {
   float: left;
   position: relative;
   bottom: -65px;
-  left: 50%;
+  left: 30%;
   transform: translateX(-50%) rotate(-10deg);
   color: #e55643;
   text-transform: uppercase;
@@ -241,9 +242,9 @@ fieldset {
 .ani-container h1{
   color: #fff;
   text-transform: uppercase;
-  font-size: 107px;
+  font-size: 91px;
   margin: 0;
-  line-height: 105px;
+  line-height: 115px;
   letter-spacing: 2px;
 }
 
@@ -254,7 +255,7 @@ fieldset {
   left: 50%;
   position: relative;
 }
-.ani-title span {
+.ani-title span, .custom-text-sticker span {
   transform: skew(-10deg);
   display: block;
   float: left;
@@ -282,4 +283,20 @@ fieldset {
   overflow-x: hidden;
   overflow-y: auto;
   word-wrap: break-word;
+}
+
+.main-content{
+  height: 69%;
+}
+.custom-text-sticker{
+  z-index: 1;
+  font-size: 30px;
+}
+.sticker-play:hover{
+  cursor: pointer;
+}
+.ui-icon-gripsmall-diagonal-se {
+  background-color: black;
+  width: 5px;
+  height: 5px;
 }

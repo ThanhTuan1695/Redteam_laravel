@@ -52,6 +52,7 @@ var ytb = io
 
 
         socket.on('YTBplay', function (channel, order, currentTime) {
+            console.log('play');
             socket.broadcast.emit(channel + 'YTBplay', order, currentTime);
         });
 
@@ -100,7 +101,6 @@ var music = io
         });
 
         socket.on('MSplay', function (channel, audioName) {
-
             socket.broadcast.emit(channel + 'MSplay', audioName);
         });
 
@@ -173,7 +173,26 @@ var general = io
     .of('/general')
     .on('connection', function (socket) {
         console.log("general connected");
+        socket.on('newSocket', function (channel) {
+
+            if (socketIdList[channel] != undefined) {
+                if (socketIdList[channel].length > 1) {
+                    var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
+                    io.of('/general').to('/general#' + lateSocketId).emit(channel + 'sticker_getCurrent');
+                }
+            }
+        })
+
+        socket.on('sticker_getCurrent', function (channel, data) {
+            console.log(data);
+            io.of('/general').to('/general#' + socketIdList[channel][0]).emit(channel + 'sticker_setCurrent', data);
+        });
+
         socket.on('text', function (channel, text) {
             socket.broadcast.emit(channel + 'text', text);
+        });
+
+        socket.on('sticker', function (channel, content) {
+            socket.broadcast.emit(channel + 'sticker', content);
         });
     });

@@ -20,7 +20,7 @@ class MessagesRepository extends BaseRepository
         'content',
         'user_id',
         'messageable_id',
-        'messageable_type'
+        'messageable_type'  
     ];
 
     /**

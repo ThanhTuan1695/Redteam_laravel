@@ -26,12 +26,11 @@
                 </div>
             </div>
         </div>
+
         <form action="" id="#search-form">
             <input type="text" class="btn btn-flat" name="search"
                    id="search" value=""/>
             <button type="reset" class="fa fa-times" id="exit" name="exit" onclick="myExit()"></button>
-        </form>
-
 
         <!-- Sidebar Menu -->
         <div id="display-sidebar">
@@ -71,5 +70,4 @@
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
 </script>
-
 

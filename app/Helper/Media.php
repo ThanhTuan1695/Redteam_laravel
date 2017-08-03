@@ -35,15 +35,15 @@ class Media
 
     static function embededMusic($id)
     {
-        return "<li>
-        <div class='container gradient'>
+        return "
+        <div class='container gradient music-player'>
             <div class='player gradient clearfix' id='".$id."'>
                 <a class='button gradient' id='play' href='' title=''><span class='glyphicon glyphicon-play' aria-hidden='true'></span></a>
                 <a class='button gradient' id='mute' href='' title=''><span class='glyphicon glyphicon-volume-up' aria-hidden='true'></a>
                 <input type='range' id='seek' value='0' max=''/>
             </div>
         </div>
-    </li>";
+    ";
     }
 
     static function embededPhoto($id)

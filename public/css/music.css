@@ -1,9 +1,9 @@
 .gradient {
     border: 1px solid black;
 
-    -webkit-box-shadow: inset 0 1px 0px rgba(255,255,255,.2);
-    -moz-box-shadow: inset 0 1px 0px rgba(255,255,255,.2);
-    box-shadow: inset 0 1px 0px rgba(255,255,255,.2);
+    -webkit-box-shadow: inset 0 1px 0px rgba(255, 255, 255, .2);
+    -moz-box-shadow: inset 0 1px 0px rgba(255, 255, 255, .2);
+    box-shadow: inset 0 1px 0px rgba(255, 255, 255, .2);
     background: #494949; /* Old browsers */
     background: -webkit-linear-gradient(top, #494949 0%, #434242 31%, #393838 55%, #242323 83%, #1b1a1a 100%, #161515 100%, #0b0b0b 100%);
 
@@ -14,35 +14,38 @@
 }
 
 .container {
-    margin-bottom : 10px;
+    margin-bottom: 10px;
     -webkit-transition: all .7s ease;
     -moz-transition: all .7s ease;
     -o-transition: all .7s ease;
     -ms-transition: all .7s ease;
     transition: all .7s ease;
     /*    position: absolute;
-    */    width: 700px;
+    */
+    width: 700px;
     height: 70px;
 
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
 
-    -webkit-box-shadow: 0px 0px 13px rgba(0,0,0,.3),inset 0 1px 0px rgba(255,255,255,.2);
-    -moz-box-shadow: 0px 0px 13px rgba(0,0,0,.3),inset 0 1px 0px rgba(255,255,255,.2);
-    box-shadow: 0px 0px 13px rgba(0,0,0,.3),inset 0 1px 0px rgba(255,255,255,.2);
+    -webkit-box-shadow: 0px 0px 13px rgba(0, 0, 0, .3), inset 0 1px 0px rgba(255, 255, 255, .2);
+    -moz-box-shadow: 0px 0px 13px rgba(0, 0, 0, .3), inset 0 1px 0px rgba(255, 255, 255, .2);
+    box-shadow: 0px 0px 13px rgba(0, 0, 0, .3), inset 0 1px 0px rgba(255, 255, 255, .2);
     /* top: 50%;
      left: 50%;*/
     /*    margin: -214px 0px 0px -214px;
-    */    padding: 10px;
+    */
+    padding: 10px;
 
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 .player {
-    margin-top : 9px;
+    margin-top: 9px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -89,7 +92,6 @@ input[type="range"] {
     margin-top: -5px;
 }
 
-
 .volume {
     position: absolute;
     height: 100px;
@@ -99,9 +101,11 @@ input[type="range"] {
     top: -97px;
     display: none;
 }
-input{
-    display:none\9!important;
+
+input {
+    display: none \9 !important;
 }
+
 input[type="range"] {
     -webkit-appearance: none;
     border: 1px solid black;
@@ -117,16 +121,16 @@ input[type="range"] {
     background-color: #242323;
     left: 30%;
 
-    -webkit-box-shadow: inset 0px 4px 4px rgba(0,0,0,.6);
-    -moz-box-shadow: inset 0px 4px 4px rgba(0,0,0,.6);
-    box-shadow: inset 0px 4px 4px rgba(0,0,0,.6);
+    -webkit-box-shadow: inset 0px 4px 4px rgba(0, 0, 0, .6);
+    -moz-box-shadow: inset 0px 4px 4px rgba(0, 0, 0, .6);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, .6);
 }
 
 input::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
-    border:1px solid black;
+    border: 1px solid black;
 
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -138,7 +142,7 @@ input::-webkit-slider-thumb {
     background: linear-gradient(top, #80e4df 0%, #75dbd6 13%, #5ec4bf 33%, #57bbb6 47%, #419d99 80%, #378f8b 100%); /* W3C */
 }
 
-#volume{
+#volume {
     -webkit-appearance: none;
     position: absolute;
     top: 12px;
@@ -150,20 +154,19 @@ input::-webkit-slider-thumb {
     border-radius: 20px;
     background-color: #242323;
     left: 13%;
-    -webkit-box-shadow: inset 0px 4px 4px rgba(0,0,0,.6);
-    -moz-box-shadow: inset 0px 4px 4px rgba(0,0,0,.6);
-    box-shadow: inset 0px 4px 4px rgba(0,0,0,.6);
+    -webkit-box-shadow: inset 0px 4px 4px rgba(0, 0, 0, .6);
+    -moz-box-shadow: inset 0px 4px 4px rgba(0, 0, 0, .6);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, .6);
 }
 
-.progressBar
-{
+.progressBar {
     position: relative;
     width: 100%;
-    height:10px;
+    height: 10px;
     background-color: #000;
 }
-.timeBar
-{
+
+.timeBar {
     position: absolute;
     top: 0;
     left: 0;
@@ -177,9 +180,14 @@ input::-webkit-slider-thumb {
     height: 427px;
 }
 
-.button>span{
+.button > span {
     color: white;
     top: 21%;
     font-size: 0.5cm;
     left: 20%;
+}
+
+.music-player {
+    margin-left: 0px;
+    margin-bottom: 30px;
 }

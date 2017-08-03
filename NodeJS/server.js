@@ -52,6 +52,7 @@ var ytb = io
 
 
         socket.on('YTBplay', function (channel, order, currentTime) {
+            console.log('play');
             socket.broadcast.emit(channel + 'YTBplay', order, currentTime);
         });
 
@@ -100,7 +101,6 @@ var music = io
         });
 
         socket.on('MSplay', function (channel, audioName) {
-
             socket.broadcast.emit(channel + 'MSplay', audioName);
         });
 

@@ -23,16 +23,19 @@
 </head>
 
 <body class="skin-blue sidebar-mini">
-    
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-10 main-content" style="float:right">
-                    @yield('content')
+
+        @include('frontend.layouts.sidebar')
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 main-content" >
+                        @yield('content')
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
 
 
     <!-- jQuery 3.1.1 -->

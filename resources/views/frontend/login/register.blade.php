@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="container" style="margin-left:220px" >
+    <div class="container1" style="margin-left:220px" >
         <form id="contact" action="{{ route('register_user') }}" method="post" enctype="multipart/form-data">
             @include('flash::message')
             @include('adminlte-templates::common.errors')
@@ -26,7 +26,7 @@
                 <button type="submit" class="btn btn-success my_btn">Submit</button>
             </fieldset>
             <fieldset>
-                <a href="{{ route('loginChat') }}"><button type="button" class="btn btn-success my_btn">Login</button></a>
+                <a href="{{ route('loginChat') }}"><button type="button" class="btn btn-success my_btn" style="width:350px;">Login</button></a>
             </fieldset>
         </form>
     </div>

@@ -27,10 +27,10 @@
     @include('frontend.layouts.sidebar')
 @endif
 
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="background-color: white">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 main-content" >
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 main-content"  >
                         @yield('content')
                     </div>
                 </div>

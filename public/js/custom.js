@@ -1,4 +1,4 @@
-var socket_general = io.connect('http://localhost:8890/general');
+var socket_general = io.connect(node_url+'/general');
 var channel = $('.media').attr('title');
 var input = $('#love-mes-form').find("input[type=text]");
 var customText = $('#custom-text').find("input[type=text]");

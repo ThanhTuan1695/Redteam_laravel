@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\PublicLoginRequest;
+use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use DB;
 use App\Models\User;
@@ -28,6 +27,7 @@ class LoginChatController extends Controller
 
     public function login(PublicLoginRequest $request)
     {
+//        dd(1);
         if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
             return redirect(route('homeChat'));
         } else {

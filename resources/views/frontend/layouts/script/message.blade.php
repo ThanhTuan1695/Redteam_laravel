@@ -2,8 +2,9 @@
 <script src="http://www.youtube.com/player_api"></script>
 
 <script type="text/javascript">
-    var socket_msg = io.connect('http://localhost:8890/msg');
-    var socket_connect = io.connect('http://localhost:8890/');
+    var socket_msg = io.connect('{{Config::get('constants.url.nodejs')}}/msg');
+    var socket_connect = io.connect('{{Config::get('constants.url.nodejs')}}');
+    var node_url = '{{Config::get('constants.url.nodejs')}}';
     var channel = $('.media').attr('title');
     socket_connect.emit('newSocketConnect', channel);
 
@@ -93,7 +94,7 @@
         $(".music-wrapper").append(data.list_media_mp3);
         $('.file-preview .row').remove();
     });
-    var socket_ytb = io.connect('http://localhost:8890/ytb');
+    var socket_ytb = io.connect('{{Config::get('constants.url.nodejs')}}/ytb');
     socket_ytb.emit('newSocket', channel);
     players = new Array();
     var statusCurrent;

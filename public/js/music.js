@@ -1,5 +1,5 @@
 $(function () {
-    var socket = io.connect('http://localhost:8890/music');
+    var socket = io.connect(node_url+'/music');
     var channel = $('.media').attr('title');
     socket.emit('newSocket', channel);
     var channel = $('.media').attr('title');

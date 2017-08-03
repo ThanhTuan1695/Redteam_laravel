@@ -47,6 +47,8 @@ var ytb = io
         });
 
         socket.on('YTBpause', function (channel, data) {
+            console.log('pause');
+
             socket.broadcast.emit(channel + 'YTBpause', data);
         });
 

@@ -25,9 +25,9 @@
                                     {!! \App\Helpers\Media::embededPhoto($media->url)!!}
                                 @endif
                             @endforeach
-                        @else 
+                        @else
                             {!! \App\Helpers\PreviewURL::getPreviewUrl($message->content) !!}
-                        @endif 
+                        @endif
                     </div>
                 @endforeach
             </div>
@@ -35,12 +35,13 @@
         <div class="input-message-container">
             <form action="" method="" id="form-sub">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control textarea-control" data-emojiable="true"
+                <textarea cols="1" rows="1" name="message" id="message-content" class="form-control textarea-control"
+                          data-emojiable="true"
                           style="float:left;resize:none;border-radius:5px">
                 </textarea>
                 <input type="button" class="display-media btn btn-default" name="media" value="Media">
                 <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
-                <div ">
+                <div>
                     <input id="file-0" type="file" name="file" class="file" style="height:100px"
                            data-preview-file-type="text">
                 </div>
@@ -51,8 +52,6 @@
 
 
 <div class="col-lg-5 col-md-5 col-sm-6 col-xs-6 media flex drop" title="{{$type}}{{$id}}">
-
-
 
 
     <ul class="nav nav-tabs">
@@ -110,18 +109,22 @@
         </form>
     </div>
     <div class="sticker-list ">
-        <div id='sticker-tab' >
+        <div id='sticker-tab'>
             <div class="ytb-list media-list ">
                 @foreach( \App\Models\Emoji::all() as $emoji)
-                   <div class="drag" style="display: inline-block; width: 80px;" > {!! \App\Helpers\Sticker::embededSticker($emoji->url) !!}</div>
+                    <div class="drag"
+                         style="display: inline-block; width: 80px;"> {!! \App\Helpers\Sticker::embededSticker($emoji->url) !!}</div>
                 @endforeach
 
             </div>
         </div>
         <div>
             <form action="" id="custom-text">
-                <input type="text" value="" > <span class="glyphicon glyphicon-play sticker-play" style="font-size: 25px; display: inline-block;"></span>
-                <div style="display:inline-block;"><img class='bin' id='st{{str_random(6)}}' src='{{url('storage/sticker')}}/bin.png' style='width : 80px;' ></div>
+                <input type="text" value=""> <span class="glyphicon glyphicon-play sticker-play"
+                                                   style="font-size: 25px; display: inline-block;"></span>
+                <div style="display:inline-block;"><img class='bin' id='st{{str_random(6)}}'
+                                                        src='{{url('storage/sticker')}}/bin.png' style='width : 80px;'>
+                </div>
             </form>
 
         </div>

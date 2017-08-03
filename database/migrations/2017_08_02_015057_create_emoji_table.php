@@ -26,6 +26,6 @@ class CreateEmojiTable extends Migration
      */
     public function down()
     {
-        Schema::drop('emoji');
+        Schema::dropIfExists('emoji');
     }
 }

@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateRoomsRequest;
 use App\Http\Requests\UpdateRoomsRequest;
+use App\Models\Rooms;
 use App\Models\User;
 use App\Repositories\RoomsRepository;
 use Flash;
 use Illuminate\Http\Request;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Illuminate\Support\Facades\DB;
 
 class RoomsController extends AppBaseController
 {
@@ -157,5 +159,26 @@ class RoomsController extends AppBaseController
         Flash::success('Rooms deleted successfully.');
 
         return redirect(route('rooms.index'));
+    }
+
+    function users($id){
+        $room = Rooms::find($id);
+        $users = $room->users;
+        return view('backend.rooms.user.index', compact('room', 'users'));
+    }
+
+    public function destroyUser($id, $userId)
+    {
+        $room = Rooms::find($id);
+        $check = DB::table('user_room')->where('room_id', $id)
+            ->where('user_id', $userId)->get();
+        if ($check->isEmpty()) {
+            Flash::error('User not found');
+            return redirect(route('room.user.index', $id));
+        }
+
+        $room->users()->detach($check[0]);
+        Flash::success('User out Room successfully.');
+        return redirect(route('room.user.index', $id));
     }
 }

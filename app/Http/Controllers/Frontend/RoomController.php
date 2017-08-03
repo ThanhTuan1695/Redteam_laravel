@@ -101,6 +101,10 @@ class RoomController extends Controller
         $room->users()->detach($check[0]);
 
     }
+    public function callback($id)
+    {
+        return $this->index($id);
+    }
 
     public function callback($id)
     {

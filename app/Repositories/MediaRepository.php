@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Media;
+use App\Models\Rooms;
+use Illuminate\Support\Facades\App;
 use InfyOm\Generator\Common\BaseRepository;
 
 class MediaRepository extends BaseRepository
@@ -23,5 +25,10 @@ class MediaRepository extends BaseRepository
     public function model()
     {
         return Media::class;
+    }
+    public  function listMedia($id){
+        $room = Rooms::find($id);
+        $meidas = $room->medias;
+        return $meidas;
     }
 }

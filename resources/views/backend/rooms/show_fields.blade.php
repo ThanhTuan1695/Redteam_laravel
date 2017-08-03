@@ -39,3 +39,12 @@
     <p>{!! $rooms->updated_at !!}</p>
 </div>
 
+<div class="form-group">
+    {!! Form::label('list_media', 'List Medias:') !!}
+   <span><a href="{{url('admin/rooms/'.$rooms->id.'/medias')}}">Click here</a></span>
+</div>
+
+<div class="form-group">
+    {!! Form::label('list_user', 'List Users:') !!}
+    <span><a href="{{url('admin/rooms/'.$rooms->id.'/users')}}">Click here</a></span>
+</div>

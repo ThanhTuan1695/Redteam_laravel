@@ -26,8 +26,12 @@ Route::group(['prefix' => 'admin','middleware'=>'admin'],function(){
 	Route::get('/', ['as' => 'home.index', 'uses' => 'Backend\HomeController@index']);
 	Route::resource('rooms', 'Backend\RoomsController');
 	Route::resource('messages', 'Backend\MessagesController');
-	Route::resource('media', 'Backend\MediaController');
 	Route::resource('users', 'Backend\UserController');
+	Route::get('rooms/{id}/medias', 'Backend\MediaController@index')->name('media.index');
+	Route::delete('rooms/{id}/medias/{mediaId}', 'Backend\MediaController@destroy')->name('media.destroy');
+	Route::get('rooms/{id}/medias/{mediaId}', 'Backend\MediaController@show')->name('media.show');
+	Route::get('rooms/{id}/users', 'Backend\RoomsController@users')->name('room.user.index');
+	Route::delete('rooms/{id}/users/{userId}', 'Backend\RoomsController@destroyUser')->name('room.user.destroy');;
 });
 
 Route::group([],function(){

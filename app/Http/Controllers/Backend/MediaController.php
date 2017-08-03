@@ -27,42 +27,14 @@ class MediaController extends AppBaseController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index($id)
     {
-        $this->mediaRepository->pushCriteria(new RequestCriteria($request));
-        $media = $this->mediaRepository->all();
+        $medias = $this->mediaRepository->listMedia($id);
 
-        return view('backend.media.index')
-            ->with('media', $media);
+        return view('backend.rooms.media.index', compact('id', 'medias'));
     }
 
-    /**
-     * Show the form for creating a new Media.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('backend.media.create');
-    }
-
-    /**
-     * Store a newly created Media in storage.
-     *
-     * @param CreateMediaRequest $request
-     *
-     * @return Response
-     */
-    public function store(CreateMediaRequest $request)
-    {
-        $input = $request->all();
-
-        $media = $this->mediaRepository->create($input);
-
-        Flash::success('Media saved successfully.');
-
-        return redirect(route('media.index'));
-    }
+  
 
     /**
      * Display the specified Media.
@@ -71,9 +43,9 @@ class MediaController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($id, $mediaId)
     {
-        $media = $this->mediaRepository->findWithoutFail($id);
+        $media = $this->mediaRepository->findWithoutFail($mediaId);
 
         if (empty($media)) {
             Flash::error('Media not found');
@@ -81,7 +53,7 @@ class MediaController extends AppBaseController
             return redirect(route('media.index'));
         }
 
-        return view('backend.media.show')->with('media', $media);
+        return view('backend.rooms.media.show', compact('media', 'id'));
     }
 
     /**
@@ -91,44 +63,7 @@ class MediaController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
-    {
-        $media = $this->mediaRepository->findWithoutFail($id);
-
-        if (empty($media)) {
-            Flash::error('Media not found');
-
-            return redirect(route('media.index'));
-        }
-
-        return view('backend.media.edit')->with('media', $media);
-    }
-
-    /**
-     * Update the specified Media in storage.
-     *
-     * @param  int              $id
-     * @param UpdateMediaRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdateMediaRequest $request)
-    {
-        $media = $this->mediaRepository->findWithoutFail($id);
-
-        if (empty($media)) {
-            Flash::error('Media not found');
-
-            return redirect(route('media.index'));
-        }
-
-        $media = $this->mediaRepository->update($request->all(), $id);
-
-        Flash::success('Media updated successfully.');
-
-        return redirect(route('media.index'));
-    }
-
+    
     /**
      * Remove the specified Media from storage.
      *
@@ -136,20 +71,20 @@ class MediaController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, $mediaId)
     {
-        $media = $this->mediaRepository->findWithoutFail($id);
+        $media = $this->mediaRepository->findWithoutFail($mediaId);
 
         if (empty($media)) {
             Flash::error('Media not found');
 
-            return redirect(route('media.index'));
+            return redirect(route('media.index', $id));
         }
 
-        $this->mediaRepository->delete($id);
+        $this->mediaRepository->delete($mediaId);
 
         Flash::success('Media deleted successfully.');
 
-        return redirect(route('media.index'));
+        return redirect(route('media.index',$id));
     }
 }

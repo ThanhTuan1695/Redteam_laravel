@@ -274,3 +274,12 @@ fieldset {
 .ani-title:nth-child(5){
    color: #f1c83c;
  }
+
+.mystyle {
+  background-color: #04436a;
+  color: white;
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  word-wrap: break-word;
+}

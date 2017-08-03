@@ -84,6 +84,7 @@ class RoomController extends Controller
         $room = Rooms::find($id);
         $check = DB::table('user_room')->where('room_id', $id)
                 ->where('user_id', Auth::user()->id)->get();
+        dd($check);
         $room->users()->detach($check[0]);
         return redirect(route('homeChat'));
     }
@@ -99,6 +100,11 @@ class RoomController extends Controller
                 ->where('user_id', $user_id)->get();
         $room->users()->detach($check[0]);
 
+    }
+
+    public function callback($id)
+    {
+        return $this->index($id);
     }
 
 }

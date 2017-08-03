@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use File;
 
 class MediaController extends AppBaseController
 {
@@ -34,7 +35,6 @@ class MediaController extends AppBaseController
         return view('backend.rooms.media.index', compact('id', 'medias'));
     }
 
-  
 
     /**
      * Display the specified Media.
@@ -63,7 +63,7 @@ class MediaController extends AppBaseController
      *
      * @return Response
      */
-    
+
     /**
      * Remove the specified Media from storage.
      *
@@ -82,9 +82,17 @@ class MediaController extends AppBaseController
         }
 
         $this->mediaRepository->delete($mediaId);
-
+        if ($media->type == 'video') {
+            File::delete(public_path().'/storage/'.$media->url.'.mp4');
+        }
+        else if ($media->type == 'mp3') {
+            File::delete(public_path().'/storage/'.$media->url.'.mp3');
+        }
+        else if ($media->type == 'image') {
+            File::delete(public_path().'/storage/'.$media->url);
+        }
         Flash::success('Media deleted successfully.');
 
-        return redirect(route('media.index',$id));
+        return redirect(route('media.index', $id));
     }
 }

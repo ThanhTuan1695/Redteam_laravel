@@ -1,5 +1,4 @@
 @extends('frontend.layouts.app')
-@include('frontend.layouts.sidebar')
 @section('content')
 @section('name-conv')
     <div class="name-conv" style="margin-bottom:20px">

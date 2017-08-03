@@ -149,6 +149,4 @@
     <script src="{{ url('/js/custom.js') }}"></script>
     <script src="{{ url('/js/jquery.lettering-0.6.1.min.js') }}"></script>
     <script src="{{ url('/js/jQueryRotate.js') }}"></script>
-
-
 @endsection

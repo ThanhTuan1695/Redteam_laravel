@@ -318,7 +318,7 @@
                                         + '</a></li>';
                             }
                         }
-                        if (content != "") {
+                        if (content != "" || roomContent!="") {
                             $('.myRoom').html(roomContent);
                             $('.myUser').html(content);
                         }

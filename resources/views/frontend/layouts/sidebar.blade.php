@@ -57,8 +57,7 @@
     </section>
     <!-- /.sidebar -->
     <div class="pull-right" style="margin:10px;">
-        <a href="{!! route('logoutPublic') !!}" class="btn btn-default btn-flat"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <a href="{!! route('logoutPublic') !!}" class="btn btn-default btn-flat">
             Sign out
         </a>
         <form id="logout-form" action="{{ route('logoutPublic') }}" method="get" style="display: none;">

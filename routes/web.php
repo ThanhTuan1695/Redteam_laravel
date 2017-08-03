@@ -39,7 +39,7 @@ Route::group([],function(){
 	Route::post('registerUser', 'Frontend\RegisterController@store')->name('register_user');
 	Route::get('loginChat', 'Frontend\LoginChatController@index')->name('loginChat');
 	Route::post('public/submitLogin', 'Frontend\LoginChatController@login')->name('submitLogin');
-	Route::group(['middleware'=>'before_login'],function(){
+//	Route::group(['middleware'=>'before_login'],function(){
 		Route::get('/','Frontend\HomeChatController@index');//xem xet lai
 		Route::get('homeChat', 'Frontend\ManagerController@index')->name('homeChat');
 		Route::get('chooseUser/{id}', 'Frontend\ManagerController@chooseUser')->name('chooseUser');
@@ -58,6 +58,8 @@ Route::group([],function(){
 		Route::post('/public/sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
 		Route::post('/public/sendmessage', 'Frontend\RoomController@sendMessage');
 		Route::get('search', 'Frontend\ManagerController@search')->name('search');
-	});
+		Route::post('webcam_upload', 'Frontend\ManagerController@webcamUpload')->name('webcam');
+
+//	});
 });
 

@@ -31,9 +31,11 @@
                             {!! Form::text('email', null, ['class' => 'form-control', 'readonly']) !!}
                         </div>
                         <div class="col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group"><br>
                                 {{ Form::file('avatar',['class' => 'control','id' => 'files']) }}
                             </div>
+                        </div>
+                        <div class="col-lg-12">
                             <div id="selectedFiles">
                                 <div class="col-lg-4">
                                 @if ($user->avatar != null && file_exists(public_path('/backend/images/upload/'.$user->avatar)))
@@ -49,7 +51,7 @@
 
                         <div class="form-group col-sm-12">
                             {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                            <a href="{!! route('users.index') !!}" class="btn btn-default">Cancel</a>
+                            <input  class="btn btn-default" type="reset" value="Cancel" />
                         </div>
 
                    {!! Form::close() !!}

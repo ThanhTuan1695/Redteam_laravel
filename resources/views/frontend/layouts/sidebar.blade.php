@@ -26,37 +26,48 @@
                 </div>
             </div>
         </div>
-        <form action="{{ route('search') }}" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="search_ip" class="form-control" placeholder="Search..."/>
-                <span class="input-group-btn">
-                    <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i
-                                class="fa fa-search"></i>
-                    </button>
-                </span>
-            </div>
-        </form>
-        <!-- Sidebar Menu -->
 
-        <ul class="sidebar-menu" style="height:250px;
+        <form action="" id="#search-form">
+            <input type="text" class="btn btn-flat" name="search"
+                   id="search" value=""/>
+            <button type="reset" class="fa fa-times" id="exit" name="exit" onclick="myExit()"></button>
+
+        <!-- Sidebar Menu -->
+        <div id="display-sidebar">
+            <ul class="sidebar-menu" style="height:250px;
         overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
-            @widget('listRooms')
-        </ul>
-        <!-- /.sidebar-menu -->
-        <ul class="sidebar-menu" style="height:210px;
+                @widget('listRooms')
+            </ul>
+            <!-- /.sidebar-menu -->
+            <ul class="sidebar-menu" style="height:210px;
         overflow-x: hidden;overflow-y: auto;word-wrap:break-word;">
-            @widget('listUsers')
-        </ul>
-        <div class="pull-right" style="margin:10px;">
-            <a href="{!! route('logoutPublic') !!}" class="btn btn-default btn-flat"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Sign out
-            </a>
-            <form id="logout-form" action="{{ route('logoutPublic') }}" method="get" style="display: none;">
-                {{ csrf_field() }}
-            </form>
+                @widget('listUsers')
+            </ul>
         </div>
+
+        <div class="result-search" id="display" hidden>
+            <ul class="sidebar-menu mystyle myRoom">
+
+            </ul>
+            <ul class="sidebar-menu mystyle myUser">
+
+            </ul>
+        </div>
+
     </section>
     <!-- /.sidebar -->
-
+    <div class="pull-right" style="margin:10px;">
+        <a href="{!! route('logoutPublic') !!}" class="btn btn-default btn-flat"
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Sign out
+        </a>
+        <form id="logout-form" action="{{ route('logoutPublic') }}" method="get" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+    </div>
 </aside>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+</script>
+

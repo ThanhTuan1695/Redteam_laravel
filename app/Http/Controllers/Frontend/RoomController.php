@@ -106,9 +106,6 @@ class RoomController extends Controller
         return $this->index($id);
     }
 
-    public function callback($id)
-    {
-        return $this->index($id);
-    }
+
 
 }

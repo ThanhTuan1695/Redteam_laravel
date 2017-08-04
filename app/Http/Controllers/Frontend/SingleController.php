@@ -61,7 +61,7 @@ class SingleController extends Controller
 
 
      public function previewUrl(Request $request){
-        $msg = $request->content;
+        $msg = $request['content'];
         $results =  PreviewURL::preview($msg);
          if (count($results) > 0 ) {
              return response()->json(['success' => true, 'data' => $results]);

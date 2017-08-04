@@ -61,14 +61,16 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="{{ url('admin/users/'.Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="{{ url('admin/users/'.Auth::user()->id) }}"
+                                           class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="{!! url('/logout') !!}" class="btn btn-default btn-flat"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             Sign out
                                         </a>
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                                              style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </div>
@@ -81,8 +83,8 @@
         </header>
 
         <!-- Left side column. contains the logo and sidebar -->
-        @include('backend.layouts.partials.sidebar')
-        <!-- Content Wrapper. Contains page content -->
+    @include('backend.layouts.partials.sidebar')
+    <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             @yield('content')
         </div>
@@ -138,19 +140,22 @@
             </div>
         </div>
     </div>
-    @endif
+@endif
 
-    <!-- jQuery 3.1.1 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<!-- jQuery 3.1.1 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
 
-    <!-- AdminLTE App -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+<script src="{{ url('/js/search.js') }}"></script>
+<script src="{{ url('/js/switchUser.js') }}"></script>
 
-    @yield('scripts')
+
+@yield('scripts')
 </body>
 </html>

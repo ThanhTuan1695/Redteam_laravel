@@ -79,10 +79,10 @@ class ManagerController extends Controller
     public function search(Request $request)
     {
         if($request['content'] != ""){
-            $search = '%'.$request->content.'%';
+            $search = '%'.$request['content'].'%';
             $users = DB::table('users')->where('username', 'like', $search)->get();
             $rooms = DB::table('rooms')->where('name', 'like', $search)->get();
-            if ($users->isNotEmpty()   || $rooms->isNotEmpty() ){
+            if ($users->isNotEmpty() || $rooms->isNotEmpty() ){
                 return response()->json(['success' => true, 'users' => $users, 'rooms' => $rooms]);
             }
         }

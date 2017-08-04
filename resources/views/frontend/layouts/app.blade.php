@@ -23,9 +23,11 @@
 </head>
 
 <body class="skin-blue sidebar-mini">
+@if (!Auth::guest())
+    @include('frontend.layouts.sidebar')
+@endif
 
-        @include('frontend.layouts.sidebar')
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="background-color: white">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 main-content" >
@@ -52,6 +54,7 @@
 
     @yield('scripts')
     @yield('added-scripts')
+{{--<script src="{{ url('/js/search.js') }}"></script>--}}
 
 
 

@@ -1,5 +1,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-<script src="http://www.youtube.com/player_api"></script>
+<script src="https://www.youtube.com/player_api"></script>
 
 <script type="text/javascript">
     var socket_msg = io.connect('{{Config::get('constants.url.nodejs')}}/msg');

@@ -258,88 +258,88 @@
     });
 </script>
 
-<script type="text/javascript">
-    function myFunction() {
-        document.getElementById('display').style.display = "block";
-        document.getElementById('display-sidebar').style.display = "none";
-    }
+{{--<script type="text/javascript">--}}
+    {{--function myFunction() {--}}
+        {{--document.getElementById('display').style.display = "block";--}}
+        {{--document.getElementById('display-sidebar').style.display = "none";--}}
+    {{--}--}}
 
-    function myExit() {
-        document.getElementById('display').style.display = "none";
-        document.getElementById('display-sidebar').style.display = "block";
-    }
+    {{--function myExit() {--}}
+        {{--document.getElementById('display').style.display = "none";--}}
+        {{--document.getElementById('display-sidebar').style.display = "block";--}}
+    {{--}--}}
 
-    $(function () {
-        $('#search').keyup(function () {
-            myFunction();
-            var content = $("#search").val();
+    {{--$(function () {--}}
+        {{--$('#search').keyup(function () {--}}
+            {{--myFunction();--}}
+            {{--var content = $("#search").val();--}}
 
-            $.ajax({
-                url: '{{url('search')}}',
-                type: 'get',
-                data: {
-                    content: content,
-                },
-                success: function (data) {
-                    console.log(data);
-                    if (data.success) {
+            {{--$.ajax({--}}
+                {{--url: '{{url('search')}}',--}}
+                {{--type: 'get',--}}
+                {{--data: {--}}
+                    {{--content: content,--}}
+                {{--},--}}
+                {{--success: function (data) {--}}
+                    {{--console.log(data);--}}
+                    {{--if (data.success) {--}}
 
-                        var user = data.users;
-                        var room = data.rooms;
-                        var username = user.map(function (a) {
-                            var result = [];
-                            result.push({id: a.id, name: a.username});
-                            return result;
-                        });
+                        {{--var user = data.users;--}}
+                        {{--var room = data.rooms;--}}
+                        {{--var username = user.map(function (a) {--}}
+                            {{--var result = [];--}}
+                            {{--result.push({id: a.id, name: a.username});--}}
+                            {{--return result;--}}
+                        {{--});--}}
 
-                        var roomname = room.map(function (a) {
-                            var result = [];
-                            result.push({id: a.id, name: a.name});
-                            return result;
-                        });
-                        var content = "";
-                        var roomContent = "";
-                        for (var i = 0; i < username.length; i++) {
-                            var obj = username[i];
-                            for (var k = 0; k < obj.length; k++) {
-                                var path = "/single/" + obj[k].id;
-                                var url = window.location.protocol + "//" + window.location.host + path;
-                                content += '<li><a href="' + url +
-                                        '">'
-                                        + obj[k].name
-                                        + '</a></li>';
-                            }
-                        }
-                        for (var i = 0; i < roomname.length; i++) {
-                            var objroom = roomname[i];
-                            for (var k = 0; k < objroom.length; k++) {
-                                var path = "/room/" + objroom[k].id;
-                                var url = window.location.protocol + "//" + window.location.host + path;
-                                roomContent += '<li><a href="' + url +
-                                        '">'
-                                        + objroom[k].name
-                                        + '</a></li>';
-                            }
-                        }
-                        if (content != "" || roomContent!="") {
-                            $('.myRoom').html(roomContent);
-                            $('.myUser').html(content);
-                        }
-                        else {
-                            $('.myRoom').html("");
-                            $('.myUser').html("");
-                        }
-                    } else {
-                        $('.myRoom').html("");
-                        $('.myUser').html("");
-                        console.log("ko co du lieu");
-                    }
-                },
-                error: function (data) {
-                    alert(data);
-                }
-            });
+                        {{--var roomname = room.map(function (a) {--}}
+                            {{--var result = [];--}}
+                            {{--result.push({id: a.id, name: a.name});--}}
+                            {{--return result;--}}
+                        {{--});--}}
+                        {{--var content = "";--}}
+                        {{--var roomContent = "";--}}
+                        {{--for (var i = 0; i < username.length; i++) {--}}
+                            {{--var obj = username[i];--}}
+                            {{--for (var k = 0; k < obj.length; k++) {--}}
+                                {{--var path = "/single/" + obj[k].id;--}}
+                                {{--var url = window.location.protocol + "//" + window.location.host + path;--}}
+                                {{--content += '<li><a href="' + url +--}}
+                                        {{--'">'--}}
+                                        {{--+ obj[k].name--}}
+                                        {{--+ '</a></li>';--}}
+                            {{--}--}}
+                        {{--}--}}
+                        {{--for (var i = 0; i < roomname.length; i++) {--}}
+                            {{--var objroom = roomname[i];--}}
+                            {{--for (var k = 0; k < objroom.length; k++) {--}}
+                                {{--var path = "/room/" + objroom[k].id;--}}
+                                {{--var url = window.location.protocol + "//" + window.location.host + path;--}}
+                                {{--roomContent += '<li><a href="' + url +--}}
+                                        {{--'">'--}}
+                                        {{--+ objroom[k].name--}}
+                                        {{--+ '</a></li>';--}}
+                            {{--}--}}
+                        {{--}--}}
+                        {{--if (content != "" || roomContent!="") {--}}
+                            {{--$('.myRoom').html(roomContent);--}}
+                            {{--$('.myUser').html(content);--}}
+                        {{--}--}}
+                        {{--else {--}}
+                            {{--$('.myRoom').html("");--}}
+                            {{--$('.myUser').html("");--}}
+                        {{--}--}}
+                    {{--} else {--}}
+                        {{--$('.myRoom').html("");--}}
+                        {{--$('.myUser').html("");--}}
+                        {{--console.log("ko co du lieu");--}}
+                    {{--}--}}
+                {{--},--}}
+                {{--error: function (data) {--}}
+                    {{--alert(data);--}}
+                {{--}--}}
+            {{--});--}}
 
-        });
-    });
-</script>
+        {{--});--}}
+    {{--});--}}
+{{--</script>--}}

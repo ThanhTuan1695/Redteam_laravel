@@ -52,8 +52,9 @@
     <!-- Chat  -->
 
 
-    @yield('scripts')
     @yield('added-scripts')
+    @yield('scripts')
+
 {{--<script src="{{ url('/js/search.js') }}"></script>--}}
 
 

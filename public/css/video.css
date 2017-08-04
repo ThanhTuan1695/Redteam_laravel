@@ -1,12 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Oswald:300);
 
 
-video { border-radius: 6px; }
+video {
+    border-radius: 6px;
+    margin-left: 20%;
+}
 
 /* video container */
 .videoContainer{
-    width:380px;
-    height:163px;
+    width:100%;
+    height: 357px;
     position:relative;
     overflow:hidden;
     background:#000;
@@ -14,7 +17,7 @@ video { border-radius: 6px; }
     border-radius: 6px;
     border: 1px solid rgba(0,0,0,0.8);
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    margin-top: 0px;
+    margin: 0px auto;
     margin-bottom: 50px;
 }
 .videoContainer:before {

@@ -33,12 +33,15 @@ class MessagesRepository extends BaseRepository
 
     public function insertChat($data, $object)
     {
-        
+//        dd($data->file('file'));
         $mes = new Messages();
         $mes->user_id = Auth::user()->id;
         $mes->content = $data['message'];
         $mes = $object->messages()->save($mes);
+
+
         if($data->hasFile('file')){
+
             $file = $data->file('file');
             $extensions = array('jpg', 'jpeg', 'png');
             $title = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());

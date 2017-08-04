@@ -93,6 +93,8 @@
         $(".video-wrapper").append(data.list_media_video);
         $(".music-wrapper").append(data.list_media_mp3);
         $('.file-preview .row').remove();
+
+
     });
     var socket_ytb = io.connect('{{Config::get('constants.url.nodejs')}}/ytb');
     socket_ytb.emit('newSocket', channel);

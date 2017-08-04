@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var channel = $('.media').attr('title');
-    var socket_video = io.connect('http://localhost:8890/video');
+    var socket_video = io.connect(node_url+'/video');
 
     var videos = new Array();
     var volumeDrag = false;

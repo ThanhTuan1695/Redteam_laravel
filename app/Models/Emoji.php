@@ -13,7 +13,7 @@ class Emoji extends Model
 {
 
     public $table = 'emoji';
-    
+    public $timestamps = false;
 
 
 

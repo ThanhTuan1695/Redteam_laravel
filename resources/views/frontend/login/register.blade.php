@@ -26,7 +26,7 @@
                 <button type="submit" class="btn btn-success my_btn">Submit</button>
             </fieldset>
             <fieldset>
-                <a href="{{ route('loginChat') }}"><button type="button" class="btn btn-success my_btn">Login</button></a>
+                <a href="{{ route('loginChat') }}"><button type="button" class="btn btn-success my_btn" style="width:350px;">Login</button></a>
             </fieldset>
         </form>
     </div>

@@ -58,6 +58,7 @@ Route::group([],function(){
 		Route::post('/public/sendmessageuser', 'Frontend\SingleController@sendMessage')->name('addchat');
 		Route::post('/public/sendmessage', 'Frontend\RoomController@sendMessage');
 		Route::get('search', 'Frontend\ManagerController@search')->name('search');
+		Route::post('webcam_upload', 'Frontend\ManagerController@webcamUpload')->name('webcam');
 	});
 });
 

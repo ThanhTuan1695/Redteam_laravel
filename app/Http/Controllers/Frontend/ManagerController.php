@@ -89,4 +89,16 @@ class ManagerController extends Controller
         return response()->json(['success' => false, 'users' => "", 'rooms' => ""]);
     }
 
+    public function webcamUpload(Request $request)
+    {
+//        dd($request->toArray());
+        if($request->hasFile('webcam')) {
+            $file = $request->file('webcam');
+            $url = 'storage';
+            $fileName = $request['name'].'.'.$request['format'];
+            $file->move(public_path('storage/sticker'), $fileName);
+           
+        }
+    }
+
 }

@@ -59,6 +59,8 @@
         <li><a data-toggle="tab" href="#video-tab">Video</a></li>
         <li><a data-toggle="tab" href="#mp3-tab">Mp3</a></li>
         @yield('list_users_tab')
+        <li><a data-toggle="tab" href="#webcam-tab">Webcam</a></li>
+
 
     </ul>
     <div class="tab-content media-list ">
@@ -100,7 +102,13 @@
             </div>
         </div>
         @yield('list_users')
-
+        <div id='webcam-tab' class="tab-pane fade ">
+            <div class="ytb-list ">
+                <div id="my_camera"></div>
+                <input type="button" id="attach" class="attach" value="Start Webcam">
+                <input type=button value="Take Snapshot" id='snap'>
+            </div>
+        </div>
 
     </div>
     <div class="love-mes form-group">
@@ -110,7 +118,7 @@
     </div>
     <div class="sticker-list ">
         <div id='sticker-tab'>
-            <div class="ytb-list media-list ">
+            <div class="sticker-list-wrapper  media-list ">
                 @foreach( \App\Models\Emoji::all() as $emoji)
                     <div class="drag"
                          style="display: inline-block; width: 80px;"> {!! \App\Helpers\Sticker::embededSticker($emoji->url) !!}</div>
@@ -146,7 +154,67 @@
     <script src="{{url("js/jquery.simulate.js")}}"></script>
     <script src="{{ url('/js/music.js') }}"></script>
     <script src="{{ url('/js/video.js') }}"></script>
-    <script src="{{ url('/js/custom.js') }}"></script>
     <script src="{{ url('/js/jquery.lettering-0.6.1.min.js') }}"></script>
     <script src="{{ url('/js/jQueryRotate.js') }}"></script>
+    <script src="{{ url('/js/webcam.js') }}"></script>
+    <script src="{{ url('/js/custom.js') }}"></script>
+
+    <script language="JavaScript">
+        function makeid() {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 9; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
+        }
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        $('#attach').click(function () {
+            if ($(this).hasClass('attach')) {
+                Webcam.attach('#my_camera');
+                $(this).val('Stop Webcam');
+                $(this).removeClass('attach');
+                $(this).addClass('detach');
+            }
+            else {
+                Webcam.reset('#my_camera');
+                $(this).val('Start Webcam');
+                $(this).removeClass('detach');
+                $(this).addClass('attach');
+
+            }
+
+        });
+
+
+    </script>
+    <script language="JavaScript">
+        var data_uri;
+        $('#snap').click(function (e) {
+            Webcam.snap(function (data_uri) {
+                data_uri = data_uri;
+                var left = Math.floor(Math.random() * 300) + 15;
+                var top = Math.floor(Math.random() * 300) + 15;
+                var name = makeid();
+
+                Webcam.upload(data_uri, '{!!  url('webcam_upload?format=jpg&name=')!!}' + name, function (code, text) {
+                    var content = "<div class='drag inside-drop-zone'  style=' position: absolute; left: " + left + "px; top: " + top + "px; width:80px'>" +
+                            "<img class='sticker' id='st" + name + "' src='{{url('storage/sticker')}}/" + name + ".jpg' style='width : 80px;' ></div>";
+                    $('.drop').append(content);
+                    $('.drop>.drag').draggable();
+                    socket_general.emit('sticker', channel, content);
+                });
+            });
+
+            e.preventDefault();
+        })
+
+
+    </script>
+
 @endsection

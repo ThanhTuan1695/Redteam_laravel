@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Simple Chat</title>
+    <title>Rocket Me</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -30,7 +30,7 @@
         <div class="content-wrapper" style="background-color: white">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 main-content" >
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 main-content"  >
                         @yield('content')
                     </div>
                 </div>
@@ -50,10 +50,94 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
 
     <!-- Chat  -->
+<script type="text/javascript">
+    function myFunction() {
+        document.getElementById('display').style.display = "block";
+        document.getElementById('display-sidebar').style.display = "none";
+    }
 
+    function myExit() {
+        document.getElementById('display').style.display = "none";
+        document.getElementById('display-sidebar').style.display = "block";
+    }
 
-    @yield('scripts')
-    @yield('added-scripts')
+    $(function () {
+        $('#search').keyup(function () {
+            myFunction();
+            var content = $("#search").val();
+
+            $.ajax({
+                url: '{{url('search')}}',
+                type: 'get',
+                data: {
+                    content: content,
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+
+                        var user = data.users;
+                        var room = data.rooms;
+                        var username = user.map(function (a) {
+                            var result = [];
+                            result.push({id: a.id, name: a.username});
+                            return result;
+                        });
+
+                        var roomname = room.map(function (a) {
+                            var result = [];
+                            result.push({id: a.id, name: a.name});
+                            return result;
+                        });
+                        var content = "";
+                        var roomContent = "";
+                        for (var i = 0; i < username.length; i++) {
+                            var obj = username[i];
+                            for (var k = 0; k < obj.length; k++) {
+                                var path = "/single/" + obj[k].id;
+                                var url = window.location.protocol + "//" + window.location.host + path;
+                                content += '<li><a href="' + url +
+                                        '">'
+                                        + obj[k].name
+                                        + '</a></li>';
+                            }
+                        }
+                        for (var i = 0; i < roomname.length; i++) {
+                            var objroom = roomname[i];
+                            for (var k = 0; k < objroom.length; k++) {
+                                var path = "/room/" + objroom[k].id;
+                                var url = window.location.protocol + "//" + window.location.host + path;
+                                roomContent += '<li><a href="' + url +
+                                        '">'
+                                        + objroom[k].name
+                                        + '</a></li>';
+                            }
+                        }
+                        if (content != "" || roomContent!="") {
+                            $('.myRoom').html(roomContent);
+                            $('.myUser').html(content);
+                        }
+                        else {
+                            $('.myRoom').html("");
+                            $('.myUser').html("");
+                        }
+                    } else {
+                        $('.myRoom').html("");
+                        $('.myUser').html("");
+                        console.log("ko co du lieu");
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+
+        });
+    });
+</script>
+@yield('scripts')
+@yield('added-scripts')
+
 {{--<script src="{{ url('/js/search.js') }}"></script>--}}
 
 

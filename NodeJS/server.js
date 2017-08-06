@@ -13,7 +13,11 @@ io.on('connection', function (socket) {
         socketIdList[channel].splice(0, 0, socket.id);
         console.log(socketIdList);
     })
-
+    socket.on('refresh media', function (channel) {
+        io.of('/ytb').to('/ytb#' + socket.id).emit(channel+'refresh media');
+        io.of('/music').to('/music#' + socket.id).emit(channel+'refresh media');
+        io.of('/video').to('/video#' + socket.id).emit(channel+ 'refresh media');
+    })
     socket.on('disconnect', function () {
         for (var item in socketIdList) {
             if (socketIdList[item].indexOf(socket.id) >= 0) {
@@ -51,7 +55,6 @@ var ytb = io
 
             socket.broadcast.emit(channel + 'YTBpause', data);
         });
-
 
         socket.on('YTBplay', function (channel, order, currentTime) {
             console.log('play');
@@ -117,28 +120,7 @@ var music = io
             socket.broadcast.emit(channel + 'MSchange', data, audioName);
         });
     });
-// var msg = io
-//     .of('/msg')
-//     .on('connection', function (socket) {
-//         console.log("msg connected");
-//         var redisClient = redis.createClient();
-//         redisClient.subscribe('message');
-//         redisClient.on("message", function (channel, data) {
-//             console.log(data);
-//             data = JSON.parse(data);
-//             socket.emit(channel + ":" + data.messagesType + ":" + data.idChannel, data);
-//         });
-//         socket.on('disconnect', function () {
-//             for (var item in socketIdList) {
-//                 if (socketIdList[item].indexOf(socket.id) >= 0) {
-//                     var index = socketIdList[item].indexOf(socket.id);
-//                     socketIdList[item].splice(index, 1);
-//                     console.log('msg  disconnect')
-//                     break;
-//                 }
-//             }
-//         });
-//     });
+
 var video = io
     .of('/video')
     .on('connection', function (socket) {

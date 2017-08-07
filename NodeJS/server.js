@@ -4,7 +4,7 @@ var io = require('socket.io')(server);
 var redis = require('redis');
 var socketIdList = new Array;
 var listChannel = new Array;
-// server.listen(8890);
+server.listen();
 
 io.on('connection', function (socket) {
     socket.on('newSocketConnect', function (channel) {

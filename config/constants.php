@@ -1,8 +1,8 @@
 <?php
 return [
     'url' => [
-        'laravel' => 'https://localhost:8000',
-        'nodejs' => 'https://node-red-team-php-intern.bap.jp'
+        'laravel' => 'http://localhost:8000',
+        'nodejs' => 'http://red-team-php-intern.bap.jp'
         // etc
     ]
 ];

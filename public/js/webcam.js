@@ -37,7 +37,7 @@ var Webcam = {
 	version: '1.0.22',
 	
 	// globals
-	protocol: location.protocol.match(/https/i) ? 'https' : 'http',
+	protocol: location.protocol.match(/http/i) ? 'http' : 'http',
 	loaded: false,   // true when webcam movie finishes loading
 	live: false,     // true when webcam is initialized and ready to snap
 	userMedia: true, // true when getUserMedia is supported natively

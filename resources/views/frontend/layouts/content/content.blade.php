@@ -153,7 +153,7 @@
         var node_url = '{{Config::get('constants.url.nodejs')}}';
 
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
     <script src="{{url("js/jquery.js")}}"></script>
     <script src="{{url("js/jquery-ui.js")}}"></script>
     <script src="{{url("js/jquery.simulate.js")}}"></script>

@@ -1,4 +1,4 @@
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <script src="{{ url('/css/lib/js/config.js')}}"></script>
 <script src="{{ url('/css/lib/js/util.js') }}"></script>

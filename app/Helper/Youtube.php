@@ -8,7 +8,7 @@ class Youtube
     {
         $pattern =
             '%^# Match any youtube URL
-        (?:https?://)?  # Optional scheme. Either http or https
+        (?:http?://)?  # Optional scheme. Either http or http
         (?:www\.)?      # Optional www subdomain
         (?:             # Group host alternatives
           youtu\.be/    # Either youtu.be,
@@ -30,7 +30,7 @@ class Youtube
 
     static function getLinkYTB($string)
     {
-        preg_match_all('@https?://(www\.)?youtube.com/.[^\s.,"\']+@i', $string, $aMatches);
+        preg_match_all('@http?://(www\.)?youtube.com/.[^\s.,"\']+@i', $string, $aMatches);
         return $aMatches[0];
     }
 

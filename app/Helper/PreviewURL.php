@@ -36,7 +36,7 @@ class PreviewURL
         $urls = 0;
 
         foreach ($arrmsg as $check) {
-           $urls = preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', trim($check), $match);
+           $urls = preg_match_all('#\bhttp?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', trim($check), $match);
            if ($urls > 0) {
                break;
            }

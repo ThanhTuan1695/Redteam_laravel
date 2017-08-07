@@ -113,7 +113,7 @@
     </div>
     <div class="love-mes form-group">
         <form id="love-mes-form" action="" method="">
-            <input type="text" class="form-control" id="love-mes-input'">
+            <input type="text" class="form-control" id="love-mes-input'" placeholder="type here and hit enter to see the magic ^^">
         </form>
     </div>
     <div class="sticker-list ">
@@ -128,11 +128,13 @@
         </div>
         <div>
             <form action="" id="custom-text">
-                <input type="text" value=""> <span class="glyphicon glyphicon-play sticker-play"
-                                                   style="font-size: 25px; display: inline-block;"></span>
+                <input type="text" value="" placeholder="type here to custom text sticker" style="width: 215px;">
                 <div style="display:inline-block;"><img class='bin' id='st{{str_random(6)}}'
-                                                        src='{{url('storage/sticker')}}/bin.png' style='width : 80px;'>
-                </div>
+                                                        src='{{url('storage/sticker')}}/bin.png' style='width : 80px;'> <--Drag here to delete sticker
+                </div> </br>
+                <span class="glyphicon glyphicon-play sticker-play"
+                                                   style="font-size: 25px; display: inline-block;"></span> <-- Click here to start playing sticker
+
             </form>
 
         </div>
@@ -147,6 +149,9 @@
     <script src="{{ url('/js/fileinput.js') }}"></script>
     <script>
         $("#file-0").fileinput();
+        var channel = $('.media').attr('title');
+        var node_url = '{{Config::get('constants.url.nodejs')}}';
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
     <script src="{{url("js/jquery.js")}}"></script>

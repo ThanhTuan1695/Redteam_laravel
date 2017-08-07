@@ -2,7 +2,7 @@
 return [
     'url' => [
         'laravel' => 'https://localhost:8000',
-        'nodejs' => 'http://localhost:8890'
+        'nodejs' => 'https://node-red-team-php-intern.bap.jp'
         // etc
     ]
 ];

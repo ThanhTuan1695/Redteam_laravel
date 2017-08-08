@@ -37,8 +37,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <textarea cols="1" rows="1" name="message" id="message-content" class="form-control textarea-control"
                           data-emojiable="true"
-                          style="float:left;resize:none;border-radius:5px">
-                </textarea>
+                          style="float:left;resize:none;border-radius:5px" value=""></textarea>
                 <input type="button" class="display-media btn btn-default" name="media" value="Media">
                 <button style="margin-left:-3px" type="submit" class="btn">Submit</button>
                 <div>

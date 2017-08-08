@@ -35,7 +35,10 @@
         if (window.FormData) {
             formdata = new FormData(form[0]);
         }
-        if (msg != '') {
+        if (msg != '' || formdata.get('file').name != '') {
+            if(msg == '') msg = formdata.get('file').name;
+                        console.log(msg);
+
             formdata.append('id', '{{$id}}');
             formdata.append('message', msg);
             $.ajax({

@@ -20,7 +20,6 @@ $(function () {
            }
            songs[name] = song;
        }
-
        // Handle events
        $('.player').on('click', '#play', function (e) {
            var audioName = getAudioName(e);
@@ -82,7 +81,7 @@ $(function () {
 
 
 // function
-       function play(audioName) {
+       function     play(audioName) {
            for (var i = 0; i < listSong.length; i++) {
                if ($(listSong[i]).attr('id') == audioName) {
                    songs[audioName].play();

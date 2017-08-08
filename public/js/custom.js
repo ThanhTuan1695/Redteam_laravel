@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    var socket_general = io.connect(node_url+'general');
+    console.log(node_url);
+    socket_general = io.connect(node_url+'/general');
     var channel = $('.media').attr('title');
     var input = $('#love-mes-form').find("input[type=text]");
     var customText = $('#custom-text').find("input[type=text]");
@@ -14,8 +15,8 @@ $(document).ready(function () {
     $('#love-mes-form').on('submit', function (e) {
         var text = input.val();
         getTextAnimation(text);
-        e.preventDefault();
         socket_general.emit('text', channel, text);
+        e.preventDefault();
     });
     $('#custom-text').on('submit', function (e) {
         var text = customText.val();

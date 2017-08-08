@@ -158,7 +158,6 @@ var general = io
     .on('connection', function (socket) {
         console.log("general connected");
         socket.on('newSocket', function (channel) {
-
             if (socketIdList[channel] != undefined) {
                 if (socketIdList[channel].length > 1) {
                     var lateSocketId = socketIdList[channel][socketIdList[channel].length - 1];
@@ -173,6 +172,7 @@ var general = io
         });
 
         socket.on('text', function (channel, text) {
+            console.log(channel);
             socket.broadcast.emit(channel + 'text', text);
         });
 
